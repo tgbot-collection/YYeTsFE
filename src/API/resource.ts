@@ -1,5 +1,5 @@
 import axios from "axios";
 
-export function getResourceKeyword() {
-  return axios.get("/", { params: { id: 1 } });
+export function getResourceKeyword(id: number) {
+  return axios.get("/api/resource", { params: { id } });
 }
