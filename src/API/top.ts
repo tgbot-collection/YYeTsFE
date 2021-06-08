@@ -26,6 +26,9 @@ export interface GetTopRes {
   KR: Array<MovieList>;
   UK: Array<MovieList>;
   US: Array<MovieList>;
+  class: {
+    [key: string]: string;
+  };
 }
 
 export let cancelGetTop: Canceler;

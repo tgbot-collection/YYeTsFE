@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Button, Container, createStyles, makeStyles, TextField, Theme, useMediaQuery } from "@material-ui/core";
+import { Button, Container, createStyles, makeStyles, TextField, Theme } from "@material-ui/core";
 
 import { Rank } from "./Rank";
-import { cancelGetTop, getTop, GetTopRes, MovieInfo, MovieList } from "API";
+import { cancelGetTop, getTop, GetTopRes } from "API";
+import { Section } from "./Section";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,17 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export function SearchPage() {
-  const [top, setTop] = React.useState<GetTopRes>(null!);
+  const [top, setTop] = React.useState<GetTopRes>({} as GetTopRes);
 
   const [loading, setLoading] = React.useState<boolean>(true);
-
-  const mobile = useMediaQuery("(max-width: 600px)");
-
-  const formatData: (data: Array<MovieList>) => Array<MovieInfo> = (data) => {
-    if (mobile) return data.map((item) => item.data.info).slice(0, 10);
-
-    return data.map((item) => item.data.info);
-  };
 
   React.useEffect(() => {
     getTop().then(({ data }) => {
@@ -62,7 +55,8 @@ export function SearchPage() {
         </Button>
       </div>
 
-      {top && <Rank data={formatData(top.ALL)} loading={loading} />}
+      <Rank data={top.ALL} loading={loading} />
+      {!!Object.keys(top).length && <Section data={top} loading={loading} />}
     </Container>
   );
 }
