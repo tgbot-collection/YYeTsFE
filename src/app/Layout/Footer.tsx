@@ -58,7 +58,7 @@ export function Footer() {
               <div className={classes.logo}>
                 <img src={toAbsoluteUrl("/logo.png")} alt="logo" />
                 <Link color="inherit" variant="body1" component={RouterLink} to="/">
-                  YYeTs
+                  人人影视分享
                 </Link>
               </div>
             </Grid>
