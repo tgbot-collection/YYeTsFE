@@ -28,6 +28,7 @@ export interface GetResourceByIDRes {
   };
   info: string;
   status: number;
+  is_like: boolean;
 }
 
 export function getResourceByID(id: string) {
