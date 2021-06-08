@@ -1,14 +1,5 @@
 import * as React from "react";
-import {
-  AppBar,
-  Button,
-  createStyles,
-  makeStyles,
-  Theme,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
+import { AppBar, Button, createStyles, makeStyles, Theme, IconButton, Toolbar, Typography } from "@material-ui/core";
 import { GitHub, Search } from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
 
@@ -42,11 +33,7 @@ export function Header() {
     <AppBar position="static">
       <Toolbar>
         <Link to="/home" className={classes.href}>
-          <img
-            src={toAbsoluteUrl("/logo.png")}
-            className={classes.logo}
-            alt="logo"
-          />
+          <img src={toAbsoluteUrl("/logo.png")} className={classes.logo} alt="logo" />
         </Link>
 
         <Typography variant="h6" className={classes.title}>
@@ -58,11 +45,7 @@ export function Header() {
             <Search />
           </IconButton>
         )}
-        <IconButton
-          color="inherit"
-          component="a"
-          href="https://github.com/tgbot-collection/YYeTsBot"
-        >
+        <IconButton color="inherit" component="a" href="https://github.com/tgbot-collection/YYeTsBot">
           <GitHub />
         </IconButton>
         <Button color="inherit">Login</Button>

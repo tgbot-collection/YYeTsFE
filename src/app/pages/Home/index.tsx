@@ -1,14 +1,6 @@
 import * as React from "react";
 import GitHubButton from "react-github-btn";
-import {
-  Button,
-  Container,
-  createStyles,
-  Link,
-  makeStyles,
-  Theme,
-  Typography,
-} from "@material-ui/core";
+import { Button, Container, createStyles, Link, makeStyles, Theme, Typography } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 
 import { toAbsoluteUrl } from "utils";
@@ -89,19 +81,9 @@ export function HomePage() {
   return (
     <>
       <Container maxWidth="md" className={classes.content}>
-        <img
-          src={toAbsoluteUrl("/logo.png")}
-          alt="logo"
-          className={classes.logo}
-        />
+        <img src={toAbsoluteUrl("/logo.png")} alt="logo" className={classes.logo} />
         <div>
-          <Typography
-            className={classes.title}
-            variant="h3"
-            component="h1"
-            color="inherit"
-            gutterBottom
-          >
+          <Typography className={classes.title} variant="h3" component="h1" color="inherit" gutterBottom>
             人人影视分享站
           </Typography>
           <Typography variant="h5" component="p" color="textSecondary">
@@ -112,7 +94,7 @@ export function HomePage() {
             ，请不要做无意义的爬虫。
           </Typography>
 
-          <Button className={classes.button} variant="outlined" color="primary">
+          <Button className={classes.button} variant="outlined" color="primary" component={RouterLink} to="/search">
             开始使用
           </Button>
         </div>
@@ -127,22 +109,14 @@ export function HomePage() {
             data-text="star"
           />
 
-          <img
-            src="https://img.shields.io/badge/license-MIT-green"
-            alt="MIT"
-            style={{ marginLeft: "8px" }}
-          />
+          <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT" style={{ marginLeft: "8px" }} />
         </div>
 
         <div className={classes.sponsor}>
           <Typography style={{ marginRight: "16px" }}>支持一下: </Typography>
 
           <Link href="https://afdian.net/@BennyThink">
-            <img
-              src={toAbsoluteUrl("sponsor/afdian.png")}
-              alt="afdian"
-              className="img"
-            />
+            <img src={toAbsoluteUrl("sponsor/afdian.png")} alt="afdian" className="img" />
           </Link>
           <Link href="https://www.buymeacoffee.com/bennythink">
             <img

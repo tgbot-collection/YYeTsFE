@@ -35,6 +35,9 @@
       "prettier"
     ]
   },
+  "prettier": {
+    "printWidth": 120
+  },
   "browserslist": {
     "production": [
       ">0.2%",

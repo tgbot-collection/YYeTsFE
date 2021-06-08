@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  createMuiTheme,
-  CssBaseline,
-  ThemeProvider as MaterialTheme,
-  useMediaQuery,
-} from "@material-ui/core";
+import { createMuiTheme, CssBaseline, ThemeProvider as MaterialTheme, useMediaQuery } from "@material-ui/core";
 
 export const ThemeProvider: React.FC = (props) => {
   const { children } = props;
