@@ -56,9 +56,6 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       minHeight: 21,
       boxSizing: "content-box",
-      "& a": {
-        color: theme.palette.background.paper,
-      },
     },
     sponsor: {
       margin: "16px 0",
@@ -68,6 +65,14 @@ const useStyles = makeStyles((theme: Theme) =>
       "& img": {
         width: 40,
         height: 40,
+      },
+    },
+    link: {
+      margin: theme.spacing(1, 0),
+      textAlign: "center",
+
+      "& a": {
+        color: "inherit",
       },
     },
   })
@@ -113,7 +118,7 @@ export function HomePage() {
         </div>
 
         <div className={classes.sponsor}>
-          <Typography style={{ marginRight: "16px" }}>支持一下: </Typography>
+          <Typography style={{ marginRight: "16px" }}>觉得不错，支持一下: </Typography>
 
           <Link href="https://afdian.net/@BennyThink" style={{ transform: "translate3d(0, 3px,0)" }}>
             <img src={toAbsoluteUrl("sponsor/afdian.png")} alt="afdian" className="img" />
@@ -124,6 +129,7 @@ export function HomePage() {
               style={{
                 marginLeft: "24px",
                 transform: "scale(0.9)",
+                borderRadius: "50%",
               }}
               alt="coffee"
               className="img"
@@ -137,17 +143,25 @@ export function HomePage() {
 
         <Container style={{ marginTop: "16px" }}>
           <Grid container>
-            <Grid item xs={6} sm={3} style={{ margin: "8px 0" }}>
-              <Typography align="center">人人影视</Typography>
+            <Grid item xs={6} sm={3} className={classes.link}>
+              <Link href="http://www.zmz2019.com" variant="body1">
+                人人影视
+              </Link>
             </Grid>
-            <Grid item xs={6} sm={3} style={{ margin: "8px 0" }}>
-              <Typography align="center">追新番</Typography>
+            <Grid item xs={6} sm={3} className={classes.link}>
+              <Link href="http://www.zhuixinfan.com/main.php" variant="body1">
+                追新番
+              </Link>
             </Grid>
-            <Grid item xs={6} sm={3} style={{ margin: "8px 0" }}>
-              <Typography align="center">磁力下载站</Typography>
+            <Grid item xs={6} sm={3} className={classes.link}>
+              <Link href="http://oabt005.com/home.html" variant="body1">
+                磁力下载站
+              </Link>
             </Grid>
-            <Grid item xs={6} sm={3} style={{ margin: "8px 0" }}>
-              <Typography align="center">FIX字幕侠</Typography>
+            <Grid item xs={6} sm={3} className={classes.link}>
+              <Link href="https://www.zimuxia.cn" variant="body1">
+                FIX字幕侠
+              </Link>
             </Grid>
           </Grid>
         </Container>
