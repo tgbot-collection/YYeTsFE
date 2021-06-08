@@ -1,24 +1,18 @@
 import axios from "axios";
-import { AES } from "crypto-js";
-
 const instance = axios.create();
 
-function generateNe1(id: number) {
-  return AES.encrypt("/api/resource?id=" + id, "" + id).toString();
-}
-
-instance.interceptors.request.use((config) => {
-  const { params } = config;
-  if (params?.id) config.headers.ne1 = generateNe1(params.id);
-
-  return config;
-});
-
-instance.interceptors.response.use((response) => {
-  if (response.status === 200) return response.data;
-
-  return response;
-});
+instance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (axios.isCancel(error)) {
+      console.log("Request canceled", error.message);
+    } else {
+      // TODO: 错误处理
+    }
+  }
+);
 
 export const CancelToken = axios.CancelToken;
 

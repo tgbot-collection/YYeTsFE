@@ -72,7 +72,7 @@ export function Footer() {
       <Container maxWidth="md">
         <footer className={classes.footer}>
           <Grid container>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={3}>
               <div className={classes.logo}>
                 <img src={toAbsoluteUrl("/logo.png")} alt="logo" />
                 <Link color="inherit" variant="body1" component={RouterLink} to="/">
@@ -81,17 +81,30 @@ export function Footer() {
               </div>
             </Grid>
 
-            <Grid item xs={6} sm={4} className={classes.list}>
+            <Grid item xs={6} sm={3} className={classes.list}>
               <Typography component="h2" gutterBottom>
-                联系方式
+                作者
               </Typography>
               <ul>
                 <li>
                   <Link href="https://t.me/BennyThink" color="inherit" variant="body1">
                     Benny 小可爱
                   </Link>
-                  <span className={classes.badge}>owner</span>
                 </li>
+                <li>
+                  <Link href="https://t.me/yyets_bot" color="inherit" variant="body1">
+                    Zuiyu
+                  </Link>
+                  <span className={classes.badge}>FE</span>
+                </li>
+              </ul>
+            </Grid>
+
+            <Grid item xs={6} sm={3} className={classes.list}>
+              <Typography component="h2" gutterBottom>
+                联系方式
+              </Typography>
+              <ul>
                 <li>
                   <Link href="https://t.me/yyets_bot" color="inherit" variant="body1">
                     Telegram Bot
@@ -110,7 +123,7 @@ export function Footer() {
               </ul>
             </Grid>
 
-            <Grid item xs={6} sm={4} className={classes.list}>
+            <Grid item xs={6} sm={3} className={classes.list}>
               <Typography component="h2" gutterBottom>
                 Credits
               </Typography>
@@ -144,13 +157,7 @@ export function Footer() {
             <Link color="inherit" href="https://github.com/mui-org/material-ui/blob/master/LICENSE">
               MIT
             </Link>
-            &nbsp;发布， Copyright © {new Date().getFullYear()} YYeTs。
-          </Typography>
-
-          <Typography className={classes.design} variant="body2" color="textSecondary">
-            Design by
-            <Link href="https://github.com/wyx1818">&nbsp;Zuiyu</Link>
-            <span className={classes.badge}>FE</span>
+            &nbsp;发布， Copyright © 2019 - {new Date().getFullYear()} YYeTs。
           </Typography>
         </footer>
       </Container>
