@@ -83,7 +83,7 @@ export function Footer() {
 
             <Grid item xs={6} sm={4} className={classes.list}>
               <Typography component="h2" gutterBottom>
-                资源
+                相关资源
               </Typography>
               <ul>
                 <li>
@@ -96,22 +96,21 @@ export function Footer() {
                     Telegram Channel
                   </Link>
                 </li>
+                <li>
+                  <Link color="inherit" variant="body1" component={RouterLink} to="/database">
+                    数据库下载
+                  </Link>
+                </li>
               </ul>
             </Grid>
           </Grid>
 
           <Typography color="textSecondary" variant="body2">
-            遵循 &nbsp;
-            <Link color="inherit" href="https://github.com/mui-org/material-ui/blob/master/LICENSE">
-              MIT
-            </Link>
-            &nbsp;发布， Copyright © 2019 - {new Date().getFullYear()} YYeTs。
-          </Typography>
-          <Typography color="textSecondary" variant="body2">
             Web Design by&nbsp;
             <Link href="https://blog.zuiyu1818.cn" color="secondary">
               Zuiyu
             </Link>
+            ，Copyright © 2019 - {new Date().getFullYear()} YYeTs
           </Typography>
         </footer>
       </Container>

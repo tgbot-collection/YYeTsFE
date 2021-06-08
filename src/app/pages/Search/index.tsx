@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flex: 1,
     },
     searchButton: {
-      marginLeft: theme.spacing(1),
+      marginLeft: theme.spacing(2),
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(4),
       },
@@ -36,9 +36,11 @@ export function SearchPage() {
   const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
-    getTop().then(({ data }) => {
-      setTop(data);
-      setLoading(false);
+    getTop().then((res) => {
+      if (res) {
+        setTop(res.data);
+        setLoading(false);
+      }
     });
 
     return cancelGetTop;
