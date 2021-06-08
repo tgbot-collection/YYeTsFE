@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Container,
   createStyles,
@@ -5,7 +6,6 @@ import {
   Grid,
   Link,
   makeStyles,
-  styled,
   Theme,
   Typography,
 } from "@material-ui/core";
@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     footer: {
       padding: theme.spacing(3, 0),
+      [theme.breakpoints.up("sm")]: {
+        padding: theme.spacing(8, 0),
+      },
     },
     logo: {
       display: "flex",
@@ -42,6 +45,8 @@ const useStyles = makeStyles((theme: Theme) =>
         listStyle: "none",
       },
       "& li": {
+        display: "flex",
+        alignItems: "center",
         padding: "6px 0",
         color: theme.palette.text.secondary,
       },
@@ -73,7 +78,7 @@ export function Footer() {
       <Container maxWidth="md">
         <footer className={classes.footer}>
           <Grid container>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
               <div className={classes.logo}>
                 <img src={toAbsoluteUrl("/logo.png")} alt="logo" />
                 <Link
@@ -82,12 +87,12 @@ export function Footer() {
                   component={RouterLink}
                   to="/"
                 >
-                  影视分享站
+                  YYeTs
                 </Link>
               </div>
             </Grid>
 
-            <Grid item xs={6} sm={3} className={classes.list}>
+            <Grid item xs={6} sm={4} className={classes.list}>
               <Typography component="h2" gutterBottom>
                 作者
               </Typography>
@@ -99,6 +104,34 @@ export function Footer() {
                     variant="body1"
                   >
                     Benny 小可爱
+                  </Link>
+                  <span className={classes.badge}>owner</span>
+                </li>
+                <li>
+                  <Link
+                    href="https://github.com/wyx1818"
+                    color="inherit"
+                    variant="body1"
+                  >
+                    Zuiyu
+                  </Link>
+                  <span className={classes.badge}>FE</span>
+                </li>
+              </ul>
+            </Grid>
+
+            <Grid item xs={6} sm={4} className={classes.list}>
+              <Typography component="h2" gutterBottom>
+                联系方式
+              </Typography>
+              <ul>
+                <li>
+                  <Link
+                    href="https://t.me/yyets_bot"
+                    color="inherit"
+                    variant="body1"
+                  >
+                    Telegram Bot
                   </Link>
                 </li>
                 <li>
@@ -116,75 +149,23 @@ export function Footer() {
                     color="inherit"
                     variant="body1"
                   >
-                    博客
-                  </Link>
-                </li>
-              </ul>
-            </Grid>
-
-            <Grid item xs={6} sm={3} className={classes.list}>
-              <Typography component="h2" gutterBottom>
-                资源
-              </Typography>
-              <ul>
-                <li>
-                  <Link
-                    component={RouterLink}
-                    to="/help"
-                    color="inherit"
-                    variant="body1"
-                  >
-                    帮助
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="https://t.me/BennyThink"
-                    color="inherit"
-                    variant="body1"
-                  >
-                    Github
-                  </Link>
-                </li>
-              </ul>
-            </Grid>
-
-            <Grid item xs={6} sm={3} className={classes.list}>
-              <Typography component="h2" gutterBottom>
-                贡献者
-              </Typography>
-              <ul>
-                <li>
-                  <Link
-                    href="https://github.com/wyx1818"
-                    color="inherit"
-                    variant="body1"
-                  >
-                    zuiyu
-                  </Link>
-                  <span className={classes.badge}>前端</span>
-                </li>
-                <li>
-                  <Link
-                    href="https://github.com/secsilm"
-                    color="inherit"
-                    variant="body1"
-                  >
-                    Alan Lee
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="https://github.com/2926295173"
-                    color="inherit"
-                    variant="body1"
-                  >
-                    AOIAN
+                    Blog
                   </Link>
                 </li>
               </ul>
             </Grid>
           </Grid>
+
+          <Typography color="textSecondary" variant="body2">
+            遵循 &nbsp;
+            <Link
+              color="inherit"
+              href="https://github.com/mui-org/material-ui/blob/master/LICENSE"
+            >
+              MIT
+            </Link>
+            &nbsp;发布， Copyright © {new Date().getFullYear()} YYeTs。
+          </Typography>
         </footer>
       </Container>
     </div>

@@ -20,4 +20,6 @@ instance.interceptors.response.use((response) => {
   return response;
 });
 
+export const CancelToken = axios.CancelToken;
+
 export default instance;
