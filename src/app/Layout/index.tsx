@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Header } from "./Header";
+import { Container } from "@material-ui/core";
+import { Footer } from "./Footer";
 
 export const Layout: React.FC = (props) => {
   const { children } = props;
@@ -7,8 +9,10 @@ export const Layout: React.FC = (props) => {
   return (
     <>
       <Header />
-      <main>{children}</main>
-      <footer>尾</footer>
+      <Container>
+        <>{children}</>
+      </Container>
+      <Footer />
     </>
   );
 };

@@ -8,6 +8,8 @@ export function HomePage() {
     getHome().then((res) => {
       console.log(res);
     });
+
+    return () => {};
   }, []);
 
   return <div>首页</div>;

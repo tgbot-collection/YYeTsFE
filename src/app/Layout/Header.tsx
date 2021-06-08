@@ -9,7 +9,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
+import { GitHub, Search } from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
 
 import { toAbsoluteUrl } from "utils";
@@ -41,7 +41,7 @@ export function Header() {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Link to="/" className={classes.href}>
+        <Link to="/home" className={classes.href}>
           <img
             src={toAbsoluteUrl("/logo.png")}
             className={classes.logo}
@@ -54,13 +54,17 @@ export function Header() {
         </Typography>
 
         {location.pathname !== "/search" && (
-          <Link to="/search">
-            <IconButton>
-              <Search />
-            </IconButton>
-          </Link>
+          <IconButton color="inherit" component={Link} to="/search">
+            <Search />
+          </IconButton>
         )}
-
+        <IconButton
+          color="inherit"
+          component="a"
+          href="https://github.com/tgbot-collection/YYeTsBot"
+        >
+          <GitHub />
+        </IconButton>
         <Button color="inherit">Login</Button>
       </Toolbar>
     </AppBar>
