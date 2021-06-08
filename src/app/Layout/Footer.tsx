@@ -42,24 +42,6 @@ const useStyles = makeStyles((theme: Theme) =>
         color: theme.palette.text.secondary,
       },
     },
-    badge: {
-      alignSelf: "center",
-      padding: "1px 3px",
-      backgroundColor: theme.palette.type === "light" ? "rgb(235, 87, 87)" : "#c55e5e",
-      color: "#fff",
-      borderRadius: 3,
-      marginLeft: 6,
-      fontSize: "10px",
-      lineHeight: "1.3",
-      textTransform: "uppercase",
-      fontWeight: "bold",
-      letterSpacing: "0.5px",
-      display: "inline-block",
-    },
-    design: {
-      display: "flex",
-      alignItems: "center",
-    },
   })
 );
 
@@ -72,7 +54,7 @@ export function Footer() {
       <Container maxWidth="md">
         <footer className={classes.footer}>
           <Grid container>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
               <div className={classes.logo}>
                 <img src={toAbsoluteUrl("/logo.png")} alt="logo" />
                 <Link color="inherit" variant="body1" component={RouterLink} to="/">
@@ -81,7 +63,7 @@ export function Footer() {
               </div>
             </Grid>
 
-            <Grid item xs={6} sm={3} className={classes.list}>
+            <Grid item xs={6} sm={4} className={classes.list}>
               <Typography component="h2" gutterBottom>
                 作者
               </Typography>
@@ -92,17 +74,16 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://t.me/yyets_bot" color="inherit" variant="body1">
-                    Zuiyu
+                  <Link href="https://dmesg.app/" color="inherit" variant="body1">
+                    Blog
                   </Link>
-                  <span className={classes.badge}>FE</span>
                 </li>
               </ul>
             </Grid>
 
-            <Grid item xs={6} sm={3} className={classes.list}>
+            <Grid item xs={6} sm={4} className={classes.list}>
               <Typography component="h2" gutterBottom>
-                联系方式
+                资源
               </Typography>
               <ul>
                 <li>
@@ -115,39 +96,6 @@ export function Footer() {
                     Telegram Channel
                   </Link>
                 </li>
-                <li>
-                  <Link href="https://dmesg.app/" color="inherit" variant="body1">
-                    Blog
-                  </Link>
-                </li>
-              </ul>
-            </Grid>
-
-            <Grid item xs={6} sm={3} className={classes.list}>
-              <Typography component="h2" gutterBottom>
-                Credits
-              </Typography>
-              <ul>
-                <li>
-                  <Link href="http://www.zmz2019.com" color="inherit" variant="body1">
-                    人人影视
-                  </Link>
-                </li>
-                <li>
-                  <Link href="http://www.zhuixinfan.com/main.php" color="inherit" variant="body1">
-                    追新番
-                  </Link>
-                </li>
-                <li>
-                  <Link href="http://oabt005.com/home.html" color="inherit" variant="body1">
-                    磁力下载站
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://www.zimuxia.cn" color="inherit" variant="body1">
-                    FIX字幕侠
-                  </Link>
-                </li>
               </ul>
             </Grid>
           </Grid>
@@ -158,6 +106,12 @@ export function Footer() {
               MIT
             </Link>
             &nbsp;发布， Copyright © 2019 - {new Date().getFullYear()} YYeTs。
+          </Typography>
+          <Typography color="textSecondary" variant="body2">
+            Web Design by&nbsp;
+            <Link href="https://blog.zuiyu1818.cn" color="secondary">
+              Zuiyu
+            </Link>
           </Typography>
         </footer>
       </Container>

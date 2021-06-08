@@ -1,6 +1,6 @@
 import * as React from "react";
 import GitHubButton from "react-github-btn";
-import { Button, Container, createStyles, Link, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Button, Container, createStyles, Grid, Link, makeStyles, Theme, Typography } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 
 import { toAbsoluteUrl } from "utils";
@@ -130,6 +130,27 @@ export function HomePage() {
             />
           </Link>
         </div>
+
+        <Typography variant="h5" component="h2" style={{ marginTop: "40px" }}>
+          特别鸣谢
+        </Typography>
+
+        <Container style={{ marginTop: "16px" }}>
+          <Grid container>
+            <Grid item xs={6} sm={3} style={{ margin: "8px 0" }}>
+              <Typography align="center">人人影视</Typography>
+            </Grid>
+            <Grid item xs={6} sm={3} style={{ margin: "8px 0" }}>
+              <Typography align="center">追新番</Typography>
+            </Grid>
+            <Grid item xs={6} sm={3} style={{ margin: "8px 0" }}>
+              <Typography align="center">磁力下载站</Typography>
+            </Grid>
+            <Grid item xs={6} sm={3} style={{ margin: "8px 0" }}>
+              <Typography align="center">FIX字幕侠</Typography>
+            </Grid>
+          </Grid>
+        </Container>
       </div>
     </>
   );
