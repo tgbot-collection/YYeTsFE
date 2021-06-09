@@ -1,17 +1,19 @@
 import React from "react";
 import clsx from "clsx";
 import { createStyles, lighten, makeStyles, Theme } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableRow from "@material-ui/core/TableRow";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
+import {
+  Checkbox,
+  Paper,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 
 import { ResourceDetail } from "API";
@@ -94,17 +96,6 @@ const useStyles = makeStyles((theme: Theme) =>
     table: {
       minWidth: 750,
     },
-    visuallyHidden: {
-      border: 0,
-      clip: "rect(0 0 0 0)",
-      height: 1,
-      margin: -1,
-      overflow: "hidden",
-      padding: 0,
-      position: "absolute",
-      top: 20,
-      width: 1,
-    },
   })
 );
 
@@ -115,8 +106,6 @@ interface DataTablePropTypes {
 
 export function DataTableComponent(props: DataTablePropTypes) {
   const { season, tableData } = props;
-
-  console.log(tableData);
 
   const [selected, setSelected] = React.useState<string[]>([]);
 
@@ -147,6 +136,7 @@ export function DataTableComponent(props: DataTablePropTypes) {
   };
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
+  const emptyRows = tableData.length < 5 ? 5 - tableData.length : 0;
 
   const classes = useStyles();
 
@@ -178,14 +168,19 @@ export function DataTableComponent(props: DataTablePropTypes) {
                     <TableCell padding="checkbox">
                       <Checkbox checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
                     </TableCell>
-                    <TableCell component="th" id={labelId} scope="row" padding="none">
+                    <TableCell component="th" id={labelId} padding="none" style={{ whiteSpace: "nowrap" }}>
                       {season} 第{row.episode}集
                     </TableCell>
                     <TableCell align="left">{row.name}</TableCell>
-                    <TableCell align="left">{row.size}</TableCell>
+                    {row.size && row.size !== "0" && <TableCell align="left">{row.size}</TableCell>}
                   </TableRow>
                 );
               })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>

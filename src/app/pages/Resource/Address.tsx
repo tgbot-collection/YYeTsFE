@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Skeleton, TabContext, TabList, TabPanel } from "@material-ui/lab";
-import { AppBar, Button, createStyles, makeStyles, Tab, Theme, Typography } from "@material-ui/core";
+import { AppBar, Button, createStyles, makeStyles, Menu, MenuItem, Tab, Theme, Typography } from "@material-ui/core";
 import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
+import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/hooks";
 
 import { AddressInfo } from "API";
 import { toAbsoluteUrl } from "utils";
@@ -12,6 +13,9 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       minHeight: 300,
       backgroundColor: theme.palette.background.paper,
+    },
+    appRoot: {
+      boxShadow: theme.shadows[1],
     },
     empty: {
       minHeight: 300,
@@ -41,16 +45,28 @@ export function AddressComponent(props: AddressPropTypes) {
   const { loading, resourceAddress = [] } = props;
 
   const [season, setSeason] = React.useState<number>(0);
-  const [quality, setQuality] = React.useState<string>("1");
+  const [quality, setQuality] = React.useState<string>("");
+  const [qualityIndex, setQualityIndex] = React.useState<string>("1");
+
+  const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
+
   console.log("资源地址", resourceAddress);
 
   const handleQualityChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-    setQuality(newValue);
+    setQualityIndex(newValue);
+    setQuality(resourceAddress[season].formats[Number(newValue) - 1]);
+  };
+
+  const handleChangeSeason = (seasonIndex: number) => {
+    setSeason(seasonIndex);
+    setQuality(resourceAddress[seasonIndex].formats[0]);
+    setQualityIndex("1");
+    popupState.close();
   };
 
   React.useEffect(() => {
     if (resourceAddress.length) {
-      setSeason(1);
+      setQuality(resourceAddress[season].formats[0]);
     }
   }, [resourceAddress]);
 
@@ -60,9 +76,17 @@ export function AddressComponent(props: AddressPropTypes) {
 
   return resourceAddress.length > 0 ? (
     <div className={classes.root}>
-      <TabContext value={quality}>
-        <AppBar position="static" className={classes.header} color="default">
-          <Button size="large">
+      <TabContext value={qualityIndex}>
+        <AppBar position="static" className={classes.header} color="default" classes={{ root: classes.appRoot }}>
+          <Menu {...bindMenu(popupState)}>
+            {resourceAddress.map((item, index) => (
+              <MenuItem onClick={() => handleChangeSeason(index)} key={item.season_cn}>
+                {item.season_cn}
+              </MenuItem>
+            ))}
+          </Menu>
+
+          <Button size="large" {...bindTrigger(popupState)}>
             {resourceAddress[season].season_cn}
             <ExpandMoreIcon />
           </Button>
@@ -79,14 +103,15 @@ export function AddressComponent(props: AddressPropTypes) {
           </TabList>
         </AppBar>
 
-        {resourceAddress[season].formats.map((item, index) => (
-          <TabPanel value={String(index + 1)} key={item} classes={{ root: classes.tabPanelRoot }}>
-            <DataTableComponent
-              tableData={resourceAddress[season].items["MP4"]}
-              season={resourceAddress[season].season_cn}
-            />
-          </TabPanel>
-        ))}
+        {resourceAddress[season] &&
+          resourceAddress[season].formats.map((item, index) => (
+            <TabPanel value={String(index + 1)} key={item} classes={{ root: classes.tabPanelRoot }}>
+              <DataTableComponent
+                tableData={resourceAddress[season].items[quality]}
+                season={resourceAddress[season].season_cn}
+              />
+            </TabPanel>
+          ))}
       </TabContext>
     </div>
   ) : (
