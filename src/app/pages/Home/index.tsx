@@ -121,11 +121,11 @@ export function HomePage() {
           <Typography style={{ marginRight: "16px" }}>觉得不错，支持一下: </Typography>
 
           <Link href="https://afdian.net/@BennyThink" style={{ transform: "translate3d(0, 3px,0)" }}>
-            <img src={toAbsoluteUrl("sponsor/afdian.png")} alt="afdian" className="img" />
+            <img src={toAbsoluteUrl("/sponsor/afdian.png")} alt="afdian" className="img" />
           </Link>
           <Link href="https://www.buymeacoffee.com/bennythink">
             <img
-              src={toAbsoluteUrl("sponsor/coffee.jpg")}
+              src={toAbsoluteUrl("/sponsor/coffee.jpg")}
               style={{
                 marginLeft: "24px",
                 transform: "scale(0.9)",

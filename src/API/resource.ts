@@ -16,13 +16,13 @@ interface ResourceDetail {
   yyets_trans: number;
 }
 
-interface SeasonItem {
+interface Season {
   [key: string]: Array<ResourceDetail>;
 }
 
-export interface Season {
+export interface AddressInfo {
   formats: Array<string>;
-  items: Array<SeasonItem>;
+  items: Array<Season>;
   season_cn: string;
   season_num: string;
 }
@@ -42,7 +42,7 @@ export interface ResourceInfo {
 export interface GetResourceByIDRes {
   data: {
     info: ResourceInfo;
-    list: Array<Season>;
+    list: Array<AddressInfo>;
   };
   info: string;
   status: number;

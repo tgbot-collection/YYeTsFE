@@ -48,7 +48,7 @@ interface InfoPropTypes {
   url: string;
 }
 
-export function Info(props: InfoPropTypes) {
+export function InfoComponent(props: InfoPropTypes) {
   const { loading, resourceInfo, url } = props;
 
   const { enqueueSnackbar } = useSnackbar();
@@ -72,7 +72,7 @@ export function Info(props: InfoPropTypes) {
       <Grid container className={classes.attribute}>
         <Grid item xs={4} sm={3} md={2}>
           <Box display="flex" alignItems="center">
-            <MovieFilterIcon />
+            {loading ? <Skeleton variant="circle" width={24} height={24} /> : <MovieFilterIcon />}
             <Typography className={classes.label}>
               {loading ? <Skeleton variant="rect" width={50} height={24} /> : resourceInfo.channel_cn}
             </Typography>
@@ -80,7 +80,7 @@ export function Info(props: InfoPropTypes) {
         </Grid>
         <Grid item xs={4} sm={3} md={2}>
           <Box display="flex" alignItems="center">
-            <ExploreIcon />
+            {loading ? <Skeleton variant="circle" width={24} height={24} /> : <ExploreIcon />}
             <Typography className={classes.label}>
               {loading ? <Skeleton variant="rect" width={50} height={24} /> : resourceInfo.area}
             </Typography>
@@ -88,7 +88,7 @@ export function Info(props: InfoPropTypes) {
         </Grid>
         <Grid item xs={4} sm={3} md={2}>
           <Box display="flex" alignItems="center">
-            <VisibilityIcon />
+            {loading ? <Skeleton variant="circle" width={24} height={24} /> : <VisibilityIcon />}
             <Typography className={classes.label}>
               {loading ? <Skeleton variant="rect" width={50} height={24} /> : resourceInfo.views}
             </Typography>

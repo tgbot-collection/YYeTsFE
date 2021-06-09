@@ -3,8 +3,9 @@ import { useLocation } from "react-router-dom";
 import { Container, createStyles, Divider, makeStyles, Theme } from "@material-ui/core";
 import queryString from "query-string";
 
-import { getResourceByID, ResourceInfo } from "API";
-import { Info } from "./Info";
+import { getResourceByID, ResourceInfo, AddressInfo } from "API";
+import { InfoComponent } from "./Info";
+import { AddressComponent } from "./Address";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,6 +15,12 @@ const useStyles = makeStyles((theme: Theme) =>
         paddingTop: theme.spacing(6),
       },
     },
+    hr: {
+      margin: theme.spacing(4, 0),
+      [theme.breakpoints.up("sm")]: {
+        margin: theme.spacing(8, 0),
+      },
+    },
   })
 );
 
@@ -21,15 +28,22 @@ export function ResourcePage() {
   const location = useLocation();
 
   const [loading, setLoading] = React.useState<boolean>(true);
+
   const [resourceInfo, setResourceInfo] = React.useState<ResourceInfo>({} as ResourceInfo);
+  const [resourceAddress, setResourceAddress] = React.useState<Array<AddressInfo>>([]);
 
   React.useEffect(() => {
     const { id } = queryString.parse(location.search);
     getResourceByID(id as string).then((res) => {
       if (res) {
-        console.log(res.data);
-        setResourceInfo(res.data.data.info);
+        const {
+          data: { data: resourceData },
+        } = res;
+
+        setResourceInfo(resourceData.info);
+        setResourceAddress(resourceData.list);
       }
+
       setLoading(false);
     });
   }, [location.search]);
@@ -38,13 +52,13 @@ export function ResourcePage() {
 
   return (
     <Container className={classes.container} maxWidth="md">
-      <Info
+      <InfoComponent
         loading={loading}
         resourceInfo={resourceInfo}
         url={`${process.env.REACT_APP_DOMAIN}${location.pathname}${location.search}`}
       />
-      <Divider style={{ margin: "32px 0" }} />
-      不知道事实上
+      <Divider className={classes.hr} />
+      <AddressComponent loading={loading} resourceAddress={resourceAddress} />
     </Container>
   );
 }
