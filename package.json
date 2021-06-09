@@ -15,6 +15,7 @@
     "@types/react-dom": "^17.0.0",
     "axios": "^0.21.1",
     "crypto-js": "^4.0.0",
+    "dayjs": "^1.10.5",
     "http-proxy-middleware": "^2.0.0",
     "material-ui-popup-state": "^1.8.3",
     "notistack": "^1.0.9",

@@ -107,14 +107,14 @@ export function HomePage() {
 
       <div className={classes.social}>
         <div>
+          <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT" style={{ marginRight: "8px" }} />
+
           <GitHubButton
             href="https://github.com/tgbot-collection/YYeTsBot"
             data-show-count
             data-icon="star"
             data-text="star"
           />
-
-          <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT" style={{ marginLeft: "8px" }} />
         </div>
 
         <div className={classes.sponsor}>

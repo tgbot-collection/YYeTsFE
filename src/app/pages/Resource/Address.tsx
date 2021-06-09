@@ -53,15 +53,20 @@ export function AddressComponent(props: AddressPropTypes) {
   console.log("资源地址", resourceAddress);
 
   const handleQualityChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+    if (newValue === qualityIndex) return;
+
     setQualityIndex(newValue);
     setQuality(resourceAddress[season].formats[Number(newValue) - 1]);
   };
 
   const handleChangeSeason = (seasonIndex: number) => {
+    popupState.close();
+
+    if (seasonIndex === season) return;
+
     setSeason(seasonIndex);
     setQuality(resourceAddress[seasonIndex].formats[0]);
     setQualityIndex("1");
-    popupState.close();
   };
 
   React.useEffect(() => {
@@ -72,7 +77,13 @@ export function AddressComponent(props: AddressPropTypes) {
 
   const classes = useStyles();
 
-  if (loading) return <Skeleton variant="rect" width="100%" height={300} />;
+  if (loading)
+    return (
+      <>
+        <Skeleton variant="rect" width="80%" height={48} />
+        <Skeleton variant="rect" width="100%" height={300} style={{ marginTop: "8px" }} />
+      </>
+    );
 
   return resourceAddress.length > 0 ? (
     <div className={classes.root}>
@@ -109,6 +120,7 @@ export function AddressComponent(props: AddressPropTypes) {
               <DataTableComponent
                 tableData={resourceAddress[season].items[quality]}
                 season={resourceAddress[season].season_cn}
+                quality={quality}
               />
             </TabPanel>
           ))}

@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     rankItem: {
       display: "flex",
       textDecoration: "none",
-      margin: theme.spacing(0.5, 0),
+      padding: theme.spacing(1, 0),
     },
     rankNum: {
       width: "24px",
@@ -74,7 +74,7 @@ export function Rank(props: RankPropTypes) {
                 </Typography>
               </Typography>
             ) : (
-              <Skeleton variant="rect" style={{ margin: "4px 8px 4px 0" }} height={24} />
+              <Skeleton variant="rect" style={{ margin: "8px 16px 8px 0" }} height={24} />
             )}
           </Grid>
         ))}

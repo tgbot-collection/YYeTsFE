@@ -15,6 +15,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/zh-cn";
 
 import { ResourceDetail } from "API";
 
@@ -23,6 +26,7 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
     root: {
       paddingLeft: theme.spacing(0.5),
       paddingRight: theme.spacing(0.5),
+      borderBottom: "1px solid grey",
     },
     highlight:
       theme.palette.type === "light"
@@ -72,7 +76,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         </Typography>
       )}
       {numSelected > 0 && (
-        <Tooltip title="Delete">
+        <Tooltip title="下载">
           <IconButton aria-label="delete">
             <CloudDownloadIcon />
           </IconButton>
@@ -96,10 +100,17 @@ const useStyles = makeStyles((theme: Theme) =>
     table: {
       minWidth: 750,
     },
+    noWarp: {
+      whiteSpace: "nowrap",
+    },
+    episode: {
+      color: theme.palette.primary.main,
+    },
   })
 );
 
 interface DataTablePropTypes {
+  quality: string;
   season: string;
   tableData: Array<ResourceDetail>;
 }
@@ -108,6 +119,7 @@ export function DataTableComponent(props: DataTablePropTypes) {
   const { season, tableData } = props;
 
   const [selected, setSelected] = React.useState<string[]>([]);
+  const [multipleMode, setMultipleMode] = React.useState<boolean>(false);
 
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name);
@@ -139,6 +151,8 @@ export function DataTableComponent(props: DataTablePropTypes) {
   const emptyRows = tableData.length < 5 ? 5 - tableData.length : 0;
 
   const classes = useStyles();
+  dayjs.extend(relativeTime);
+  dayjs.locale("zh-cn");
 
   return (
     <div className={classes.root}>
@@ -168,11 +182,22 @@ export function DataTableComponent(props: DataTablePropTypes) {
                     <TableCell padding="checkbox">
                       <Checkbox checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
                     </TableCell>
-                    <TableCell component="th" id={labelId} padding="none" style={{ whiteSpace: "nowrap" }}>
+
+                    <TableCell
+                      component="th"
+                      id={labelId}
+                      padding={multipleMode ? "none" : undefined}
+                      className={clsx(classes.noWarp, classes.episode)}
+                    >
                       {season} 第{row.episode}集
                     </TableCell>
                     <TableCell align="left">{row.name}</TableCell>
                     {row.size && row.size !== "0" && <TableCell align="left">{row.size}</TableCell>}
+                    {row.dateline && (
+                      <TableCell align="left" className={classes.noWarp}>
+                        {dayjs.unix(Number(row.dateline)).fromNow()}
+                      </TableCell>
+                    )}
                   </TableRow>
                 );
               })}

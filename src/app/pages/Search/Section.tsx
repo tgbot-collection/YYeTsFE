@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
     rankItem: {
       display: "flex",
       textDecoration: "none",
-      margin: theme.spacing(0.5, 0),
+      padding: theme.spacing(1, 0),
     },
   })
 );
