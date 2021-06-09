@@ -65,7 +65,7 @@ export function Footer() {
 
             <Grid item xs={6} sm={4} className={classes.list}>
               <Typography component="h2" gutterBottom>
-                作者
+                项目作者
               </Typography>
               <ul>
                 <li>

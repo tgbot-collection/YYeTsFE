@@ -1,6 +1,24 @@
 import axios from "axios";
 
-interface SeasonItem {}
+interface ResourceLink {
+  address: string;
+  passwd: string;
+  way: string;
+  way_cn: string;
+}
+
+interface ResourceDetail {
+  dateline: string;
+  episode: string;
+  files: Array<ResourceLink>;
+  itemid: string;
+  name: string;
+  yyets_trans: number;
+}
+
+interface SeasonItem {
+  [key: string]: Array<ResourceDetail>;
+}
 
 export interface Season {
   formats: Array<string>;
@@ -9,7 +27,7 @@ export interface Season {
   season_num: string;
 }
 
-export interface MovieDetail {
+export interface ResourceInfo {
   id: number;
   views: number;
   cnname: string;
@@ -23,7 +41,7 @@ export interface MovieDetail {
 
 export interface GetResourceByIDRes {
   data: {
-    info: MovieDetail;
+    info: ResourceInfo;
     list: Array<Season>;
   };
   info: string;

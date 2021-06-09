@@ -8,6 +8,7 @@ function App() {
   return (
     <ThemeProvider>
       <SnackbarProvider
+        preventDuplicate
         maxSnack={2}
         anchorOrigin={{
           vertical: "top",
