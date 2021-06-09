@@ -39,6 +39,7 @@ export function SearchPage() {
     getTop().then((res) => {
       if (res) {
         setTop(res.data);
+
         setLoading(false);
       }
     });

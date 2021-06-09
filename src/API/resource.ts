@@ -1,4 +1,5 @@
-import axios from "axios";
+import { Canceler } from "axios";
+import axios, { CancelToken } from "./axiosConfig";
 
 interface ResourceLink {
   address: string;
@@ -7,13 +8,14 @@ interface ResourceLink {
   way_cn: string;
 }
 
-interface ResourceDetail {
+export interface ResourceDetail {
   dateline: string;
   episode: string;
   files: Array<ResourceLink>;
   itemid: string;
   name: string;
   yyets_trans: number;
+  size: string;
 }
 
 interface Season {
@@ -22,7 +24,7 @@ interface Season {
 
 export interface AddressInfo {
   formats: Array<string>;
-  items: Array<Season>;
+  items: Season;
   season_cn: string;
   season_num: string;
 }
@@ -48,7 +50,11 @@ export interface GetResourceByIDRes {
   status: number;
   is_like: boolean;
 }
+export let cancelGetResourceByID: Canceler;
 
 export function getResourceByID(id: string) {
-  return axios.get<GetResourceByIDRes>("/api/resource", { params: { id } });
+  return axios.get<GetResourceByIDRes>("/api/resource", {
+    params: { id },
+    cancelToken: new CancelToken((c) => (cancelGetResourceByID = c)),
+  });
 }

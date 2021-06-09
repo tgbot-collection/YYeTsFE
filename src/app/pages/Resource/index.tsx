@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Container, createStyles, Divider, makeStyles, Theme } from "@material-ui/core";
 import queryString from "query-string";
 
-import { getResourceByID, ResourceInfo, AddressInfo } from "API";
+import { getResourceByID, ResourceInfo, AddressInfo, cancelGetResourceByID } from "API";
 import { InfoComponent } from "./Info";
 import { AddressComponent } from "./Address";
 
@@ -42,23 +42,27 @@ export function ResourcePage() {
 
         setResourceInfo(resourceData.info);
         setResourceAddress(resourceData.list);
-      }
 
-      setLoading(false);
+        setLoading(false);
+      }
     });
+
+    return cancelGetResourceByID;
   }, [location.search]);
 
   const classes = useStyles();
 
   return (
-    <Container className={classes.container} maxWidth="md">
-      <InfoComponent
-        loading={loading}
-        resourceInfo={resourceInfo}
-        url={`${process.env.REACT_APP_DOMAIN}${location.pathname}${location.search}`}
-      />
-      <Divider className={classes.hr} />
-      <AddressComponent loading={loading} resourceAddress={resourceAddress} />
-    </Container>
+    <>
+      <Container className={classes.container} maxWidth="lg">
+        <InfoComponent
+          loading={loading}
+          resourceInfo={resourceInfo}
+          url={`${process.env.REACT_APP_DOMAIN}${location.pathname}${location.search}`}
+        />
+        <Divider className={classes.hr} />
+        <AddressComponent loading={loading} resourceAddress={resourceAddress} />
+      </Container>
+    </>
   );
 }
