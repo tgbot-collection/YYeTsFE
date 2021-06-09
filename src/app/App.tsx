@@ -14,6 +14,7 @@ function App() {
           vertical: "top",
           horizontal: "right",
         }}
+        autoHideDuration={3000}
       >
         <Routes />
       </SnackbarProvider>

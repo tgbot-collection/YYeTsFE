@@ -50,8 +50,6 @@ export function AddressComponent(props: AddressPropTypes) {
 
   const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
 
-  console.log("资源地址", resourceAddress);
-
   const handleQualityChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     if (newValue === qualityIndex) return;
 
@@ -71,7 +69,7 @@ export function AddressComponent(props: AddressPropTypes) {
 
   React.useEffect(() => {
     if (resourceAddress.length) {
-      setQuality(resourceAddress[season].formats[0]);
+      setQuality(resourceAddress[0].formats[0]);
     }
   }, [resourceAddress]);
 

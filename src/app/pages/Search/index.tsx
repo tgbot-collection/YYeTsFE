@@ -52,7 +52,7 @@ export function SearchPage() {
   return (
     <Container className={classes.container} maxWidth="lg">
       <div className={classes.searchBar}>
-        <TextField placeholder="电影标题" className={classes.searchInput} />
+        <TextField placeholder="电影标题" className={classes.searchInput} autoFocus />
         <Button variant="contained" color="primary" size="small" className={classes.searchButton}>
           搜索
         </Button>

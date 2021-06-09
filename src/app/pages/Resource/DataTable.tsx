@@ -13,6 +13,7 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  Button,
 } from "@material-ui/core";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import dayjs from "dayjs";
@@ -20,6 +21,9 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
 
 import { ResourceDetail } from "API";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { FileCopy as FileCopyIcon } from "@material-ui/icons";
+import { useSnackbar } from "notistack";
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -86,6 +90,39 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   );
 };
 
+interface AddressButtonProps {
+  downItem: ResourceDetail["files"][0];
+}
+
+const AddressButton = (props: AddressButtonProps) => {
+  const { downItem } = props;
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const isHref = ["9", "12"].includes(downItem.way);
+
+  return (
+    <CopyToClipboard
+      text={isHref ? downItem.passwd || "无密码" : downItem.address}
+      onCopy={() => {
+        enqueueSnackbar(isHref ? "网盘密码已复制" : `${downItem.way_cn} 下载地址复制成功`, {
+          variant: "success",
+        });
+      }}
+    >
+      <Button
+        variant="contained"
+        size="small"
+        startIcon={<FileCopyIcon />}
+        href={isHref ? downItem.address : undefined}
+        title={isHref ? `网盘密码：${downItem.passwd || "无密码"}` : undefined}
+      >
+        {downItem.way_cn}
+      </Button>
+    </CopyToClipboard>
+  );
+};
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -104,7 +141,10 @@ const useStyles = makeStyles((theme: Theme) =>
       whiteSpace: "nowrap",
     },
     episode: {
-      color: theme.palette.primary.main,
+      color: theme.palette.type === "light" ? theme.palette.primary.main : theme.palette.primary.light,
+    },
+    downBtn: {
+      padding: theme.spacing(0, 1),
     },
   })
 );
@@ -117,9 +157,9 @@ interface DataTablePropTypes {
 
 export function DataTableComponent(props: DataTablePropTypes) {
   const { season, tableData } = props;
+  console.log("表格数据", tableData);
 
   const [selected, setSelected] = React.useState<string[]>([]);
-  const [multipleMode, setMultipleMode] = React.useState<boolean>(false);
 
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name);
@@ -170,23 +210,14 @@ export function DataTableComponent(props: DataTablePropTypes) {
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.name)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.name}
-                    selected={isItemSelected}
-                  >
-                    <TableCell padding="checkbox">
+                  <TableRow hover key={row.name}>
+                    <TableCell padding="checkbox" onClick={(event) => handleClick(event, row.name)} tabIndex={index}>
                       <Checkbox checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
                     </TableCell>
-
                     <TableCell
                       component="th"
                       id={labelId}
-                      padding={multipleMode ? "none" : undefined}
+                      padding="none"
                       className={clsx(classes.noWarp, classes.episode)}
                     >
                       {season} 第{row.episode}集
@@ -198,6 +229,16 @@ export function DataTableComponent(props: DataTablePropTypes) {
                         {dayjs.unix(Number(row.dateline)).fromNow()}
                       </TableCell>
                     )}
+                    {row.files.map((downItem, index) => (
+                      <TableCell
+                        align="left"
+                        className={clsx(classes.noWarp, classes.downBtn)}
+                        padding={index === row.files.length - 1 ? undefined : "none"}
+                        key={downItem.way}
+                      >
+                        <AddressButton downItem={downItem} />
+                      </TableCell>
+                    ))}
                   </TableRow>
                 );
               })}
