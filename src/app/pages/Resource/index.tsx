@@ -7,6 +7,7 @@ import { getResourceByID, ResourceInfo, AddressInfo, cancelGetResourceByID } fro
 import { InfoComponent } from "./Info";
 import { AddressComponent } from "./Address";
 import { useSnackbar } from "notistack";
+import { CommentComponent } from "./Coment";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,6 +70,7 @@ export function ResourcePage() {
         />
         <Divider className={classes.hr} />
         <AddressComponent loading={loading} resourceAddress={resourceAddress} />
+        <CommentComponent />
       </Container>
     </>
   );

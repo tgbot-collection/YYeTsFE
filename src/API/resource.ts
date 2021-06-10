@@ -52,9 +52,17 @@ export interface GetResourceByIDRes {
 }
 export let cancelGetResourceByID: Canceler;
 
+/* 资源页 */
 export function getResourceByID(id: string) {
   return axios.get<GetResourceByIDRes>("/api/resource", {
     params: { id },
     cancelToken: new CancelToken((c) => (cancelGetResourceByID = c)),
   });
+}
+
+/* 获取评论 */
+
+/* 验证码 */
+export function getCaptcha(id: string) {
+  return axios.get("/api/captcha", { params: { id } });
 }

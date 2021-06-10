@@ -53,7 +53,7 @@ export function SearchPage() {
       });
 
     return cancelGetTop;
-  }, []);
+  }, [enqueueSnackbar]);
 
   const classes = useStyles();
 
