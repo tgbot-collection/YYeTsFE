@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import { useSnackbar } from "notistack";
 
 import { logout, toAbsoluteUrl } from "utils";
-import { postUser } from "API/user";
+import { postUser } from "API";
 import { UserContext } from "../../Layout/UserContext";
 
 const useStyles = makeStyles((theme: Theme) =>

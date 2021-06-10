@@ -12,9 +12,9 @@ import {
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
 
-import { ResourceInfo } from "API";
+import { ResourceInfo, patchUser } from "API";
 import { UserContext } from "../../Layout/UserContext";
-import { patchUser } from "../../../API/user";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -55,7 +55,8 @@ interface InfoPropTypes {
 
 export function InfoComponent(props: InfoPropTypes) {
   const { loading, resourceInfo, url, isLike, id } = props;
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const history = useHistory();
 
   const { name } = React.useContext(UserContext);
 
@@ -66,7 +67,19 @@ export function InfoComponent(props: InfoPropTypes) {
 
   const handleClickFavorite = () => {
     if (!name) {
-      enqueueSnackbar("请先登录", { variant: "warning" });
+      enqueueSnackbar("请先登录", {
+        variant: "warning",
+        action: (key) => (
+          <Button
+            onClick={() => {
+              closeSnackbar(key);
+              history.push("/login");
+            }}
+          >
+            去登录
+          </Button>
+        ),
+      });
       return;
     }
 

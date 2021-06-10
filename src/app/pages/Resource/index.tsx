@@ -59,7 +59,7 @@ export function ResourcePage() {
       });
 
     return cancelGetResourceByID;
-  }, [enqueueSnackbar, location.search]);
+  }, [enqueueSnackbar, id, location.search]);
 
   const classes = useStyles();
 
