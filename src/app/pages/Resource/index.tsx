@@ -6,6 +6,7 @@ import queryString from "query-string";
 import { getResourceByID, ResourceInfo, AddressInfo, cancelGetResourceByID } from "API";
 import { InfoComponent } from "./Info";
 import { AddressComponent } from "./Address";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export function ResourcePage() {
   const location = useLocation();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [loading, setLoading] = React.useState<boolean>(true);
 
@@ -34,21 +36,26 @@ export function ResourcePage() {
 
   React.useEffect(() => {
     const { id } = queryString.parse(location.search);
-    getResourceByID(id as string).then((res) => {
-      if (res) {
-        const {
-          data: { data: resourceData },
-        } = res;
+    getResourceByID(id as string)
+      .then((res) => {
+        if (res) {
+          const {
+            data: { data: resourceData },
+          } = res;
 
-        setResourceInfo(resourceData.info);
-        setResourceAddress(resourceData.list);
+          setResourceInfo(resourceData.info);
+          setResourceAddress(resourceData.list);
 
-        setLoading(false);
-      }
-    });
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        enqueueSnackbar(error.message, { variant: "error" });
+      });
 
     return cancelGetResourceByID;
-  }, [location.search]);
+  }, [enqueueSnackbar, location.search]);
 
   const classes = useStyles();
 

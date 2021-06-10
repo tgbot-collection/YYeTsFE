@@ -4,6 +4,7 @@ import { Button, Container, createStyles, makeStyles, TextField, Theme } from "@
 import { Rank } from "./Rank";
 import { cancelGetTop, getTop, GetTopRes } from "API";
 import { Section } from "./Section";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,18 +32,25 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export function SearchPage() {
+  const { enqueueSnackbar } = useSnackbar();
+
   const [top, setTop] = React.useState<GetTopRes>({} as GetTopRes);
 
   const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
-    getTop().then((res) => {
-      if (res) {
-        setTop(res.data);
+    getTop()
+      .then((res) => {
+        if (res) {
+          setTop(res.data);
 
-        setLoading(false);
-      }
-    });
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        enqueueSnackbar(error.message, { variant: "error" });
+      });
 
     return cancelGetTop;
   }, []);

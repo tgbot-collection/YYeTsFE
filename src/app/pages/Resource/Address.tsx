@@ -10,9 +10,8 @@ import { DataTableComponent } from "./DataTable";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      minHeight: 300,
-      backgroundColor: theme.palette.background.paper,
+    title: {
+      marginBottom: theme.spacing(2),
     },
     appRoot: {
       boxShadow: theme.shadows[1],
@@ -33,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     tabPanelRoot: {
       padding: 0,
+      backgroundColor: theme.palette.background.paper,
     },
   })
 );
@@ -78,13 +78,17 @@ export function AddressComponent(props: AddressPropTypes) {
   if (loading)
     return (
       <>
-        <Skeleton variant="rect" width="80%" height={48} />
-        <Skeleton variant="rect" width="100%" height={300} style={{ marginTop: "8px" }} />
+        <Skeleton variant="rect" width={120} height={32} className={classes.title} />
+        <Skeleton variant="rect" width="100%" height={300} />
       </>
     );
 
   return resourceAddress.length > 0 ? (
-    <div className={classes.root}>
+    <div>
+      <Typography component="h2" variant="h5" className={classes.title}>
+        下载地址
+      </Typography>
+
       <TabContext value={qualityIndex}>
         <AppBar position="static" className={classes.header} color="default" classes={{ root: classes.appRoot }}>
           <Menu {...bindMenu(popupState)}>

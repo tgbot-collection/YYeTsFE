@@ -52,11 +52,13 @@ interface EnhancedTableToolbarProps {
   numSelected: number;
   rowCount: number;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  multipleAddress: string;
+  enqueueSnackbar: ProviderContext["enqueueSnackbar"];
 }
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   const classes = useToolbarStyles();
-  const { numSelected, rowCount, onSelectAllClick } = props;
+  const { numSelected, rowCount, onSelectAllClick, multipleAddress, enqueueSnackbar } = props;
 
   return (
     <Toolbar
@@ -80,11 +82,20 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         </Typography>
       )}
       {numSelected > 0 && (
-        <Tooltip title="下载">
-          <IconButton aria-label="delete">
-            <CloudDownloadIcon />
-          </IconButton>
-        </Tooltip>
+        <CopyToClipboard
+          text={multipleAddress}
+          onCopy={() => {
+            enqueueSnackbar("批量地址已复制", {
+              variant: "success",
+            });
+          }}
+        >
+          <Tooltip title="复制磁链">
+            <IconButton aria-label="delete">
+              <CloudDownloadIcon />
+            </IconButton>
+          </Tooltip>
+        </CopyToClipboard>
       )}
     </Toolbar>
   );
@@ -183,13 +194,13 @@ interface DataTablePropTypes {
 export function DataTableComponent(props: DataTablePropTypes) {
   const { season, tableData } = props;
 
-  const [selected, setSelected] = React.useState<string[]>([]);
-
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+  const [selected, setSelected] = React.useState<number[]>([]);
+
+  const handleClick = (event: React.MouseEvent<unknown>, name: number) => {
     const selectedIndex = selected.indexOf(name);
-    let newSelected: string[] = [];
+    let newSelected: number[] = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
@@ -206,18 +217,25 @@ export function DataTableComponent(props: DataTablePropTypes) {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = tableData.map((n) => n.name);
+      const newSelecteds = tableData.map((n, index) => index);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
+  const handleClickMultipleDown = () => {
+    return selected.reduce((pre, current) => {
+      const add = tableData[current].files.find((address) => address.way === "2");
+      return pre + (add ? add.address + "\n" : "");
+    }, "");
+  };
+
   React.useEffect(() => {
     setSelected([]);
   }, [season]);
 
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
+  const isSelected = (name: number) => selected.indexOf(name) !== -1;
   const emptyRows = tableData.length < 5 ? 5 - tableData.length : 0;
 
   const classes = useStyles();
@@ -231,17 +249,19 @@ export function DataTableComponent(props: DataTablePropTypes) {
           numSelected={selected.length}
           rowCount={tableData.length}
           onSelectAllClick={handleSelectAllClick}
+          multipleAddress={handleClickMultipleDown()}
+          enqueueSnackbar={enqueueSnackbar}
         />
         <TableContainer>
           <Table className={classes.table} aria-labelledby="tableTitle" aria-label="enhanced table">
             <TableBody>
               {tableData.map((row, index) => {
-                const isItemSelected = isSelected(row.name);
+                const isItemSelected = isSelected(index);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow hover key={row.name}>
-                    <TableCell padding="checkbox" onClick={(event) => handleClick(event, row.name)} tabIndex={index}>
+                    <TableCell padding="checkbox" onClick={(event) => handleClick(event, index)} tabIndex={index}>
                       <Checkbox checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
                     </TableCell>
                     <TableCell
@@ -259,7 +279,7 @@ export function DataTableComponent(props: DataTablePropTypes) {
                         {dayjs.unix(Number(row.dateline)).fromNow()}
                       </TableCell>
                     )}
-                    {row.files.map((downItem, index) => (
+                    {row.files?.map((downItem, index) => (
                       <TableCell
                         align="left"
                         className={clsx(classes.noWarp, classes.downBtn)}
