@@ -14,6 +14,7 @@ import { useSnackbar } from "notistack";
 
 import { ResourceInfo } from "API";
 import { UserContext } from "../../Layout/UserContext";
+import { patchUser } from "../../../API/user";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,13 +50,17 @@ interface InfoPropTypes {
   resourceInfo: ResourceInfo;
   url: string;
   isLike: boolean;
+  id: string;
 }
 
 export function InfoComponent(props: InfoPropTypes) {
-  const { loading, resourceInfo, url, isLike } = props;
+  const { loading, resourceInfo, url, isLike, id } = props;
+  const { enqueueSnackbar } = useSnackbar();
+
   const { name } = React.useContext(UserContext);
 
-  const { enqueueSnackbar } = useSnackbar();
+  const [like, setLike] = React.useState(isLike);
+  const [likeLoading, setLikeLoading] = React.useState<boolean>(false);
 
   const classes = useStyles();
 
@@ -64,6 +69,19 @@ export function InfoComponent(props: InfoPropTypes) {
       enqueueSnackbar("请先登录", { variant: "warning" });
       return;
     }
+
+    setLikeLoading(true);
+    patchUser({ resource_id: id })
+      .then((res) => {
+        setLikeLoading(false);
+        setLike((pre) => !pre);
+
+        enqueueSnackbar(res.data, { variant: "success" });
+      })
+      .catch((error) => {
+        setLikeLoading(false);
+        enqueueSnackbar(error.message, { variant: "error" });
+      });
   };
 
   return (
@@ -115,10 +133,11 @@ export function InfoComponent(props: InfoPropTypes) {
               variant="contained"
               color="secondary"
               size="small"
-              startIcon={isLike ? <UnFavoriteIcon /> : <FavoriteIcon />}
+              startIcon={like ? <UnFavoriteIcon /> : <FavoriteIcon />}
               onClick={handleClickFavorite}
+              disabled={likeLoading}
             >
-              {isLike ? "取消收藏" : "收藏资源"}
+              {like ? "取消收藏" : "收藏资源"}
             </Button>
           )}
         </Grid>

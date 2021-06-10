@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export function ResourcePage() {
   const location = useLocation();
+  const { id } = queryString.parse(location.search);
+
   const { enqueueSnackbar } = useSnackbar();
 
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -37,7 +39,6 @@ export function ResourcePage() {
   const [isLike, setIsLike] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    const { id } = queryString.parse(location.search);
     getResourceByID(id as string)
       .then((res) => {
         if (res) {
@@ -70,6 +71,7 @@ export function ResourcePage() {
           resourceInfo={resourceInfo}
           url={`${process.env.REACT_APP_DOMAIN}${location.pathname}${location.search}`}
           isLike={isLike}
+          id={id as string}
         />
         <Divider className={classes.hr} />
         <AddressComponent loading={loading} resourceAddress={resourceAddress} />
