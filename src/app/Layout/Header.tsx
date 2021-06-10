@@ -48,7 +48,9 @@ export function Header() {
         <IconButton color="inherit" component="a" href="https://github.com/tgbot-collection/YYeTsBot">
           <GitHub />
         </IconButton>
-        <Button color="inherit">Login</Button>
+        <Button color="inherit" component={Link} to="/login">
+          Login
+        </Button>
       </Toolbar>
     </AppBar>
   );
