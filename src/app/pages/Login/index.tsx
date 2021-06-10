@@ -1,14 +1,14 @@
 import * as React from "react";
 import * as yup from "yup";
-import { Button, createStyles, makeStyles, Paper, TextField, Theme, Typography } from "@material-ui/core";
+import { Button, createStyles, makeStyles, TextField, Theme, Typography } from "@material-ui/core";
 import { Cached as CachedIcon, Send as SendIcon } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import { useSnackbar } from "notistack";
-import Cookies from "js-cookie";
 
-import { toAbsoluteUrl } from "utils";
+import { logout, toAbsoluteUrl } from "utils";
 import { postUser } from "API/user";
+import { UserContext } from "../../Layout/UserContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         width: "100%",
         height: 200,
+        margin: theme.spacing(4, 0),
 
         "& img": {
           width: "auto",
@@ -74,8 +75,9 @@ const validationSchema = yup.object({
 
 export function LoginPage() {
   const classes = useStyles();
-  const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
+  const { setName } = React.useContext(UserContext);
 
   const [loading, setLoading] = React.useState(false);
 
@@ -90,18 +92,17 @@ export function LoginPage() {
       postUser(values)
         .then(() => {
           setTimeout(() => {
+            setLoading(false);
             history.push("/search");
           }, 1000);
 
+          setName(values.username);
           localStorage.setItem("username", values.username);
           enqueueSnackbar("登录成功", { variant: "success" });
-
-          setLoading(false);
         })
         .catch((error) => {
           setLoading(false);
-          Cookies.remove("username");
-          localStorage.removeItem("username");
+          logout();
 
           if (error.isAxiosError) {
             enqueueSnackbar(error.response.data, { variant: "error" });

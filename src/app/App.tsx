@@ -3,20 +3,23 @@ import { SnackbarProvider } from "notistack";
 
 import { Routes } from "./Routes";
 import { ThemeProvider } from "./Layout/ThemeProvider";
+import { UserProvider } from "./Layout/UserContext";
 
 function App() {
   return (
-    <ThemeProvider>
-      <SnackbarProvider
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        autoHideDuration={3000}
-      >
-        <Routes />
-      </SnackbarProvider>
-    </ThemeProvider>
+    <UserProvider>
+      <ThemeProvider>
+        <SnackbarProvider
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          autoHideDuration={3000}
+        >
+          <Routes />
+        </SnackbarProvider>
+      </ThemeProvider>
+    </UserProvider>
   );
 }
 

@@ -4,6 +4,7 @@ import { Skeleton } from "@material-ui/lab";
 import {
   Explore as ExploreIcon,
   Favorite as FavoriteIcon,
+  FavoriteBorder as UnFavoriteIcon,
   FileCopy as FileCopyIcon,
   MovieFilter as MovieFilterIcon,
   Visibility as VisibilityIcon,
@@ -12,6 +13,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
 
 import { ResourceInfo } from "API";
+import { UserContext } from "../../Layout/UserContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,14 +48,23 @@ interface InfoPropTypes {
   loading: boolean;
   resourceInfo: ResourceInfo;
   url: string;
+  isLike: boolean;
 }
 
 export function InfoComponent(props: InfoPropTypes) {
-  const { loading, resourceInfo, url } = props;
+  const { loading, resourceInfo, url, isLike } = props;
+  const { name } = React.useContext(UserContext);
 
   const { enqueueSnackbar } = useSnackbar();
 
   const classes = useStyles();
+
+  const handleClickFavorite = () => {
+    if (!name) {
+      enqueueSnackbar("请先登录", { variant: "warning" });
+      return;
+    }
+  };
 
   return (
     <div>
@@ -100,8 +111,14 @@ export function InfoComponent(props: InfoPropTypes) {
           {loading ? (
             <Skeleton variant="rect" width={100} height={30} />
           ) : (
-            <Button variant="contained" color="secondary" size="small" startIcon={<FavoriteIcon />}>
-              收藏资源
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              startIcon={isLike ? <UnFavoriteIcon /> : <FavoriteIcon />}
+              onClick={handleClickFavorite}
+            >
+              {isLike ? "取消收藏" : "收藏资源"}
             </Button>
           )}
         </Grid>

@@ -34,6 +34,7 @@ export function ResourcePage() {
 
   const [resourceInfo, setResourceInfo] = React.useState<ResourceInfo>({} as ResourceInfo);
   const [resourceAddress, setResourceAddress] = React.useState<Array<AddressInfo>>([]);
+  const [isLike, setIsLike] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     const { id } = queryString.parse(location.search);
@@ -46,6 +47,7 @@ export function ResourcePage() {
 
           setResourceInfo(resourceData.info);
           setResourceAddress(resourceData.list);
+          setIsLike(res.data.is_like || false);
 
           setLoading(false);
         }
@@ -67,6 +69,7 @@ export function ResourcePage() {
           loading={loading}
           resourceInfo={resourceInfo}
           url={`${process.env.REACT_APP_DOMAIN}${location.pathname}${location.search}`}
+          isLike={isLike}
         />
         <Divider className={classes.hr} />
         <AddressComponent loading={loading} resourceAddress={resourceAddress} />
