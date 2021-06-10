@@ -16,14 +16,14 @@ import {
   Button,
 } from "@material-ui/core";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { FileCopy as FileCopyIcon, Cloud as CloudIcon } from "@material-ui/icons";
+import { useSnackbar, ProviderContext } from "notistack";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
 
 import { ResourceDetail } from "API";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { FileCopy as FileCopyIcon } from "@material-ui/icons";
-import { useSnackbar } from "notistack";
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,22 +90,19 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   );
 };
 
-interface AddressButtonProps {
+interface ButtonProps {
   downItem: ResourceDetail["files"][0];
+  enqueueSnackbar: ProviderContext["enqueueSnackbar"];
 }
 
-const AddressButton = (props: AddressButtonProps) => {
-  const { downItem } = props;
-
-  const { enqueueSnackbar } = useSnackbar();
-
-  const isHref = ["9", "12"].includes(downItem.way);
+const CopyButton = (props: ButtonProps) => {
+  const { downItem, enqueueSnackbar } = props;
 
   return (
     <CopyToClipboard
-      text={isHref ? downItem.passwd || "无密码" : downItem.address}
+      text={downItem.address}
       onCopy={() => {
-        enqueueSnackbar(isHref ? "网盘密码已复制" : `${downItem.way_cn} 下载地址复制成功`, {
+        enqueueSnackbar(`${downItem.way_cn} 下载地址复制成功`, {
           variant: "success",
         });
       }}
@@ -114,8 +111,36 @@ const AddressButton = (props: AddressButtonProps) => {
         variant="contained"
         size="small"
         startIcon={<FileCopyIcon />}
-        href={isHref ? downItem.address : undefined}
-        title={isHref ? `网盘密码：${downItem.passwd || "无密码"}` : undefined}
+        title={downItem.address}
+        disableRipple
+        disableElevation
+      >
+        {downItem.way_cn}
+      </Button>
+    </CopyToClipboard>
+  );
+};
+
+const HrefButton = (props: ButtonProps) => {
+  const { downItem, enqueueSnackbar } = props;
+
+  return (
+    <CopyToClipboard
+      text={downItem.passwd || "无密码"}
+      onCopy={() => {
+        enqueueSnackbar("网盘密码已复制", {
+          variant: "success",
+        });
+      }}
+    >
+      <Button
+        variant="contained"
+        size="small"
+        startIcon={<CloudIcon />}
+        href={downItem.address}
+        title={`网盘密码：${downItem.passwd || "无密码"}`}
+        disableRipple
+        disableElevation
       >
         {downItem.way_cn}
       </Button>
@@ -157,9 +182,10 @@ interface DataTablePropTypes {
 
 export function DataTableComponent(props: DataTablePropTypes) {
   const { season, tableData } = props;
-  console.log("表格数据", tableData);
 
   const [selected, setSelected] = React.useState<string[]>([]);
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name);
@@ -186,6 +212,10 @@ export function DataTableComponent(props: DataTablePropTypes) {
     }
     setSelected([]);
   };
+
+  React.useEffect(() => {
+    setSelected([]);
+  }, [season]);
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
   const emptyRows = tableData.length < 5 ? 5 - tableData.length : 0;
@@ -236,7 +266,11 @@ export function DataTableComponent(props: DataTablePropTypes) {
                         padding={index === row.files.length - 1 ? undefined : "none"}
                         key={downItem.way}
                       >
-                        <AddressButton downItem={downItem} />
+                        {downItem.way !== "1" && downItem.way !== "2" ? (
+                          <HrefButton downItem={downItem} enqueueSnackbar={enqueueSnackbar} />
+                        ) : (
+                          <CopyButton downItem={downItem} enqueueSnackbar={enqueueSnackbar} />
+                        )}
                       </TableCell>
                     ))}
                   </TableRow>

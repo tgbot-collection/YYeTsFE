@@ -1,5 +1,7 @@
 import axios from "axios";
-const instance = axios.create();
+const instance = axios.create({
+  timeout: 5000,
+});
 
 instance.interceptors.response.use(
   (response) => {
@@ -7,7 +9,7 @@ instance.interceptors.response.use(
   },
   (error) => {
     if (axios.isCancel(error)) {
-      console.log("Request canceled", error.message);
+      if (process.env.NODE_ENV === "development") console.log("Request canceled", error.message);
     } else {
       // TODO: 错误处理
     }
