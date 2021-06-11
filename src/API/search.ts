@@ -1,22 +1,10 @@
 import { Canceler } from "axios";
 import axios, { CancelToken } from "./axiosConfig";
-
-export interface MovieInfo {
-  id: number;
-  cnname: string;
-  enname: string;
-  aliasname: string;
-  expire: string;
-  area: string;
-  channel: string;
-  channel_cn: string;
-  views: number;
-  year: Array<number>;
-}
+import { ResourceInfo } from "./resource";
 
 export interface MovieList {
   data: {
-    info: MovieInfo;
+    info: ResourceInfo;
   };
 }
 
@@ -33,8 +21,18 @@ export interface GetTopRes {
 
 export let cancelGetTop: Canceler;
 
+/* 获取排行榜 */
 export function getTop() {
   return axios.get<GetTopRes>("/api/top", {
     cancelToken: new CancelToken((c) => (cancelGetTop = c)),
   });
+}
+
+interface GetSearchKwRes {
+  data: Array<{ data: { info: ResourceInfo } }>;
+}
+
+/* 搜索剧集 */
+export function getSearchKw(kw: string) {
+  return axios.get<GetSearchKwRes>("/api/resource", { params: { kw } });
 }

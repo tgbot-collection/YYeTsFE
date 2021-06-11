@@ -8,9 +8,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       marginTop: theme.spacing(4),
-      [theme.breakpoints.up("sm")]: {
-        marginTop: theme.spacing(8),
-      },
     },
     footer: {
       padding: theme.spacing(3, 0),

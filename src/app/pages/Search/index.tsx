@@ -1,18 +1,22 @@
 import * as React from "react";
+import * as yup from "yup";
 import { Button, Container, createStyles, makeStyles, TextField, Theme } from "@material-ui/core";
-
-import { Rank } from "./Rank";
-import { cancelGetTop, getTop, GetTopRes } from "API";
-import { Section } from "./Section";
 import { useSnackbar } from "notistack";
+import { useFormik } from "formik";
+
+import { RankComponent } from "./Rank";
+import { cancelGetTop, getSearchKw, getTop, GetTopRes, ResourceInfo } from "API";
+import { SectionComponent } from "./Section";
+import { SearchListComponent } from "./SearchList";
+
+const validationSchema = yup.object({
+  search: yup.string().required("请输入电影名"),
+});
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       paddingTop: theme.spacing(4),
-      [theme.breakpoints.up("sm")]: {
-        paddingTop: theme.spacing(6),
-      },
     },
     searchBar: {
       display: "flex",
@@ -23,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flex: 1,
     },
     searchButton: {
+      alignSelf: "flex-start",
       marginLeft: theme.spacing(2),
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(4),
@@ -34,9 +39,34 @@ const useStyles = makeStyles((theme: Theme) =>
 export function SearchPage() {
   const { enqueueSnackbar } = useSnackbar();
 
+  const [mode, setMode] = React.useState<"top" | "list">("top");
+
+  const [rankLoading, setRankLoading] = React.useState<boolean>(true);
   const [top, setTop] = React.useState<GetTopRes>({} as GetTopRes);
 
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [listLoading, setListLoading] = React.useState<boolean>(true);
+  const [list, setList] = React.useState<Array<ResourceInfo>>([]);
+
+  const formik = useFormik({
+    initialValues: {
+      search: "",
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      setListLoading(true);
+      setMode("list");
+
+      getSearchKw(values.search)
+        .then((res) => {
+          setListLoading(false);
+
+          setList(res.data.data.map((item) => item.data.info));
+        })
+        .catch((error) => {
+          enqueueSnackbar(`搜索出错：${error.message}`, { variant: "error" });
+        });
+    },
+  });
 
   React.useEffect(() => {
     getTop()
@@ -44,11 +74,10 @@ export function SearchPage() {
         if (res) {
           setTop(res.data);
 
-          setLoading(false);
+          setRankLoading(false);
         }
       })
       .catch((error) => {
-        console.log(error);
         enqueueSnackbar(error.message, { variant: "error" });
       });
 
@@ -59,15 +88,31 @@ export function SearchPage() {
 
   return (
     <Container className={classes.container} maxWidth="lg">
-      <div className={classes.searchBar}>
-        <TextField placeholder="电影标题" className={classes.searchInput} autoFocus />
-        <Button variant="contained" color="primary" size="small" className={classes.searchButton}>
+      <form className={classes.searchBar} onSubmit={formik.handleSubmit}>
+        <TextField
+          name="search"
+          placeholder="搜索片名"
+          className={classes.searchInput}
+          autoFocus
+          value={formik.values.search}
+          onChange={formik.handleChange}
+          error={formik.touched.search && Boolean(formik.errors.search)}
+          helperText={formik.touched.search && formik.errors.search}
+          autoComplete="off"
+        />
+        <Button variant="contained" color="primary" size="small" className={classes.searchButton} type="submit">
           搜索
         </Button>
-      </div>
+      </form>
 
-      <Rank data={top.ALL} loading={loading} />
-      {!!Object.keys(top).length && <Section data={top} loading={loading} />}
+      {mode === "top" ? (
+        <>
+          <RankComponent data={top.ALL} loading={rankLoading} />
+          {!!Object.keys(top).length && <SectionComponent data={top} loading={rankLoading} />}
+        </>
+      ) : (
+        <SearchListComponent list={list} loading={listLoading} />
+      )}
     </Container>
   );
 }

@@ -132,7 +132,6 @@ export function LoginPage() {
           <form onSubmit={formik.handleSubmit}>
             <TextField
               fullWidth
-              id="username"
               name="username"
               label="账号"
               className={classes.formControl}
@@ -143,7 +142,6 @@ export function LoginPage() {
             />
             <TextField
               fullWidth
-              id="password"
               name="password"
               label="密码"
               type="password"

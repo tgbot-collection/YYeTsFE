@@ -60,8 +60,6 @@ export function getResourceByID(id: string) {
   });
 }
 
-/* 获取评论 */
-
 /* 验证码 */
 export function getCaptcha(id: string) {
   return axios.get("/api/captcha", { params: { id } });

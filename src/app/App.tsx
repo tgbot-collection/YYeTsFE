@@ -22,7 +22,11 @@ function App() {
             horizontal: "right",
           }}
           autoHideDuration={3000}
-          action={(key) => <Button onClick={onClickDismiss(key)}>关闭</Button>}
+          action={(key) => (
+            <Button onClick={onClickDismiss(key)} color="inherit">
+              关闭
+            </Button>
+          )}
         >
           <Routes />
         </SnackbarProvider>
