@@ -5,7 +5,10 @@ import { FixedSizeList, ListChildComponentProps } from "react-window";
 import { Skeleton } from "@material-ui/lab";
 import { Link } from "react-router-dom";
 import { lighten } from "@material-ui/core/styles";
-import { toAbsoluteUrl } from "../../../utils";
+import { deepOrange, deepPurple } from "@material-ui/core/colors";
+import clsx from "clsx";
+
+import { toAbsoluteUrl } from "utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
       "&:hover": {
         backgroundColor:
-          theme.palette.type === "light" ? lighten(theme.palette.secondary.light, 0.85) : theme.palette.secondary.dark,
+          theme.palette.type === "light" ? lighten(theme.palette.primary.light, 0.85) : theme.palette.primary.dark,
       },
     },
     warp: {
@@ -52,6 +55,19 @@ const useStyles = makeStyles((theme: Theme) =>
         marginBottom: theme.spacing(2),
       },
     },
+    end: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    orange: {
+      color: theme.palette.getContrastText(deepOrange[500]),
+      backgroundColor: deepOrange[500],
+    },
+    purple: {
+      color: theme.palette.getContrastText(deepPurple[500]),
+      backgroundColor: deepPurple[500],
+    },
   })
 );
 
@@ -68,7 +84,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
   function renderRow(props: ListChildComponentProps) {
     const { index, style } = props;
 
-    return (
+    return index !== list.length ? (
       <Link
         style={style}
         key={index}
@@ -79,7 +95,15 @@ export function SearchListComponent(props: SearchListPropTypes) {
         }}
       >
         <ListItemAvatar>
-          <Avatar className={classes.channel}>{list[index].channel_cn}</Avatar>
+          <Avatar
+            className={clsx(
+              classes.channel,
+              { [classes.orange]: list[index].channel === "tv" },
+              { [classes.purple]: list[index].channel === "movie" }
+            )}
+          >
+            {list[index].channel_cn}
+          </Avatar>
         </ListItemAvatar>
         <div className={classes.warp}>
           <Typography noWrap className={classes.itemInfo}>
@@ -95,6 +119,10 @@ export function SearchListComponent(props: SearchListPropTypes) {
           </Typography>
         </div>
       </Link>
+    ) : (
+      <Typography style={style} key={index} className={classes.end} color="secondary">
+        我是有底线哒 o(≧口≦)o
+      </Typography>
     );
   }
 
@@ -112,7 +140,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
   return (
     <div className={classes.root}>
       {list.length > 0 ? (
-        <FixedSizeList height={height} width="100%" itemSize={46} itemCount={list.length}>
+        <FixedSizeList height={height} width="100%" itemSize={46} itemCount={list.length + 1}>
           {renderRow}
         </FixedSizeList>
       ) : (
