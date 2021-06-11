@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ResourceInfo } from "API";
-import { Avatar, createStyles, ListItemAvatar, ListItemText, makeStyles, Theme } from "@material-ui/core";
+import { Avatar, createStyles, ListItemAvatar, ListItemText, makeStyles, Theme, Typography } from "@material-ui/core";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import { Skeleton } from "@material-ui/lab";
 import { Link } from "react-router-dom";
@@ -28,11 +28,29 @@ const useStyles = makeStyles((theme: Theme) =>
           theme.palette.type === "light" ? lighten(theme.palette.secondary.light, 0.85) : theme.palette.secondary.dark,
       },
     },
+    warp: {
+      display: "flex",
+      flexDirection: "column",
+      flex: 1,
+      overflow: "hidden",
+    },
+    itemInfo: {
+      lineHeight: 1,
+    },
     skeleton: {
       margin: "3px 0",
     },
     empty: {
       height: "60vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+
+      "& img": {
+        width: "200px",
+        marginBottom: theme.spacing(2),
+      },
     },
   })
 );
@@ -63,7 +81,19 @@ export function SearchListComponent(props: SearchListPropTypes) {
         <ListItemAvatar>
           <Avatar className={classes.channel}>{list[index].channel_cn}</Avatar>
         </ListItemAvatar>
-        <ListItemText>{list[index].cnname}</ListItemText>
+        <div className={classes.warp}>
+          <Typography noWrap className={classes.itemInfo}>
+            {list[index].cnname}
+            {list[index].enname && (
+              <Typography component="span" variant="body2">
+                &nbsp;{list[index].enname}
+              </Typography>
+            )}
+          </Typography>
+          <Typography variant="caption" noWrap className={classes.itemInfo}>
+            {list[index].aliasname || "---"}
+          </Typography>
+        </div>
       </Link>
     );
   }
@@ -88,6 +118,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
       ) : (
         <div className={classes.empty}>
           <img src={toAbsoluteUrl("/svg/emptyAddress.svg")} alt="empty" />
+          <Typography>暂无结果</Typography>
         </div>
       )}
     </div>
