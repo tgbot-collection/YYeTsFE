@@ -8,6 +8,7 @@ import { InfoComponent } from "./Info";
 import { AddressComponent } from "./Address";
 import { useSnackbar } from "notistack";
 import { CommentComponent } from "./Coment";
+import { setTitle } from "utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,13 +21,14 @@ const useStyles = makeStyles((theme: Theme) =>
     hr: {
       margin: theme.spacing(4, 0),
       [theme.breakpoints.up("sm")]: {
-        margin: theme.spacing(8, 0),
+        margin: theme.spacing(6, 0),
       },
     },
   })
 );
 
 export function ResourcePage() {
+  setTitle("资源信息");
   const location = useLocation();
   const { id } = queryString.parse(location.search);
 
@@ -51,6 +53,7 @@ export function ResourcePage() {
           setIsLike(res.data.is_like || false);
 
           setLoading(false);
+          setTitle(resourceData.info.cnname);
         }
       })
       .catch((error) => {
@@ -73,8 +76,13 @@ export function ResourcePage() {
           isLike={isLike}
           id={id as string}
         />
+
         <Divider className={classes.hr} />
+
         <AddressComponent loading={loading} resourceAddress={resourceAddress} />
+
+        <Divider className={classes.hr} />
+
         <CommentComponent />
       </Container>
     </>

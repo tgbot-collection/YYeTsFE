@@ -2,7 +2,7 @@ import * as React from "react";
 import { Button, createStyles, makeStyles, TextField, Theme, Typography } from "@material-ui/core";
 import { Send as SendIcon } from "@material-ui/icons";
 
-import { getCaptcha } from "API";
+import { cancelGetCaptcha, getCaptcha } from "API";
 import { randomString } from "utils";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
@@ -59,6 +59,8 @@ export function CommentComponent() {
 
         setCaptchaLoading(false);
       });
+
+    return cancelGetCaptcha;
   }, [captchaID, enqueueSnackbar]);
 
   const refreshCaptcha = () => {

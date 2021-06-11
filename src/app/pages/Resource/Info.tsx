@@ -75,6 +75,7 @@ export function InfoComponent(props: InfoPropTypes) {
               closeSnackbar(key);
               history.push("/login");
             }}
+            color="inherit"
           >
             去登录
           </Button>

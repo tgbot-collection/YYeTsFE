@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ResourceInfo } from "API";
-import { Avatar, createStyles, ListItemAvatar, ListItemText, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Avatar, createStyles, ListItemAvatar, makeStyles, Theme, Typography } from "@material-ui/core";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import { Skeleton } from "@material-ui/lab";
 import { Link } from "react-router-dom";

@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import { useSnackbar } from "notistack";
 
-import { logout, toAbsoluteUrl } from "utils";
+import { logout, setTitle, toAbsoluteUrl } from "utils";
 import { postUser } from "API";
 import { UserContext } from "../../Layout/UserContext";
 
@@ -74,6 +74,8 @@ const validationSchema = yup.object({
 });
 
 export function LoginPage() {
+  setTitle("登录");
+
   const classes = useStyles();
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();

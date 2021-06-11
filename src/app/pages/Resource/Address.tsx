@@ -22,6 +22,11 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
+
+      "& img": {
+        width: 200,
+        marginBottom: theme.spacing(2),
+      },
     },
     header: {
       alignItems: "center",
@@ -83,55 +88,57 @@ export function AddressComponent(props: AddressPropTypes) {
       </>
     );
 
-  return resourceAddress.length > 0 ? (
+  return (
     <div>
       <Typography component="h2" variant="h5" className={classes.title}>
         下载地址
       </Typography>
 
-      <TabContext value={qualityIndex}>
-        <AppBar position="static" className={classes.header} color="default" classes={{ root: classes.appRoot }}>
-          <Menu {...bindMenu(popupState)}>
-            {resourceAddress.map((item, index) => (
-              <MenuItem onClick={() => handleChangeSeason(index)} key={item.season_cn}>
-                {item.season_cn}
-              </MenuItem>
-            ))}
-          </Menu>
+      {resourceAddress.length > 0 ? (
+        <TabContext value={qualityIndex}>
+          <AppBar position="static" className={classes.header} color="default" classes={{ root: classes.appRoot }}>
+            <Menu {...bindMenu(popupState)}>
+              {resourceAddress.map((item, index) => (
+                <MenuItem onClick={() => handleChangeSeason(index)} key={item.season_cn}>
+                  {item.season_cn}
+                </MenuItem>
+              ))}
+            </Menu>
 
-          <Button size="large" {...bindTrigger(popupState)}>
-            {resourceAddress[season].season_cn}
-            <ExpandMoreIcon />
-          </Button>
-          <TabList
-            onChange={handleQualityChange}
-            scrollButtons="auto"
-            indicatorColor="primary"
-            textColor="primary"
-            style={{ flex: 1 }}
-          >
-            {resourceAddress[season].formats.map((item, index) => (
-              <Tab label={item} value={String(index + 1)} className={classes.tabRoot} key={item} />
-            ))}
-          </TabList>
-        </AppBar>
+            <Button size="large" {...bindTrigger(popupState)}>
+              {resourceAddress[season].season_cn}
+              <ExpandMoreIcon />
+            </Button>
+            <TabList
+              onChange={handleQualityChange}
+              scrollButtons="auto"
+              indicatorColor="primary"
+              textColor="primary"
+              style={{ flex: 1 }}
+            >
+              {resourceAddress[season].formats.map((item, index) => (
+                <Tab label={item} value={String(index + 1)} className={classes.tabRoot} key={item} />
+              ))}
+            </TabList>
+          </AppBar>
 
-        {resourceAddress[season] &&
-          resourceAddress[season].formats.map((item, index) => (
-            <TabPanel value={String(index + 1)} key={item} classes={{ root: classes.tabPanelRoot }}>
-              <DataTableComponent
-                tableData={resourceAddress[season].items[quality]}
-                season={resourceAddress[season].season_cn}
-                quality={quality}
-              />
-            </TabPanel>
-          ))}
-      </TabContext>
-    </div>
-  ) : (
-    <div className={classes.empty}>
-      <img src={toAbsoluteUrl("/svg/emptyAddress.svg")} alt="empty" height={200} />
-      <Typography style={{ marginTop: "24px" }}>暂无资源，敬请期待</Typography>
+          {resourceAddress[season] &&
+            resourceAddress[season].formats.map((item, index) => (
+              <TabPanel value={String(index + 1)} key={item} classes={{ root: classes.tabPanelRoot }}>
+                <DataTableComponent
+                  tableData={resourceAddress[season].items[quality]}
+                  season={resourceAddress[season].season_cn}
+                  quality={quality}
+                />
+              </TabPanel>
+            ))}
+        </TabContext>
+      ) : (
+        <div className={classes.empty}>
+          <img src={toAbsoluteUrl("/svg/emptyAddress.svg")} alt="empty" />
+          <Typography>暂无资源，敬请期待</Typography>
+        </div>
+      )}
     </div>
   );
 }

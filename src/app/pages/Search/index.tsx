@@ -8,6 +8,7 @@ import { RankComponent } from "./Rank";
 import { cancelGetTop, getSearchKw, getTop, GetTopRes, ResourceInfo } from "API";
 import { SectionComponent } from "./Section";
 import { SearchListComponent } from "./SearchList";
+import { setTitle } from "utils";
 
 const validationSchema = yup.object({
   search: yup.string().required("请输入电影名"),
@@ -37,9 +38,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export function SearchPage() {
+  setTitle("搜索资源");
+
   const { enqueueSnackbar } = useSnackbar();
 
   const [mode, setMode] = React.useState<"top" | "list">("top");
+  const ref = React.useRef<HTMLInputElement>(null!);
 
   const [rankLoading, setRankLoading] = React.useState<boolean>(true);
   const [top, setTop] = React.useState<GetTopRes>({} as GetTopRes);
@@ -53,6 +57,7 @@ export function SearchPage() {
     },
     validationSchema,
     onSubmit: (values) => {
+      ref.current.blur();
       setListLoading(true);
       setMode("list");
 
@@ -99,6 +104,7 @@ export function SearchPage() {
           error={formik.touched.search && Boolean(formik.errors.search)}
           helperText={formik.touched.search && formik.errors.search}
           autoComplete="off"
+          inputProps={{ ref }}
         />
         <Button variant="contained" color="primary" size="small" className={classes.searchButton} type="submit">
           搜索

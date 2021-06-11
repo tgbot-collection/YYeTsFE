@@ -10,6 +10,7 @@ import {
   IconButton,
   Toolbar,
   Typography,
+  Link as MuLink,
 } from "@material-ui/core";
 import { GitHub, Search } from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
@@ -43,8 +44,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export function Header() {
   const location = useLocation();
-  const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
   const { enqueueSnackbar } = useSnackbar();
+
+  const loginPopupState = usePopupState({ variant: "popover", popupId: "loginMenu" });
+  const githubPopupState = usePopupState({ variant: "popover", popupId: "githubMenu" });
 
   const { name: username, setName } = React.useContext(UserContext);
 
@@ -52,7 +55,7 @@ export function Header() {
 
   const handleLogout = () => {
     setName("");
-    popupState.close();
+    loginPopupState.close();
 
     logout();
     enqueueSnackbar("退出成功", { variant: "warning" });
@@ -74,21 +77,40 @@ export function Header() {
             <Search />
           </IconButton>
         )}
-        <IconButton color="inherit" component="a" href="https://github.com/tgbot-collection/YYeTsBot">
+
+        <IconButton color="inherit" {...bindTrigger(githubPopupState)}>
           <GitHub />
         </IconButton>
+        <Menu
+          {...bindMenu(githubPopupState)}
+          getContentAnchorEl={null}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          transformOrigin={{ vertical: "top", horizontal: "left" }}
+        >
+          <MenuItem onClick={githubPopupState.close}>
+            <MuLink href="https://github.com/tgbot-collection/YYeTsBot" color="inherit">
+              YYeTsBot
+            </MuLink>
+          </MenuItem>
+          <MenuItem onClick={githubPopupState.close}>
+            <MuLink href="https://github.com/wyx1818/YYeTsFE" color="inherit">
+              YYeTsFE
+            </MuLink>
+          </MenuItem>
+        </Menu>
+
         {username ? (
           <>
-            <Button color="inherit" className={classes.noUp} {...bindTrigger(popupState)}>
+            <Button color="inherit" className={classes.noUp} {...bindTrigger(loginPopupState)}>
               {username}
             </Button>
             <Menu
-              {...bindMenu(popupState)}
+              {...bindMenu(loginPopupState)}
               getContentAnchorEl={null}
               anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
               transformOrigin={{ vertical: "top", horizontal: "left" }}
             >
-              <MenuItem onClick={popupState.close}>
+              <MenuItem onClick={loginPopupState.close}>
                 <Link to="/me" style={{ color: "inherit", textDecoration: "none" }}>
                   个人中心
                 </Link>

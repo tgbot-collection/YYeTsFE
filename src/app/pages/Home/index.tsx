@@ -3,7 +3,7 @@ import GitHubButton from "react-github-btn";
 import { Button, Container, createStyles, Grid, Link, makeStyles, Theme, Typography } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 
-import { toAbsoluteUrl } from "utils";
+import { setTitle, toAbsoluteUrl } from "utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export function HomePage() {
-  document.title = "首页";
+  setTitle("首页");
 
   const classes = useStyles();
 
