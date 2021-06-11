@@ -82,3 +82,27 @@ interface PostCommentRes {
 export function postComment(params: PostCommentParams) {
   return axios.post<PostCommentRes>("/api/comment", params);
 }
+
+interface GetCommentParams {
+  resource_id: number;
+  size: number;
+  page: number;
+}
+
+export interface Comment {
+  date: string;
+  username: string;
+  content: string;
+  id: number;
+}
+
+interface GetCommentRes {
+  data: Array<Comment>;
+  count: number;
+  resource_id: number;
+}
+
+/* 获取评论 */
+export function getComment(params: GetCommentParams) {
+  return axios.get<GetCommentRes>("/api/comment", { params });
+}

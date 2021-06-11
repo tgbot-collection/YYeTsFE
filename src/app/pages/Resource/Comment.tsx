@@ -5,8 +5,9 @@ import { Send as SendIcon } from "@material-ui/icons";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
+import dayjs from "dayjs";
 
-import { cancelGetCaptcha, getCaptcha, postComment } from "API";
+import { cancelGetCaptcha, Comment, getCaptcha, getComment, postComment } from "API";
 import { randomString } from "utils";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -29,8 +30,11 @@ const useStyles = makeStyles((theme: Theme) =>
         alignSelf: "flex-end",
       },
     },
-    comment: {
+    commentInput: {
       maxWidth: 600,
+    },
+    commentList: {
+      display: "flex",
     },
   })
 );
@@ -55,6 +59,8 @@ export function CommentComponent(props: CommentPropTypes) {
   const [captchaID, setCaptchaID] = React.useState<string>(randomString());
 
   const [postLoading, setPostLoading] = React.useState<boolean>(false);
+
+  const [commentList, setCommentList] = React.useState<Array<Comment>>([]);
 
   const formik = useFormik({
     initialValues: {
@@ -95,13 +101,28 @@ export function CommentComponent(props: CommentPropTypes) {
         setCaptchaLoading(false);
       })
       .catch((error) => {
-        enqueueSnackbar("验证码获取错误", { variant: "error" });
+        enqueueSnackbar(`验证码获取错误: ${error.message}`, { variant: "error" });
+
+        setCaptchaLoading(false);
+      });
+
+    getComment({ resource_id: id, page: 1, size: 10 })
+      .then((res) => {
+        if (res) {
+          console.log(res);
+          setCommentList(res.data.data);
+        }
+
+        setCaptchaLoading(false);
+      })
+      .catch((error) => {
+        enqueueSnackbar(`获取评论列表出错: ${error.message}`, { variant: "error" });
 
         setCaptchaLoading(false);
       });
 
     return cancelGetCaptcha;
-  }, [captchaID, enqueueSnackbar]);
+  }, [captchaID, enqueueSnackbar, id]);
 
   const refreshCaptcha = () => {
     if (captchaLoading) return;
@@ -114,7 +135,7 @@ export function CommentComponent(props: CommentPropTypes) {
         评论
       </Typography>
 
-      <form className={classes.comment} onSubmit={formik.handleSubmit}>
+      <form className={classes.commentInput} onSubmit={formik.handleSubmit}>
         <TextField
           name="content"
           value={formik.values.content}
@@ -150,6 +171,20 @@ export function CommentComponent(props: CommentPropTypes) {
           </Button>
         </div>
       </form>
+
+      <div>
+        <Typography component="h2" variant="h5" style={{ margin: "16px 0" }}>
+          评论列表
+        </Typography>
+
+        {commentList.map((comment) => (
+          <div className={classes.commentList}>
+            <Typography>{comment.username}</Typography>
+            <Typography>&nbsp;{comment.content}</Typography>
+            <Typography>&nbsp;{dayjs(comment.date).format("YYYY-MM-DD HH:ss")}</Typography>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
