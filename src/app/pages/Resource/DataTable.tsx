@@ -78,7 +78,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          批量下载
+          批量复制
         </Typography>
       )}
       {numSelected > 0 && (
@@ -150,6 +150,7 @@ const HrefButton = (props: ButtonProps) => {
         startIcon={<CloudIcon />}
         href={downItem.address}
         title={`网盘密码：${downItem.passwd || "无密码"}`}
+        color="primary"
         disableRipple
         disableElevation
       >

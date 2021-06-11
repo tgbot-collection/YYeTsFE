@@ -66,3 +66,19 @@ export let cancelGetCaptcha: Canceler;
 export function getCaptcha(id: string) {
   return axios.get("/api/captcha", { params: { id }, cancelToken: new CancelToken((c) => (cancelGetCaptcha = c)) });
 }
+
+interface PostCommentParams {
+  resource_id: number;
+  content: string;
+  id: string;
+  captcha: string;
+}
+
+interface PostCommentRes {
+  message: string;
+}
+
+/* 发表评论 */
+export function postComment(params: PostCommentParams) {
+  return axios.post<PostCommentRes>("/api/comment", params);
+}
