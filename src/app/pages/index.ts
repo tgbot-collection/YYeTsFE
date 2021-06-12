@@ -5,3 +5,4 @@ export * from "./Resource";
 export * from "./Login";
 export * from "./Discuss";
 export * from "./Me";
+export * from "./Database";
