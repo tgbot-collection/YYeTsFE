@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import { cancelGetCaptcha, Comment, getCaptcha, getComment, postComment } from "API";
 import { randomString } from "utils";
 import { UserContext } from "../../Layout/UserContext";
+import { useLogin } from "../../../Hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -191,6 +192,7 @@ export function CommentComponent(props: CommentPropTypes) {
   const { id, loading, title } = props;
 
   const history = useHistory();
+  const login = useLogin();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const classes = useStyles();
@@ -224,7 +226,7 @@ export function CommentComponent(props: CommentPropTypes) {
             <Button
               onClick={() => {
                 closeSnackbar(key);
-                history.push("/login");
+                history.push(login);
               }}
               color="inherit"
             >

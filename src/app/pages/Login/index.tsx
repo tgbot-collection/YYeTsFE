@@ -2,7 +2,7 @@ import * as React from "react";
 import * as yup from "yup";
 import { Button, createStyles, makeStyles, TextField, Theme, Typography } from "@material-ui/core";
 import { Cached as CachedIcon, Send as SendIcon } from "@material-ui/icons";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import { useSnackbar } from "notistack";
 
@@ -78,6 +78,7 @@ export function LoginPage() {
 
   const classes = useStyles();
   const history = useHistory();
+  const { state } = useLocation<{ ref?: string }>();
   const { enqueueSnackbar } = useSnackbar();
   const { setName } = React.useContext(UserContext);
 
@@ -95,7 +96,7 @@ export function LoginPage() {
         .then(() => {
           setTimeout(() => {
             setLoading(false);
-            history.push("/search");
+            history.push(state.ref || "/search");
           }, 1000);
 
           setName(values.username);

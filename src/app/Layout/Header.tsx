@@ -17,10 +17,11 @@ import {
 import { AccountCircle, GitHub, Search, QuestionAnswer } from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
 import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/hooks";
+import { useSnackbar } from "notistack";
 
 import { logout, toAbsoluteUrl } from "utils";
 import { UserContext } from "./UserContext";
-import { useSnackbar } from "notistack";
+import { useLogin } from "Hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,6 +57,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export function Header() {
   const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
+
+  const login = useLogin();
 
   const loginPopupState = usePopupState({ variant: "popover", popupId: "loginMenu" });
   const githubPopupState = usePopupState({ variant: "popover", popupId: "githubMenu" });
@@ -130,7 +133,7 @@ export function Header() {
               anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
               transformOrigin={{ vertical: "top", horizontal: "left" }}
             >
-              <MenuItem className={classes.nowrap} disabled>
+              <MenuItem className={classes.nowrap} disabled dense>
                 {username}
               </MenuItem>
               <MenuItem onClick={loginPopupState.close}>
@@ -138,6 +141,7 @@ export function Header() {
                   个人中心
                 </Link>
               </MenuItem>
+
               <Divider />
 
               <MenuItem onClick={handleLogout} className={classes.danger}>
@@ -146,7 +150,7 @@ export function Header() {
             </Menu>
           </>
         ) : (
-          <Button color="inherit" component={Link} to="/login">
+          <Button color="inherit" component={Link} to={login}>
             Login
           </Button>
         )}

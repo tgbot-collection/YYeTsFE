@@ -15,6 +15,7 @@ import { useSnackbar } from "notistack";
 import { ResourceInfo, patchUser } from "API";
 import { UserContext } from "../../Layout/UserContext";
 import { useHistory } from "react-router-dom";
+import { useLogin } from "../../../Hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,7 +57,9 @@ interface InfoPropTypes {
 export function InfoComponent(props: InfoPropTypes) {
   const { loading, resourceInfo, url, isLike, id } = props;
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const history = useHistory();
+  const login = useLogin();
 
   const { name } = React.useContext(UserContext);
 
@@ -73,7 +76,7 @@ export function InfoComponent(props: InfoPropTypes) {
           <Button
             onClick={() => {
               closeSnackbar(key);
-              history.push("/login");
+              history.push(login);
             }}
             color="inherit"
           >
