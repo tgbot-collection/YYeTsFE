@@ -31,13 +31,20 @@ const useStyles = makeStyles((theme: Theme) =>
       gridTemplateAreas: ` 'avatar name'
                             'avatar comment'
                          `,
-      gridTemplateColumns: "64px 1fr",
+      gridTemplateColumns: "44px 1fr",
       gridGap: theme.spacing(1),
+
+      [theme.breakpoints.up("sm")]: {
+        gridTemplateColumns: "62px 1fr",
+
+        "& .avatar": {
+          width: "50px",
+          height: "50px",
+        },
+      },
 
       "& .avatar": {
         gridArea: "avatar",
-        width: "50px",
-        height: "50px",
       },
       "& .name": {
         gridArea: "name",
@@ -51,6 +58,10 @@ const useStyles = makeStyles((theme: Theme) =>
       "&:last-child .comment": {
         borderBottom: `none`,
       },
+    },
+    hasMore: {
+      display: "flex",
+      justifyContent: "center",
     },
     comment: {
       width: "100%",
@@ -161,6 +172,10 @@ export function CommentComponent(props: CommentPropTypes) {
 
   const [postLoading, setPostLoading] = React.useState<boolean>(false);
 
+  const PAGE_SIZE = 10;
+  const [page, setPage] = React.useState<number>(1);
+  const [hasMore, setHasMore] = React.useState<boolean>(false);
+  const [listLoading, setListLoading] = React.useState<boolean>(false);
   const [commentList, setCommentList] = React.useState<Array<Comment>>([]);
 
   const formik = useFormik({
@@ -194,6 +209,11 @@ export function CommentComponent(props: CommentPropTypes) {
       postComment({ resource_id: id, captcha: values.captcha, content: values.content, id: captchaID })
         .then((res) => {
           if (res) {
+            setCommentList((pre) =>
+              [{ id: Math.random(), username: name, date: Date(), content: values.content }].concat(pre)
+            );
+
+            refreshCaptcha();
             enqueueSnackbar(res.data.message, { variant: "success" });
           }
         })
@@ -210,8 +230,18 @@ export function CommentComponent(props: CommentPropTypes) {
     },
   });
 
+  const refreshCaptcha = () => {
+    if (captchaLoading) return;
+    setCaptchaID(randomString());
+  };
+
+  const handleLoadMore = () => {
+    if (hasMore) setPage((pre) => pre + 1);
+  };
+
   React.useEffect(() => {
     setCaptchaLoading(true);
+
     getCaptcha(captchaID)
       .then((res) => {
         if (res) {
@@ -226,28 +256,27 @@ export function CommentComponent(props: CommentPropTypes) {
         setCaptchaLoading(false);
       });
 
-    getComment({ resource_id: id, page: 1, size: 10 })
+    return cancelGetCaptcha;
+  }, [captchaID, enqueueSnackbar, id]);
+
+  React.useEffect(() => {
+    setListLoading(true);
+
+    getComment({ resource_id: id, page, size: PAGE_SIZE })
       .then((res) => {
         if (res) {
-          console.log(res);
-          setCommentList(res.data.data);
+          setCommentList((pre) => (page === 1 ? res.data.data : pre.concat(res.data.data)));
+          setHasMore(page * PAGE_SIZE < res.data.count);
         }
 
-        setCaptchaLoading(false);
+        setListLoading(false);
       })
       .catch((error) => {
         enqueueSnackbar(`获取评论列表出错: ${error.message}`, { variant: "error" });
 
-        setCaptchaLoading(false);
+        setListLoading(false);
       });
-
-    return cancelGetCaptcha;
-  }, [captchaID, enqueueSnackbar, id]);
-
-  const refreshCaptcha = () => {
-    if (captchaLoading) return;
-    setCaptchaID(randomString());
-  };
+  }, [page, id, enqueueSnackbar]);
 
   if (loading)
     return (
@@ -266,7 +295,7 @@ export function CommentComponent(props: CommentPropTypes) {
         <textarea
           name="content"
           maxLength={400}
-          placeholder={name ? `欢迎 ${name}，快来畅所欲言吧～` : "您还未登陆哦，快去登陆吧～"}
+          placeholder={name ? `欢迎 ${name}，畅所欲言吧～` : "您还未登陆哦，快去登陆吧～"}
           autoComplete="off"
           value={formik.values.content}
           onChange={formik.handleChange}
@@ -298,6 +327,7 @@ export function CommentComponent(props: CommentPropTypes) {
               endIcon={<SendIcon />}
               style={{ marginLeft: "8px" }}
               type="submit"
+              disabled={postLoading}
             >
               提交
             </Button>
@@ -307,21 +337,32 @@ export function CommentComponent(props: CommentPropTypes) {
 
       <section className={classes.commentList}>
         {commentList.length > 0 ? (
-          commentList.map((comment) => (
-            <div className={classes.commentItem}>
-              <Avatar className="avatar">{comment.username.substr(0, 1)}</Avatar>
+          <>
+            <div>
+              {commentList.map((comment) => (
+                <div className={classes.commentItem} key={comment.id}>
+                  <Avatar className="avatar">{comment.username.substr(0, 1)}</Avatar>
 
-              <div className="name">
-                <Typography component="span" variant="h5" color="textPrimary">
-                  {comment.username}
-                </Typography>
-                <Typography component="span" variant="body2" color="textSecondary" style={{ marginLeft: "16px" }}>
-                  {dayjs(comment.date).format("YYYY-MM-DD HH:ss")}
-                </Typography>
-              </div>
-              <Typography className="comment">{comment.content}</Typography>
+                  <div className="name">
+                    <Typography component="span" variant="h5" color="textPrimary">
+                      {comment.username}
+                    </Typography>
+                    <Typography component="span" variant="body2" color="textSecondary" style={{ marginLeft: "16px" }}>
+                      {dayjs(comment.date).format("YYYY-MM-DD HH:mm")}
+                    </Typography>
+                  </div>
+                  <Typography className="comment">{comment.content}</Typography>
+                </div>
+              ))}
             </div>
-          ))
+            {hasMore && (
+              <div className={classes.hasMore}>
+                <Button onClick={handleLoadMore} disabled={listLoading} variant="outlined">
+                  {listLoading ? "努力加载中..." : "加载更多"}
+                </Button>
+              </div>
+            )}
+          </>
         ) : (
           <div className="empty">
             <Typography color="textSecondary">快来呀，第一条神评就是你拉～</Typography>

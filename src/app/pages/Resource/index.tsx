@@ -58,7 +58,7 @@ export function ResourcePage() {
       })
       .catch((error) => {
         console.log(error);
-        enqueueSnackbar(error.message, { variant: "error" });
+        enqueueSnackbar(`获取资源信息错误：${error.message}`, { variant: "error" });
       });
 
     return cancelGetResourceByID;
