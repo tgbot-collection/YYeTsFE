@@ -58,8 +58,11 @@ export function SearchPage() {
     validationSchema,
     onSubmit: (values) => {
       ref.current.blur();
-      setListLoading(true);
       setMode("list");
+
+      setTimeout(() => {
+        setListLoading(true);
+      }, 100);
 
       getSearchKw(values.search)
         .then((res) => {

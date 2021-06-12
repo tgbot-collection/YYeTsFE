@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(2),
     },
     appRoot: {
-      boxShadow: theme.shadows[1],
+      boxShadow: theme.shadows[0],
     },
     empty: {
       minHeight: 300,
@@ -111,6 +111,7 @@ export function AddressComponent(props: AddressPropTypes) {
             </Button>
             <TabList
               onChange={handleQualityChange}
+              variant="scrollable"
               scrollButtons="auto"
               indicatorColor="primary"
               textColor="primary"
@@ -122,16 +123,11 @@ export function AddressComponent(props: AddressPropTypes) {
             </TabList>
           </AppBar>
 
-          {resourceAddress[season] &&
-            resourceAddress[season].formats.map((item, index) => (
-              <TabPanel value={String(index + 1)} key={item} classes={{ root: classes.tabPanelRoot }}>
-                <DataTableComponent
-                  tableData={resourceAddress[season].items[quality]}
-                  season={resourceAddress[season].season_cn}
-                  quality={quality}
-                />
-              </TabPanel>
-            ))}
+          <DataTableComponent
+            tableData={resourceAddress[season].items[quality]}
+            season={resourceAddress[season].season_cn}
+            quality={quality}
+          />
         </TabContext>
       ) : (
         <div className={classes.empty}>

@@ -1,10 +1,11 @@
 import * as React from "react";
 import * as yup from "yup";
-import { Button, createStyles, makeStyles, TextField, Theme, Typography } from "@material-ui/core";
+import { Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import { Send as SendIcon } from "@material-ui/icons";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
+import clsx from "clsx";
 import dayjs from "dayjs";
 
 import { cancelGetCaptcha, Comment, getCaptcha, getComment, postComment } from "API";
@@ -35,6 +36,86 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     commentList: {
       display: "flex",
+    },
+    comment: {
+      width: "100%",
+      border: `1px solid ${theme.palette.divider}`,
+      borderRadius: "8px",
+      padding: theme.spacing(1),
+      backgroundColor: theme.palette.background.paper,
+      boxSizing: "border-box",
+
+      [theme.breakpoints.up("sm")]: {
+        padding: theme.spacing(1.5),
+      },
+
+      "& textarea": {
+        width: "100%",
+        outline: "none",
+        resize: "none",
+        minHeight: "146px",
+        borderRadius: "8px",
+        padding: theme.spacing(1),
+        boxSizing: "border-box",
+        border: `1px solid ${theme.palette.background.paper}`,
+        backgroundColor: theme.palette.background.paper,
+        color: "inherit",
+
+        [theme.breakpoints.up("sm")]: {
+          minHeight: "168px",
+          fontSize: "18px",
+        },
+
+        "&:focus": {
+          backgroundColor: theme.palette.background.default,
+        },
+
+        "&:hover": {
+          backgroundColor: theme.palette.background.default,
+        },
+      },
+    },
+    commentFooter: {
+      display: "flex",
+      marginTop: theme.spacing(3),
+      justifyContent: "space-between",
+
+      "& .left": {
+        display: "flex",
+        alignItems: "center",
+      },
+
+      "& input": {
+        outline: "none",
+        border: `1px solid ${theme.palette.background.paper}`,
+        padding: theme.spacing(0.5, 1),
+        borderRadius: "2px",
+        height: "30px",
+        lineHeight: "30px",
+        width: "80px",
+        marginLeft: theme.spacing(1),
+        backgroundColor: theme.palette.background.paper,
+        color: "inherit",
+
+        "&:focus": {
+          backgroundColor: theme.palette.background.default,
+          border: `1px solid ${theme.palette.background.default}`,
+        },
+
+        "&:hover": {
+          backgroundColor: theme.palette.background.default,
+          border: `1px solid ${theme.palette.background.default}`,
+        },
+      },
+
+      "& img": {
+        width: 80,
+        height: 30,
+        borderRadius: "2px",
+      },
+    },
+    inputError: {
+      border: `1px solid ${theme.palette.error.main} !important`,
     },
   })
 );
@@ -134,47 +215,51 @@ export function CommentComponent(props: CommentPropTypes) {
       <Typography component="h2" variant="h5" style={{ marginBottom: "16px" }}>
         评论
       </Typography>
-
-      <form className={classes.commentInput} onSubmit={formik.handleSubmit}>
-        <TextField
+      <form className={classes.comment} onSubmit={formik.handleSubmit}>
+        <textarea
           name="content"
+          maxLength={400}
+          placeholder="写点啥"
+          autoComplete="off"
           value={formik.values.content}
           onChange={formik.handleChange}
-          multiline
-          fullWidth
-          inputProps={{ maxLength: 140 }}
-          autoComplete="off"
-          error={formik.touched.content && Boolean(formik.errors.content)}
-          helperText={formik.touched.content && formik.errors.content}
+          className={clsx({ [classes.inputError]: formik.touched.content && Boolean(formik.errors.content) })}
         />
 
-        <div className={classes.authCode}>
-          <div style={{ display: "flex" }}>
-            {captcha ? (
-              <img src={captcha} alt="验证码" onClick={refreshCaptcha} />
-            ) : (
-              <Skeleton variant="rect" width={80} height={30} onClick={refreshCaptcha} />
-            )}
-            <TextField
+        <div className={classes.commentFooter}>
+          <div className="left">
+            <img src={captcha} alt="验证码" onClick={refreshCaptcha} />
+            <input
+              placeholder="验证码"
+              maxLength={4}
               name="captcha"
+              autoComplete="off"
               value={formik.values.captcha}
               onChange={formik.handleChange}
-              inputProps={{ maxLength: 4 }}
-              style={{ marginLeft: "16px" }}
-              error={formik.touched.captcha && Boolean(formik.errors.captcha)}
-              helperText={formik.touched.captcha && formik.errors.captcha}
+              className={clsx({ [classes.inputError]: formik.errors.captcha })}
             />
           </div>
-
-          <Button variant="contained" size="small" endIcon={<SendIcon />} type="submit" disabled={postLoading}>
-            发送
-          </Button>
+          <div className="left">
+            <Typography variant="body2" color="textSecondary">
+              {formik.values.content.length} 字
+            </Typography>
+            <Button
+              variant="contained"
+              size="small"
+              disableElevation
+              endIcon={<SendIcon />}
+              style={{ marginLeft: "8px" }}
+              type="submit"
+            >
+              提交
+            </Button>
+          </div>
         </div>
       </form>
 
       <div>
         <Typography component="h2" variant="h5" style={{ margin: "16px 0" }}>
-          评论列表
+          评论
         </Typography>
 
         {commentList.map((comment) => (

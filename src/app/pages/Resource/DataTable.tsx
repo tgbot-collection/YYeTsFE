@@ -183,6 +183,9 @@ const useStyles = makeStyles((theme: Theme) =>
     downBtn: {
       padding: theme.spacing(0, 1),
     },
+    noBorderBottom: {
+      borderBottom: 0,
+    },
   })
 );
 
@@ -245,7 +248,7 @@ export function DataTableComponent(props: DataTablePropTypes) {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} elevation={0}>
         <EnhancedTableToolbar
           numSelected={selected.length}
           rowCount={tableData.length}
@@ -261,7 +264,7 @@ export function DataTableComponent(props: DataTablePropTypes) {
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
-                  <TableRow hover key={row.name}>
+                  <TableRow hover key={row.name} selected={isItemSelected}>
                     <TableCell padding="checkbox" onClick={(event) => handleClick(event, index)} tabIndex={index}>
                       <Checkbox checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
                     </TableCell>
@@ -280,6 +283,7 @@ export function DataTableComponent(props: DataTablePropTypes) {
                         {dayjs.unix(Number(row.dateline)).fromNow()}
                       </TableCell>
                     )}
+
                     {row.files?.map((downItem, index) => (
                       <TableCell
                         align="left"
@@ -297,9 +301,10 @@ export function DataTableComponent(props: DataTablePropTypes) {
                   </TableRow>
                 );
               })}
+
               {emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={6} className={classes.noBorderBottom} />
                 </TableRow>
               )}
             </TableBody>
