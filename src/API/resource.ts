@@ -94,6 +94,7 @@ export interface Comment {
   username: string;
   content: string;
   id: number;
+  browser: string;
 }
 
 interface GetCommentRes {

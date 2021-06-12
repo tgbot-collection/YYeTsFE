@@ -9,12 +9,11 @@ module.exports = function (app) {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: "https://yyets.dmesg.app",
+      target: process.env.REACT_APP_DOMAIN,
       changeOrigin: true,
       onProxyReq(proxyReq, req, res) {
         const id = req.query.id;
 
-        proxyReq.setHeader("Referer", "https://yyets.dmesg.app/" + req.url);
         id && proxyReq.setHeader("ne1", genNe1(id));
       },
     })

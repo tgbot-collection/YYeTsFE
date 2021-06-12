@@ -11,8 +11,9 @@ import {
   Toolbar,
   Typography,
   Link as MuLink,
+  Divider,
 } from "@material-ui/core";
-import { GitHub, Search } from "@material-ui/icons";
+import { AccountCircle, GitHub, Search } from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
 import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/hooks";
 
@@ -36,8 +37,17 @@ const useStyles = makeStyles((theme: Theme) =>
       height: theme.spacing(4),
       borderRadius: "50%",
     },
-    noUp: {
+    nowrap: {
+      display: "inline-block",
       textTransform: "none",
+      width: "100%",
+      maxWidth: 200,
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
+    },
+    danger: {
+      color: theme.palette.error.main,
     },
   })
 );
@@ -79,7 +89,7 @@ export function Header() {
         )}
 
         <IconButton color="inherit" {...bindTrigger(githubPopupState)}>
-          <GitHub />
+          <GitHub fontSize="small" />
         </IconButton>
         <Menu
           {...bindMenu(githubPopupState)}
@@ -101,21 +111,28 @@ export function Header() {
 
         {username ? (
           <>
-            <Button color="inherit" className={classes.noUp} {...bindTrigger(loginPopupState)}>
-              {username}
-            </Button>
+            <IconButton color="inherit" {...bindTrigger(loginPopupState)}>
+              <AccountCircle />
+            </IconButton>
             <Menu
               {...bindMenu(loginPopupState)}
               getContentAnchorEl={null}
               anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
               transformOrigin={{ vertical: "top", horizontal: "left" }}
             >
+              <MenuItem className={classes.nowrap} disabled>
+                {username}
+              </MenuItem>
               <MenuItem onClick={loginPopupState.close}>
                 <Link to="/me" style={{ color: "inherit", textDecoration: "none" }}>
                   个人中心
                 </Link>
               </MenuItem>
-              <MenuItem onClick={handleLogout}>退出</MenuItem>
+              <Divider />
+
+              <MenuItem onClick={handleLogout} className={classes.danger}>
+                退出
+              </MenuItem>
             </Menu>
           </>
         ) : (

@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as yup from "yup";
+import * as Bowser from "bowser";
 import { Avatar, Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import { Send as SendIcon } from "@material-ui/icons";
 import { Skeleton } from "@material-ui/lab";
@@ -27,10 +28,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     commentItem: {
       margin: theme.spacing(2, 0),
+      position: "relative",
       display: "grid",
-      gridTemplateAreas: ` 'avatar name'
-                            'avatar comment'
-                         `,
+      gridTemplateAreas: `
+       'avatar name'
+       'avatar ua'
+       'avatar comment'
+      `,
       gridTemplateColumns: "44px 1fr",
       gridGap: theme.spacing(1),
 
@@ -49,14 +53,24 @@ const useStyles = makeStyles((theme: Theme) =>
       "& .name": {
         gridArea: "name",
       },
+      "& .ua": {
+        gridArea: "ua",
+        position: "relative",
+        top: "-6px",
+      },
       "& .comment": {
         gridArea: "comment",
-        paddingBottom: theme.spacing(2),
+        paddingBottom: theme.spacing(2.5),
         borderBottom: `1px dashed ${theme.palette.divider}`,
         wordBreak: "break-all",
       },
       "&:last-child .comment": {
         borderBottom: `none`,
+      },
+      "& .floor": {
+        position: "absolute",
+        bottom: 2,
+        right: 4,
       },
     },
     hasMore: {
@@ -143,6 +157,16 @@ const useStyles = makeStyles((theme: Theme) =>
     inputError: {
       border: `1px solid ${theme.palette.error.main} !important`,
     },
+    browser: {
+      borderRadius: "4px",
+      backgroundColor: theme.palette.background.paper,
+      margin: theme.spacing(-0.25, -0.5),
+      padding: theme.spacing(0.25, 0.5),
+
+      "&:last-child": {
+        marginLeft: theme.spacing(1),
+      },
+    },
   })
 );
 
@@ -174,6 +198,7 @@ export function CommentComponent(props: CommentPropTypes) {
 
   const PAGE_SIZE = 10;
   const [page, setPage] = React.useState<number>(1);
+  const [count, setCount] = React.useState<number>(0);
   const [hasMore, setHasMore] = React.useState<boolean>(false);
   const [listLoading, setListLoading] = React.useState<boolean>(false);
   const [commentList, setCommentList] = React.useState<Array<Comment>>([]);
@@ -184,7 +209,7 @@ export function CommentComponent(props: CommentPropTypes) {
       captcha: "",
     },
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       if (!name) {
         enqueueSnackbar("请先登陆后评论", {
           variant: "warning",
@@ -209,8 +234,18 @@ export function CommentComponent(props: CommentPropTypes) {
       postComment({ resource_id: id, captcha: values.captcha, content: values.content, id: captchaID })
         .then((res) => {
           if (res) {
+            resetForm();
+            setCount((pre) => pre + 1);
             setCommentList((pre) =>
-              [{ id: Math.random(), username: name, date: Date(), content: values.content }].concat(pre)
+              [
+                {
+                  id: Math.random(),
+                  username: name,
+                  date: Date(),
+                  content: values.content,
+                  browser: navigator.userAgent,
+                },
+              ].concat(pre)
             );
 
             refreshCaptcha();
@@ -237,6 +272,14 @@ export function CommentComponent(props: CommentPropTypes) {
 
   const handleLoadMore = () => {
     if (hasMore) setPage((pre) => pre + 1);
+  };
+
+  const formatBowser = (browser: string) => {
+    const result = Bowser.parse(browser);
+    return {
+      browser: `${result.browser.name} ${result.browser.version}`,
+      os: `${result.os.name} ${result.os.version}`,
+    };
   };
 
   React.useEffect(() => {
@@ -266,6 +309,7 @@ export function CommentComponent(props: CommentPropTypes) {
       .then((res) => {
         if (res) {
           setCommentList((pre) => (page === 1 ? res.data.data : pre.concat(res.data.data)));
+          setCount(res.data.count);
           setHasMore(page * PAGE_SIZE < res.data.count);
         }
 
@@ -312,7 +356,7 @@ export function CommentComponent(props: CommentPropTypes) {
               autoComplete="off"
               value={formik.values.captcha}
               onChange={formik.handleChange}
-              className={clsx({ [classes.inputError]: formik.errors.captcha })}
+              className={clsx({ [classes.inputError]: formik.touched.content && formik.errors.captcha })}
             />
           </div>
           <div className="left">
@@ -339,21 +383,52 @@ export function CommentComponent(props: CommentPropTypes) {
         {commentList.length > 0 ? (
           <>
             <div>
-              {commentList.map((comment) => (
-                <div className={classes.commentItem} key={comment.id}>
-                  <Avatar className="avatar">{comment.username.substr(0, 1)}</Avatar>
+              {commentList.map((comment, index) => {
+                const { browser, os } = formatBowser(comment.browser);
 
-                  <div className="name">
-                    <Typography component="span" variant="h5" color="textPrimary">
-                      {comment.username}
-                    </Typography>
-                    <Typography component="span" variant="body2" color="textSecondary" style={{ marginLeft: "16px" }}>
-                      {dayjs(comment.date).format("YYYY-MM-DD HH:mm")}
+                return (
+                  <div className={classes.commentItem} key={comment.id}>
+                    <Avatar className="avatar">{comment.username.substr(0, 1)}</Avatar>
+
+                    <div className="name">
+                      <Typography component="span" variant="h5" color="textPrimary">
+                        {comment.username}
+                      </Typography>
+                      <Typography component="span" variant="body2" color="textSecondary" style={{ marginLeft: "16px" }}>
+                        {dayjs(comment.date).format("YYYY-MM-DD HH:mm")}
+                      </Typography>
+                    </div>
+                    {browser !== " " && os !== " " && (
+                      <div className="ua">
+                        {browser !== " " && (
+                          <Typography
+                            variant="caption"
+                            component="span"
+                            color="textSecondary"
+                            className={classes.browser}
+                          >
+                            {browser}
+                          </Typography>
+                        )}
+                        {os !== " " && (
+                          <Typography
+                            variant="caption"
+                            component="span"
+                            color="textSecondary"
+                            className={classes.browser}
+                          >
+                            {os}
+                          </Typography>
+                        )}
+                      </div>
+                    )}
+                    <Typography className="comment">{comment.content}</Typography>
+                    <Typography className="floor" variant="body2" component="span" color="textSecondary">
+                      # {count - index}
                     </Typography>
                   </div>
-                  <Typography className="comment">{comment.content}</Typography>
-                </div>
-              ))}
+                );
+              })}
             </div>
             {hasMore && (
               <div className={classes.hasMore}>
