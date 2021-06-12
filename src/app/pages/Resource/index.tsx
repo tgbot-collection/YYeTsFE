@@ -83,7 +83,7 @@ export function ResourcePage() {
 
         <Divider className={classes.hr} />
 
-        <CommentComponent id={Number(id)} />
+        <CommentComponent loading={loading} id={Number(id)} />
       </Container>
     </>
   );

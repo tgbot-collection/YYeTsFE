@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Skeleton, TabContext, TabList, TabPanel } from "@material-ui/lab";
+import { Skeleton, TabContext, TabList } from "@material-ui/lab";
 import { AppBar, Button, createStyles, makeStyles, Menu, MenuItem, Tab, Theme, Typography } from "@material-ui/core";
 import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/hooks";
@@ -84,7 +84,7 @@ export function AddressComponent(props: AddressPropTypes) {
     return (
       <>
         <Skeleton variant="rect" width={120} height={32} className={classes.title} />
-        <Skeleton variant="rect" width="100%" height={300} />
+        <Skeleton variant="rect" width="100%" height={376} />
       </>
     );
 

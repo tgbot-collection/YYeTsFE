@@ -1,41 +1,56 @@
 import * as React from "react";
 import * as yup from "yup";
-import { Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Avatar, Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import { Send as SendIcon } from "@material-ui/icons";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
 import clsx from "clsx";
 import dayjs from "dayjs";
+import { useHistory } from "react-router-dom";
 
 import { cancelGetCaptcha, Comment, getCaptcha, getComment, postComment } from "API";
 import { randomString } from "utils";
+import { UserContext } from "../../Layout/UserContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    authCode: {
-      marginTop: theme.spacing(2),
-      display: "flex",
-      justifyContent: "space-between",
-
-      "& img": {
-        width: 80,
-        height: 30,
-      },
-
-      "& input": {
-        width: 80,
-      },
-
-      "& button": {
-        alignSelf: "flex-end",
-      },
-    },
-    commentInput: {
-      maxWidth: 600,
-    },
     commentList: {
-      display: "flex",
+      marginTop: theme.spacing(4),
+
+      "& .empty": {
+        height: 150,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      },
+    },
+    commentItem: {
+      margin: theme.spacing(2, 0),
+      display: "grid",
+      gridTemplateAreas: ` 'avatar name'
+                            'avatar comment'
+                         `,
+      gridTemplateColumns: "64px 1fr",
+      gridGap: theme.spacing(1),
+
+      "& .avatar": {
+        gridArea: "avatar",
+        width: "50px",
+        height: "50px",
+      },
+      "& .name": {
+        gridArea: "name",
+      },
+      "& .comment": {
+        gridArea: "comment",
+        paddingBottom: theme.spacing(2),
+        borderBottom: `1px dashed ${theme.palette.divider}`,
+        wordBreak: "break-all",
+      },
+      "&:last-child .comment": {
+        borderBottom: `none`,
+      },
     },
     comment: {
       width: "100%",
@@ -127,13 +142,18 @@ const validationSchema = yup.object({
 
 interface CommentPropTypes {
   id: number;
+  loading: boolean;
 }
 
 export function CommentComponent(props: CommentPropTypes) {
-  const { id } = props;
+  const { id, loading } = props;
+
+  const history = useHistory();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const classes = useStyles();
-  const { enqueueSnackbar } = useSnackbar();
+
+  const { name } = React.useContext(UserContext);
 
   const [captchaLoading, setCaptchaLoading] = React.useState<boolean>(true);
   const [captcha, setCaptcha] = React.useState<string>("");
@@ -150,6 +170,25 @@ export function CommentComponent(props: CommentPropTypes) {
     },
     validationSchema,
     onSubmit: (values) => {
+      if (!name) {
+        enqueueSnackbar("请先登陆后评论", {
+          variant: "warning",
+          action: (key) => (
+            <Button
+              onClick={() => {
+                closeSnackbar(key);
+                history.push("/login");
+              }}
+              color="inherit"
+            >
+              去登录
+            </Button>
+          ),
+        });
+
+        return;
+      }
+
       setPostLoading(true);
 
       postComment({ resource_id: id, captcha: values.captcha, content: values.content, id: captchaID })
@@ -210,6 +249,14 @@ export function CommentComponent(props: CommentPropTypes) {
     setCaptchaID(randomString());
   };
 
+  if (loading)
+    return (
+      <div>
+        <Skeleton variant="rect" width={120} height={32} style={{ marginBottom: "16px" }} />
+        <Skeleton variant="rect" width="100%" height={253} />
+      </div>
+    );
+
   return (
     <div>
       <Typography component="h2" variant="h5" style={{ marginBottom: "16px" }}>
@@ -219,7 +266,7 @@ export function CommentComponent(props: CommentPropTypes) {
         <textarea
           name="content"
           maxLength={400}
-          placeholder="写点啥"
+          placeholder={name ? `欢迎 ${name}，快来畅所欲言吧～` : "您还未登陆哦，快去登陆吧～"}
           autoComplete="off"
           value={formik.values.content}
           onChange={formik.handleChange}
@@ -246,6 +293,7 @@ export function CommentComponent(props: CommentPropTypes) {
             <Button
               variant="contained"
               size="small"
+              color="primary"
               disableElevation
               endIcon={<SendIcon />}
               style={{ marginLeft: "8px" }}
@@ -257,19 +305,29 @@ export function CommentComponent(props: CommentPropTypes) {
         </div>
       </form>
 
-      <div>
-        <Typography component="h2" variant="h5" style={{ margin: "16px 0" }}>
-          评论
-        </Typography>
+      <section className={classes.commentList}>
+        {commentList.length > 0 ? (
+          commentList.map((comment) => (
+            <div className={classes.commentItem}>
+              <Avatar className="avatar">{comment.username.substr(0, 1)}</Avatar>
 
-        {commentList.map((comment) => (
-          <div className={classes.commentList}>
-            <Typography>{comment.username}</Typography>
-            <Typography>&nbsp;{comment.content}</Typography>
-            <Typography>&nbsp;{dayjs(comment.date).format("YYYY-MM-DD HH:ss")}</Typography>
+              <div className="name">
+                <Typography component="span" variant="h5" color="textPrimary">
+                  {comment.username}
+                </Typography>
+                <Typography component="span" variant="body2" color="textSecondary" style={{ marginLeft: "16px" }}>
+                  {dayjs(comment.date).format("YYYY-MM-DD HH:ss")}
+                </Typography>
+              </div>
+              <Typography className="comment">{comment.content}</Typography>
+            </div>
+          ))
+        ) : (
+          <div className="empty">
+            <Typography color="textSecondary">快来呀，第一条神评就是你拉～</Typography>
           </div>
-        ))}
-      </div>
+        )}
+      </section>
     </div>
   );
 }
