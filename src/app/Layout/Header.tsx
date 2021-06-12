@@ -12,8 +12,9 @@ import {
   Typography,
   Link as MuLink,
   Divider,
+  Tooltip,
 } from "@material-ui/core";
-import { AccountCircle, GitHub, Search } from "@material-ui/icons";
+import { AccountCircle, GitHub, Search, QuestionAnswer } from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
 import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/hooks";
 
@@ -88,6 +89,14 @@ export function Header() {
           </IconButton>
         )}
 
+        {/* 留言板 */}
+        <Tooltip title="留言板">
+          <IconButton component={Link} to="/discuss" color="inherit">
+            <QuestionAnswer />
+          </IconButton>
+        </Tooltip>
+
+        {/* Github */}
         <IconButton color="inherit" {...bindTrigger(githubPopupState)}>
           <GitHub fontSize="small" />
         </IconButton>
@@ -109,6 +118,7 @@ export function Header() {
           </MenuItem>
         </Menu>
 
+        {/* 个人信息 */}
         {username ? (
           <>
             <IconButton color="inherit" {...bindTrigger(loginPopupState)}>

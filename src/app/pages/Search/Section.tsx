@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface SectionPropTypes {
   data: GetTopRes;
-  loading: boolean;
 }
 
 export function SectionComponent(props: SectionPropTypes) {

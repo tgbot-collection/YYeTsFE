@@ -2,7 +2,7 @@ import * as React from "react";
 import * as yup from "yup";
 import * as Bowser from "bowser";
 import { Avatar, Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
-import { Send as SendIcon } from "@material-ui/icons";
+import { Chat as SendIcon } from "@material-ui/icons";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
       "& .avatar": {
         gridArea: "avatar",
+        fontSize: "0.875rem",
       },
       "& .name": {
         gridArea: "name",
@@ -63,6 +64,11 @@ const useStyles = makeStyles((theme: Theme) =>
         paddingBottom: theme.spacing(2.5),
         borderBottom: `1px dashed ${theme.palette.divider}`,
         wordBreak: "break-all",
+        fontSize: "0.875rem",
+
+        [theme.breakpoints.up("sm")]: {
+          fontSize: "1rem",
+        },
       },
       "&:last-child .comment": {
         borderBottom: `none`,
@@ -178,10 +184,11 @@ const validationSchema = yup.object({
 interface CommentPropTypes {
   id: number;
   loading: boolean;
+  title?: string;
 }
 
 export function CommentComponent(props: CommentPropTypes) {
-  const { id, loading } = props;
+  const { id, loading, title } = props;
 
   const history = useHistory();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -332,9 +339,12 @@ export function CommentComponent(props: CommentPropTypes) {
 
   return (
     <div>
-      <Typography component="h2" variant="h5" style={{ marginBottom: "16px" }}>
-        评论
-      </Typography>
+      {title && (
+        <Typography component="h2" variant="h5" style={{ marginBottom: "16px" }}>
+          {title}
+        </Typography>
+      )}
+
       <form className={classes.comment} onSubmit={formik.handleSubmit}>
         <textarea
           name="content"
@@ -388,7 +398,7 @@ export function CommentComponent(props: CommentPropTypes) {
 
                 return (
                   <div className={classes.commentItem} key={comment.id}>
-                    <Avatar className="avatar">{comment.username.substr(0, 1)}</Avatar>
+                    <Avatar className="avatar">{comment.username.substr(0, 3)}</Avatar>
 
                     <div className="name">
                       <Typography component="span" variant="h5" color="textPrimary">

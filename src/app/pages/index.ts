@@ -3,3 +3,5 @@ export * from "./NotFound";
 export * from "./Search";
 export * from "./Resource";
 export * from "./Login";
+export * from "./Discuss";
+export * from "./Me";

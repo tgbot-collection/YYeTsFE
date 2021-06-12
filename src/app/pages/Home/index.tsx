@@ -1,6 +1,6 @@
 import * as React from "react";
 import GitHubButton from "react-github-btn";
-import { Button, Container, createStyles, Grid, Link, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Button, Container, createStyles, Link, makeStyles, Theme, Typography } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 
 import { setTitle, toAbsoluteUrl } from "utils";
@@ -67,14 +67,6 @@ const useStyles = makeStyles((theme: Theme) =>
         height: 40,
       },
     },
-    link: {
-      margin: theme.spacing(1, 0),
-      textAlign: "center",
-
-      "& a": {
-        color: "inherit",
-      },
-    },
   })
 );
 
@@ -136,35 +128,6 @@ export function HomePage() {
             />
           </Link>
         </div>
-
-        <Typography variant="h5" component="h2" style={{ marginTop: "40px" }}>
-          特别鸣谢
-        </Typography>
-
-        <Container style={{ marginTop: "16px" }}>
-          <Grid container>
-            <Grid item xs={6} sm={3} className={classes.link}>
-              <Link href="http://www.zmz2019.com" variant="body1">
-                人人影视
-              </Link>
-            </Grid>
-            <Grid item xs={6} sm={3} className={classes.link}>
-              <Link href="http://www.zhuixinfan.com/main.php" variant="body1">
-                追新番
-              </Link>
-            </Grid>
-            <Grid item xs={6} sm={3} className={classes.link}>
-              <Link href="http://oabt005.com/home.html" variant="body1">
-                磁力下载站
-              </Link>
-            </Grid>
-            <Grid item xs={6} sm={3} className={classes.link}>
-              <Link href="https://www.zimuxia.cn" variant="body1">
-                FIX字幕侠
-              </Link>
-            </Grid>
-          </Grid>
-        </Container>
       </div>
     </>
   );

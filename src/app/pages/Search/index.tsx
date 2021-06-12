@@ -117,7 +117,7 @@ export function SearchPage() {
       {mode === "top" ? (
         <>
           <RankComponent data={top.ALL} loading={rankLoading} />
-          {!!Object.keys(top).length && <SectionComponent data={top} loading={rankLoading} />}
+          {!!Object.keys(top).length && <SectionComponent data={top} />}
         </>
       ) : (
         <SearchListComponent list={list} loading={listLoading} />
