@@ -3,6 +3,7 @@ import { setTitle, toAbsoluteUrl } from "utils";
 import { Button, Container, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 
 import { getDatabase, GetDatabaseRes } from "API";
+import { Skeleton } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,25 +45,17 @@ export function DataBasePage() {
 
   const classes = useStyles();
 
-  const [db, setDb] = React.useState<GetDatabaseRes>({
-    "yyets_mongo.gz": {
-      checksum: "b32e9d8e24c607a9f29889a926c15179d9179791",
-      date: "2021-04-15 22:11:08",
-    },
-    "yyets_mysql.zip": {
-      checksum: "6b24ae7cb7cef42951f7e2df183f0825512029e0",
-      date: "2021-04-15 22:11:08",
-    },
-    "yyets_sqlite.zip": {
-      checksum: "7e1659ab5cbc98b21155c3debce3015c39f1ec05",
-      date: "2021-04-15 22:11:08",
-    },
-  });
+  const [db, setDb] = React.useState<GetDatabaseRes>({} as GetDatabaseRes);
+
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
+    setLoading(true);
+
     getDatabase()
       .then((res) => {
         setDb(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -78,13 +71,17 @@ export function DataBasePage() {
       <Grid container spacing={4}>
         <Grid item xs={12} md={6} lg={4} className={classes.db}>
           <img src={toAbsoluteUrl("/svg/mongodb.svg")} alt="mongodb" className="icon" />
-          <Typography className="hash" noWrap title={db["yyets_mongo.gz"].checksum}>
-            SHA1:&nbsp;
-            <Typography component="span" variant="body2">
-              {db["yyets_mongo.gz"].checksum}
+          {loading ? (
+            <Skeleton />
+          ) : (
+            <Typography className="hash" noWrap title={db["yyets_mongo.gz"].checksum}>
+              SHA1:&nbsp;
+              <Typography component="span" variant="body2">
+                {db["yyets_mongo.gz"].checksum}
+              </Typography>
             </Typography>
-          </Typography>
-          <Typography className="date">Update: {db["yyets_mongo.gz"].date}</Typography>
+          )}
+          {loading ? <Skeleton /> : <Typography className="date">Update: {db["yyets_mongo.gz"].date}</Typography>}
           <Button variant="outlined" href="/data/yyets_mongo.gz">
             下载 MongoDB
           </Button>
@@ -92,13 +89,17 @@ export function DataBasePage() {
 
         <Grid item xs={12} md={6} lg={4} className={classes.db}>
           <img src={toAbsoluteUrl("/svg/mysql.svg")} alt="mysql" className="icon" />
-          <Typography className="hash" noWrap title={db["yyets_mysql.zip"].checksum}>
-            SHA1:&nbsp;
-            <Typography component="span" variant="body2">
-              {db["yyets_mysql.zip"].checksum}
+          {loading ? (
+            <Skeleton />
+          ) : (
+            <Typography className="hash" noWrap title={db["yyets_mysql.zip"].checksum}>
+              SHA1:&nbsp;
+              <Typography component="span" variant="body2">
+                {db["yyets_mysql.zip"].checksum}
+              </Typography>
             </Typography>
-          </Typography>
-          <Typography className="date">Update: {db["yyets_mysql.zip"].date}</Typography>
+          )}
+          {loading ? <Skeleton /> : <Typography className="date">Update: {db["yyets_mysql.zip"].date}</Typography>}
           <Button variant="outlined" href="/data/yyets_mysql.zip">
             下载 MySQL 5.7
           </Button>
@@ -106,13 +107,17 @@ export function DataBasePage() {
 
         <Grid item xs={12} md={6} lg={4} className={classes.db}>
           <img src={toAbsoluteUrl("/svg/sqlite.svg")} alt="sqlite" className="icon" />
-          <Typography className="hash" noWrap title={db["yyets_sqlite.zip"].checksum}>
-            SHA1:&nbsp;
-            <Typography component="span" variant="body2">
-              {db["yyets_sqlite.zip"].checksum}
+          {loading ? (
+            <Skeleton />
+          ) : (
+            <Typography className="hash" noWrap title={db["yyets_sqlite.zip"].checksum}>
+              SHA1:&nbsp;
+              <Typography component="span" variant="body2">
+                {db["yyets_sqlite.zip"].checksum}
+              </Typography>
             </Typography>
-          </Typography>
-          <Typography className="date">Update: {db["yyets_mongo.gz"].date}</Typography>
+          )}
+          {loading ? <Skeleton /> : <Typography className="date">Update: {db["yyets_mongo.gz"].date}</Typography>}
           <Button variant="outlined" href="/data/yyets_mongo.gz">
             下载 SQLite
           </Button>
