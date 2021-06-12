@@ -11,7 +11,9 @@ import {
   IconButton,
   makeStyles,
   Modal,
+  SvgIcon,
   Theme,
+  Tooltip,
   Typography,
 } from "@material-ui/core";
 import queryString from "query-string";
@@ -118,9 +120,15 @@ export function ResourcePage() {
   return (
     <>
       <Container className={classes.container} maxWidth="lg">
-        <IconButton className={classes.back} onClick={handleOpen}>
-          <History />
-        </IconButton>
+        <Tooltip title="返回旧版">
+          <IconButton className={classes.back} onClick={handleOpen}>
+            <SvgIcon>
+              <svg className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <path d="M371.643733 286.72V68.266667L0 450.56l371.712 382.293333V608.938667C637.1328 608.938667 823.022933 696.32 955.733333 887.466667c-53.0432-273.066667-212.309333-546.133333-584.021333-600.746667" />
+              </svg>
+            </SvgIcon>
+          </IconButton>
+        </Tooltip>
 
         <Modal
           className={classes.modal}

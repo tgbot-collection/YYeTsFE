@@ -5,7 +5,7 @@ import {
   Explore as ExploreIcon,
   Favorite as FavoriteIcon,
   FavoriteBorder as UnFavoriteIcon,
-  FileCopy as FileCopyIcon,
+  Share as ShareIcon,
   MovieFilter as MovieFilterIcon,
   Visibility as VisibilityIcon,
 } from "@material-ui/icons";
@@ -165,11 +165,11 @@ export function InfoComponent(props: InfoPropTypes) {
             <CopyToClipboard
               text={url}
               onCopy={() => {
-                enqueueSnackbar("复制成功，快去分享给小伙伴吧", { variant: "success" });
+                enqueueSnackbar("页面地址复制成功，快去分享给小伙伴吧", { variant: "success" });
               }}
             >
-              <Button variant="contained" color="primary" size="small" startIcon={<FileCopyIcon />}>
-                复制页面
+              <Button variant="contained" color="primary" size="small" startIcon={<ShareIcon />}>
+                分享页面
               </Button>
             </CopyToClipboard>
           )}
