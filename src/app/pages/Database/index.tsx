@@ -86,7 +86,7 @@ export function DataBasePage() {
           </Typography>
           <Typography className="date">Update: {db["yyets_mongo.gz"].date}</Typography>
           <Button variant="outlined" href="/data/yyets_mongo.gz">
-            下载
+            下载 MongoDB
           </Button>
         </Grid>
 
@@ -100,7 +100,7 @@ export function DataBasePage() {
           </Typography>
           <Typography className="date">Update: {db["yyets_mysql.zip"].date}</Typography>
           <Button variant="outlined" href="/data/yyets_mysql.zip">
-            下载
+            下载 MySQL 5.7
           </Button>
         </Grid>
 
@@ -114,7 +114,7 @@ export function DataBasePage() {
           </Typography>
           <Typography className="date">Update: {db["yyets_mongo.gz"].date}</Typography>
           <Button variant="outlined" href="/data/yyets_mongo.gz">
-            下载
+            下载 SQLite
           </Button>
         </Grid>
       </Grid>

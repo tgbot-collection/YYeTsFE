@@ -351,7 +351,7 @@ export function CommentComponent(props: CommentPropTypes) {
         <textarea
           name="content"
           maxLength={400}
-          placeholder={name ? `欢迎 ${name}，畅所欲言吧～` : "您还未登陆哦，快去登陆吧～"}
+          placeholder={name ? `欢迎 ${name}，畅所欲言吧～` : "您还未登陆哦，先去登陆吧～"}
           autoComplete="off"
           value={formik.values.content}
           onChange={formik.handleChange}
@@ -452,7 +452,7 @@ export function CommentComponent(props: CommentPropTypes) {
           </>
         ) : (
           <div className="empty">
-            <Typography color="textSecondary">快来呀，第一条神评就是你拉～</Typography>
+            <Typography color="textSecondary">快来呀，第一条神评就是你啦～</Typography>
           </div>
         )}
       </section>

@@ -114,7 +114,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
               </Typography>
             )}
           </Typography>
-          <Typography variant="caption" noWrap className={classes.itemInfo}>
+          <Typography variant="caption" noWrap className={classes.itemInfo} color="textSecondary">
             {list[index].aliasname || "---"}
           </Typography>
         </div>

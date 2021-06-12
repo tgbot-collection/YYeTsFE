@@ -230,7 +230,7 @@ export function DataTableComponent(props: DataTablePropTypes) {
 
   const handleClickMultipleDown = () => {
     return selected.reduce((pre, current) => {
-      const add = tableData[current].files.find((address) => address.way === "2");
+      const add = tableData[current].files?.find((address) => address?.way === "2");
       return pre + (add ? add.address + "\n" : "");
     }, "");
   };

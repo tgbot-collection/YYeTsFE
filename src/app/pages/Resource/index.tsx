@@ -1,6 +1,19 @@
 import * as React from "react";
 import { useLocation } from "react-router-dom";
-import { Container, createStyles, Divider, makeStyles, Theme } from "@material-ui/core";
+import {
+  Backdrop,
+  Button,
+  ButtonGroup,
+  Container,
+  createStyles,
+  Divider,
+  Fade,
+  IconButton,
+  makeStyles,
+  Modal,
+  Theme,
+  Typography,
+} from "@material-ui/core";
 import queryString from "query-string";
 
 import { getResourceByID, ResourceInfo, AddressInfo, cancelGetResourceByID } from "API";
@@ -9,11 +22,14 @@ import { AddressComponent } from "./Address";
 import { useSnackbar } from "notistack";
 import { CommentComponent } from "./Comment";
 import { setTitle } from "utils";
+import { History } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
+      position: "relative",
       paddingTop: theme.spacing(4),
+
       [theme.breakpoints.up("sm")]: {
         paddingTop: theme.spacing(6),
       },
@@ -23,6 +39,30 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up("sm")]: {
         margin: theme.spacing(6, 0),
       },
+    },
+    back: {
+      position: "absolute",
+      top: 0,
+      right: 16,
+
+      "&::before": {
+        position: "absolute",
+        content: " ",
+        width: 100,
+        height: 100,
+        backgroundColor: theme.palette.background.paper,
+      },
+    },
+    modal: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    paper: {
+      borderRadius: "4px",
+      backgroundColor: theme.palette.background.paper,
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
     },
   })
 );
@@ -35,10 +75,19 @@ export function ResourcePage() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [loading, setLoading] = React.useState<boolean>(true);
+  const [open, setOpen] = React.useState<boolean>(false);
 
   const [resourceInfo, setResourceInfo] = React.useState<ResourceInfo>({} as ResourceInfo);
   const [resourceAddress, setResourceAddress] = React.useState<Array<AddressInfo>>([]);
   const [isLike, setIsLike] = React.useState<boolean>(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   React.useEffect(() => {
     getResourceByID(id as string)
@@ -69,6 +118,37 @@ export function ResourcePage() {
   return (
     <>
       <Container className={classes.container} maxWidth="lg">
+        <IconButton className={classes.back} onClick={handleOpen}>
+          <History />
+        </IconButton>
+
+        <Modal
+          className={classes.modal}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div className={classes.paper}>
+              <Typography variant="h6" gutterBottom>
+                返回旧版页面
+              </Typography>
+              <div>
+                <ButtonGroup variant="contained" disableElevation>
+                  <Button onClick={handleClose}>取消</Button>
+                  <Button color="primary" href={`/resource.html${location.search}`}>
+                    确认
+                  </Button>
+                </ButtonGroup>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
+
         <InfoComponent
           loading={loading}
           resourceInfo={resourceInfo}
