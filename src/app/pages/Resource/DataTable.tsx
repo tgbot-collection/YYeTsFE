@@ -274,7 +274,7 @@ export function DataTableComponent(props: DataTablePropTypes) {
                       padding="none"
                       className={clsx(classes.noWarp, classes.episode)}
                     >
-                      {season} 第{row.episode}集
+                      {season} {row.episode && `第${row.episode}集`}
                     </TableCell>
                     <TableCell align="left">{row.name}</TableCell>
                     {row.size && row.size !== "0" && <TableCell align="left">{row.size}</TableCell>}
