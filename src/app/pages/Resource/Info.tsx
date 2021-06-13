@@ -51,11 +51,12 @@ interface InfoPropTypes {
   resourceInfo: ResourceInfo;
   url: string;
   isLike: boolean;
+  setIsLike: React.Dispatch<React.SetStateAction<boolean>>;
   id: string;
 }
 
 export function InfoComponent(props: InfoPropTypes) {
-  const { loading, resourceInfo, url, isLike, id } = props;
+  const { loading, resourceInfo, url, isLike, setIsLike, id } = props;
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const history = useHistory();
@@ -63,7 +64,6 @@ export function InfoComponent(props: InfoPropTypes) {
 
   const { name } = React.useContext(UserContext);
 
-  const [like, setLike] = React.useState(isLike);
   const [likeLoading, setLikeLoading] = React.useState<boolean>(false);
 
   const classes = useStyles();
@@ -91,7 +91,7 @@ export function InfoComponent(props: InfoPropTypes) {
     patchUser({ resource_id: id })
       .then((res) => {
         setLikeLoading(false);
-        setLike((pre) => !pre);
+        setIsLike((pre) => !pre);
 
         enqueueSnackbar(res.data, { variant: "success" });
       })
@@ -150,11 +150,11 @@ export function InfoComponent(props: InfoPropTypes) {
               variant="contained"
               color="secondary"
               size="small"
-              startIcon={like ? <UnFavoriteIcon /> : <FavoriteIcon />}
+              startIcon={isLike ? <UnFavoriteIcon /> : <FavoriteIcon />}
               onClick={handleClickFavorite}
               disabled={likeLoading}
             >
-              {like ? "取消收藏" : "收藏资源"}
+              {isLike ? "取消收藏" : "收藏资源"}
             </Button>
           )}
         </Grid>

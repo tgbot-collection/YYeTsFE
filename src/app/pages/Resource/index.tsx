@@ -161,6 +161,7 @@ export function ResourcePage() {
           resourceInfo={resourceInfo}
           url={`${process.env.REACT_APP_DOMAIN}${location.pathname}${location.search}`}
           isLike={isLike}
+          setIsLike={setIsLike}
           id={id as string}
         />
 
