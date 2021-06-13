@@ -123,7 +123,7 @@ export function HelpPage() {
         <Typography>3. 我使用了Cloudflare，请参考Cloudflare的隐私政策。</Typography>
         <Typography>
           4. 我记录了metrics信息，用于优化日后访问量，此信息不包含个人信息，无法用于追踪你。 可以
-          <Link href="https://yyets.dmesg.app/api/metrics">点击这里查看</Link>。
+          <Link href={`${process.env.REACT_APP_DOMAIN}/api/metrics`}>点击这里查看</Link>。
         </Typography>
         <Typography>
           5. 如果你选择注册，我会保存你的用户名、加密后的密码、注册时间、UA等信息。此类信息不会被公开或与第三方分享。

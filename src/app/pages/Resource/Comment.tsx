@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       "& .ua": {
         gridArea: "ua",
         position: "relative",
-        top: "-6px",
+        top: "-4px",
       },
       "& .comment": {
         gridArea: "comment",
@@ -209,6 +209,7 @@ export function CommentComponent(props: CommentPropTypes) {
   const [count, setCount] = React.useState<number>(0);
   const [hasMore, setHasMore] = React.useState<boolean>(false);
   const [listLoading, setListLoading] = React.useState<boolean>(false);
+  const [loadingMore, setLoadingMore] = React.useState<boolean>(false);
   const [commentList, setCommentList] = React.useState<Array<Comment>>([]);
 
   const formik = useFormik({
@@ -312,7 +313,8 @@ export function CommentComponent(props: CommentPropTypes) {
   }, [captchaID, enqueueSnackbar, id]);
 
   React.useEffect(() => {
-    setListLoading(true);
+    if (page === 1) setListLoading(true);
+    else setLoadingMore(true);
 
     getComment({ resource_id: id, page, size: PAGE_SIZE })
       .then((res) => {
@@ -392,7 +394,21 @@ export function CommentComponent(props: CommentPropTypes) {
       </form>
 
       <section className={classes.commentList}>
-        {commentList.length > 0 ? (
+        {listLoading &&
+          Array.from(new Array(4)).map((item, index) => (
+            <div className={classes.commentItem} key={index}>
+              <Skeleton variant="circle" className="avatar" />
+              <Skeleton variant="rect" className="name" width={180} height={32} />
+              <Skeleton variant="rect" className="ua" width={240} height={18} />
+              <Skeleton variant="rect" className="comment" style={{ borderBottom: "none" }} height={72} />
+            </div>
+          ))}
+        {!listLoading && commentList.length === 0 && (
+          <div className="empty">
+            <Typography color="textSecondary">快来呀，第一条神评就是你啦～</Typography>
+          </div>
+        )}
+        {!listLoading && commentList.length > 0 && (
           <>
             <div>
               {commentList.map((comment, index) => {
@@ -444,16 +460,12 @@ export function CommentComponent(props: CommentPropTypes) {
             </div>
             {hasMore && (
               <div className={classes.hasMore}>
-                <Button onClick={handleLoadMore} disabled={listLoading} variant="outlined">
+                <Button onClick={handleLoadMore} disabled={loadingMore} variant="outlined">
                   {listLoading ? "努力加载中..." : "加载更多"}
                 </Button>
               </div>
             )}
           </>
-        ) : (
-          <div className="empty">
-            <Typography color="textSecondary">快来呀，第一条神评就是你啦～</Typography>
-          </div>
         )}
       </section>
     </div>
