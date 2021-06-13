@@ -130,14 +130,16 @@ export function SearchListComponent(props: SearchListPropTypes) {
   }
 
   /* 去除搜索和搜索结果高度 */
-  const height = Math.ceil((window.innerHeight - 150) / 46 - 1) * 46;
+  const height = window.innerHeight - 150 - 46;
 
   if (loading)
     return (
       <div className={classes.root}>
-        {Array.from(new Array(height / 46 + 1)).map((item, index) => (
-          <Skeleton variant="rect" height={40} width="100%" key={index} className={classes.skeleton} />
-        ))}
+        <div style={{ height: height + 46, overflow: "hidden" }}>
+          {Array.from(new Array(Math.ceil(height / 46) + 1)).map((item, index) => (
+            <Skeleton variant="rect" height={40} width="100%" key={index} className={classes.skeleton} />
+          ))}
+        </div>
       </div>
     );
 
