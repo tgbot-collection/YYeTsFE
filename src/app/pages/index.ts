@@ -6,3 +6,4 @@ export * from "./Login";
 export * from "./Discuss";
 export * from "./Me";
 export * from "./Database";
+export * from "./Help";

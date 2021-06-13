@@ -101,6 +101,11 @@ export function Footer() {
                     数据库下载
                   </Link>
                 </li>
+                <li>
+                  <Link color="inherit" variant="body1" component={RouterLink} to="/help">
+                    帮助页
+                  </Link>
+                </li>
               </ul>
             </Grid>
           </Grid>

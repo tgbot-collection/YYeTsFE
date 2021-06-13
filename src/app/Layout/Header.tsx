@@ -93,11 +93,13 @@ export function Header() {
         )}
 
         {/* 留言板 */}
-        <Tooltip title="留言板">
-          <IconButton component={Link} to="/discuss" color="inherit">
-            <QuestionAnswer />
-          </IconButton>
-        </Tooltip>
+        {location.pathname !== "/discuss" && (
+          <Tooltip title="留言板">
+            <IconButton component={Link} to="/discuss" color="inherit">
+              <QuestionAnswer />
+            </IconButton>
+          </Tooltip>
+        )}
 
         {/* Github */}
         <IconButton color="inherit" {...bindTrigger(githubPopupState)}>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
-import { DataBasePage, DiscussPage, HomePage, MePage, ResourcePage, SearchPage } from "./pages";
+import { DataBasePage, DiscussPage, HelpPage, HomePage, MePage, ResourcePage, SearchPage } from "./pages";
 import { UserContext } from "./Layout/UserContext";
 import { useLogin } from "../Hooks";
 
@@ -20,6 +20,7 @@ export function BasePage() {
         {name ? <MePage /> : <Redirect to={login} />}
       </Route>
       <Route exact path="/database" component={DataBasePage} />
+      <Route exact path="/help" component={HelpPage} />
 
       <Route>
         <Redirect to="/404" />

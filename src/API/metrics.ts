@@ -28,5 +28,5 @@ type MetricsType =
   | "share";
 
 export function postMetrics(type: MetricsType) {
-  return axios.post("/api/metrics", null, { params: { type } });
+  return axios.post("/api/metrics", { type });
 }
