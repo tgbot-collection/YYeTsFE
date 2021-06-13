@@ -83,7 +83,7 @@ export function DataBasePage() {
           )}
           {loading ? <Skeleton /> : <Typography className="date">Update: {db["yyets_mongo.gz"].date}</Typography>}
           <Button variant="outlined" href="/data/yyets_mongo.gz">
-            下载 MongoDB
+            下载 MongoDB {db["yyets_mongo.gz"]?.size}
           </Button>
         </Grid>
 
@@ -101,7 +101,7 @@ export function DataBasePage() {
           )}
           {loading ? <Skeleton /> : <Typography className="date">Update: {db["yyets_mysql.zip"].date}</Typography>}
           <Button variant="outlined" href="/data/yyets_mysql.zip">
-            下载 MySQL 5.7
+            下载 MySQL 5.7 {db["yyets_mysql.zip"]?.size}
           </Button>
         </Grid>
 
@@ -119,7 +119,7 @@ export function DataBasePage() {
           )}
           {loading ? <Skeleton /> : <Typography className="date">Update: {db["yyets_sqlite.zip"].date}</Typography>}
           <Button variant="outlined" href="/data/yyets_sqlite.zip">
-            下载 SQLite
+            下载 SQLite {db["yyets_sqlite.zip"]?.size}
           </Button>
         </Grid>
       </Grid>
