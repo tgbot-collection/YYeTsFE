@@ -25,7 +25,8 @@ type MetricsType =
   | "favorite"
   | "comment"
   | "download"
-  | "share";
+  | "share"
+  | "backOld";
 
 export function postMetrics(type: MetricsType) {
   return axios.post("/api/metrics", { type });
