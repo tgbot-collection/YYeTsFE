@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import { useHistory, useLocation } from "react-router-dom";
 import queryString from "query-string";
 
-import { cancelGetTop, getSearchKw, getTop, GetTopRes, ResourceInfo } from "API";
+import { cancelGetTop, getSearchKw, getTop, GetTopRes, postMetrics, ResourceInfo } from "API";
 import { setTitle } from "utils";
 import { SectionComponent } from "./Section";
 import { SearchListComponent } from "./SearchList";
@@ -65,6 +65,9 @@ export function SearchPage() {
       })
       .catch((error) => {
         enqueueSnackbar(`搜索出错：${error.message}`, { variant: "error" });
+      })
+      .finally(() => {
+        postMetrics("search").catch();
       });
   };
 
@@ -104,6 +107,9 @@ export function SearchPage() {
         })
         .catch((error) => {
           enqueueSnackbar(error.message, { variant: "error" });
+        })
+        .finally(() => {
+          postMetrics("top").catch();
         });
     }
 

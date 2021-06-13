@@ -23,7 +23,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
 
-import { ResourceDetail } from "API";
+import { postMetrics, ResourceDetail } from "API";
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -116,6 +116,7 @@ const CopyButton = (props: ButtonProps) => {
         enqueueSnackbar(`${downItem.way_cn} 下载地址复制成功`, {
           variant: "success",
         });
+        postMetrics("download").catch();
       }}
     >
       <Button
@@ -142,6 +143,7 @@ const HrefButton = (props: ButtonProps) => {
         enqueueSnackbar("网盘密码已复制", {
           variant: "success",
         });
+        postMetrics("download").catch();
       }}
     >
       <Button

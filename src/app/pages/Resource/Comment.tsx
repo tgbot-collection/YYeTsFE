@@ -10,7 +10,7 @@ import clsx from "clsx";
 import dayjs from "dayjs";
 import { useHistory } from "react-router-dom";
 
-import { cancelGetCaptcha, Comment, getCaptcha, getComment, postComment } from "API";
+import { cancelGetCaptcha, Comment, getCaptcha, getComment, postComment, postMetrics } from "API";
 import { randomString } from "utils";
 import { UserContext } from "../../Layout/UserContext";
 import { useLogin } from "../../../Hooks";
@@ -269,6 +269,7 @@ export function CommentComponent(props: CommentPropTypes) {
         })
         .finally(() => {
           setPostLoading(false);
+          postMetrics("comment").catch();
         });
     },
   });

@@ -18,7 +18,7 @@ import {
 } from "@material-ui/core";
 import queryString from "query-string";
 
-import { getResourceByID, ResourceInfo, AddressInfo, cancelGetResourceByID } from "API";
+import { getResourceByID, ResourceInfo, AddressInfo, cancelGetResourceByID, postMetrics } from "API";
 import { InfoComponent } from "./Info";
 import { AddressComponent } from "./Address";
 import { useSnackbar } from "notistack";
@@ -109,6 +109,9 @@ export function ResourcePage() {
       .catch((error) => {
         console.log(error);
         enqueueSnackbar(`获取资源信息错误：${error.message}`, { variant: "error" });
+      })
+      .finally(() => {
+        postMetrics("resource").catch();
       });
 
     return cancelGetResourceByID;

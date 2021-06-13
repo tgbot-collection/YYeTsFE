@@ -4,6 +4,7 @@ import { Button, Container, createStyles, Link, makeStyles, Theme, Typography } 
 import { Link as RouterLink } from "react-router-dom";
 
 import { setTitle, toAbsoluteUrl } from "utils";
+import { postMetrics } from "API";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -74,6 +75,10 @@ export function HomePage() {
   setTitle("首页");
 
   const classes = useStyles();
+
+  React.useEffect(() => {
+    postMetrics("home").catch();
+  }, []);
 
   return (
     <>

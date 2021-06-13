@@ -2,7 +2,7 @@ import * as React from "react";
 import { setTitle, toAbsoluteUrl } from "utils";
 import { Button, Container, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 
-import { getDatabase, GetDatabaseRes } from "API";
+import { getDatabase, GetDatabaseRes, postMetrics } from "API";
 import { Skeleton } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -60,6 +60,8 @@ export function DataBasePage() {
       .catch((error) => {
         console.log(error);
       });
+
+    postMetrics("database").catch();
   }, []);
 
   return (

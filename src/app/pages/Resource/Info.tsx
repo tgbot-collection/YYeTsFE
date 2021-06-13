@@ -12,7 +12,7 @@ import {
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
 
-import { ResourceInfo, patchUser } from "API";
+import { ResourceInfo, patchUser, postMetrics } from "API";
 import { UserContext } from "../../Layout/UserContext";
 import { useHistory } from "react-router-dom";
 import { useLogin } from "../../../Hooks";
@@ -98,6 +98,9 @@ export function InfoComponent(props: InfoPropTypes) {
       .catch((error) => {
         setLikeLoading(false);
         enqueueSnackbar(error.message, { variant: "error" });
+      })
+      .finally(() => {
+        postMetrics("favorite").catch();
       });
   };
 
@@ -166,6 +169,7 @@ export function InfoComponent(props: InfoPropTypes) {
               text={url}
               onCopy={() => {
                 enqueueSnackbar("页面地址复制成功，快去分享给小伙伴吧", { variant: "success" });
+                postMetrics("share").catch();
               }}
             >
               <Button variant="contained" color="primary" size="small" startIcon={<ShareIcon />}>

@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-import { getLike, patchUser, ResourceInfo } from "API";
+import { getLike, patchUser, postMetrics, ResourceInfo } from "API";
 import { useSnackbar } from "notistack";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { Skeleton } from "@material-ui/lab";
@@ -101,6 +101,10 @@ export function MePage() {
       })
       .catch((error) => {
         console.log(error);
+        enqueueSnackbar(`获取收藏资源失败: ${error.message}`, { variant: "error" });
+      })
+      .finally(() => {
+        postMetrics("me").catch();
       });
   }, []);
 
@@ -127,6 +131,9 @@ export function MePage() {
       })
       .catch((err) => {
         enqueueSnackbar(err.message, { variant: "error" });
+      })
+      .finally(() => {
+        postMetrics("favorite").catch();
       });
   };
 
@@ -138,7 +145,7 @@ export function MePage() {
         </Typography>
         <Skeleton variant="rect" height={18} width={160} />
         <section className={classes.section}>
-          <Skeleton variant="rect" width={80} height={32} className={classes.title} />
+          <Skeleton variant="rect" width={80} height={32} style={{ marginBottom: 7 }} />
           <Grid container spacing={mobile ? 1 : 2}>
             {Array.from(new Array(8)).map((item, index) => (
               <Grid item xs={6} sm={4} md={3} key={index}>
@@ -211,6 +218,7 @@ export function MePage() {
                         text={`${process.env.REACT_APP_DOMAIN}/resource?id=${item.id}`}
                         onCopy={() => {
                           enqueueSnackbar("地址复制成功，快去分享给小伙伴吧", { variant: "success" });
+                          postMetrics("share").catch();
                         }}
                       >
                         <Button size="small" color="primary" variant="contained" disableElevation>
