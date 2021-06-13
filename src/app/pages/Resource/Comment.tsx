@@ -51,6 +51,8 @@ const useStyles = makeStyles((theme: Theme) =>
       "& .avatar": {
         gridArea: "avatar",
         fontSize: "0.875rem",
+        width: "40px",
+        height: "40px",
       },
       "& .name": {
         gridArea: "name",
