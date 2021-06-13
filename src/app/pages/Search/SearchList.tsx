@@ -41,7 +41,11 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: 1,
     },
     skeleton: {
-      margin: "3px 0",
+      margin: "6px 0",
+
+      "&:last-child": {
+        marginBottom: theme.spacing(4) + 6,
+      },
     },
     empty: {
       display: "flex",
@@ -125,12 +129,13 @@ export function SearchListComponent(props: SearchListPropTypes) {
     );
   }
 
-  const height = window.innerHeight - 150;
+  /* 去除搜索和搜索结果高度 */
+  const height = Math.ceil((window.innerHeight - 150) / 46 - 1) * 46;
 
   if (loading)
     return (
       <div className={classes.root}>
-        {Array.from(new Array(Math.ceil(height / 46))).map((item, index) => (
+        {Array.from(new Array(height / 46 + 1)).map((item, index) => (
           <Skeleton variant="rect" height={40} width="100%" key={index} className={classes.skeleton} />
         ))}
       </div>
@@ -139,9 +144,12 @@ export function SearchListComponent(props: SearchListPropTypes) {
   return (
     <div className={classes.root}>
       {list.length > 0 ? (
-        <FixedSizeList height={height} width="100%" itemSize={46} itemCount={list.length + 1}>
-          {renderRow}
-        </FixedSizeList>
+        <>
+          <Typography style={{ height: 46, lineHeight: "46px" }}>共 {list.length} 条搜索结果</Typography>
+          <FixedSizeList height={height} width="100%" itemSize={46} itemCount={list.length + 1}>
+            {renderRow}
+          </FixedSizeList>
+        </>
       ) : (
         <div className={classes.empty} style={{ height }}>
           <img src={toAbsoluteUrl("/svg/emptyAddress.svg")} alt="empty" />

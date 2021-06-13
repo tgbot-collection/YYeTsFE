@@ -69,7 +69,7 @@ export function DataBasePage() {
       </Typography>
 
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6} lg={4} className={classes.db}>
+        <Grid item xs={12} md={6} xl={4} className={classes.db}>
           <img src={toAbsoluteUrl("/svg/mongodb.svg")} alt="mongodb" className="icon" />
           {loading ? (
             <Skeleton />
@@ -87,7 +87,7 @@ export function DataBasePage() {
           </Button>
         </Grid>
 
-        <Grid item xs={12} md={6} lg={4} className={classes.db}>
+        <Grid item xs={12} md={6} xl={4} className={classes.db}>
           <img src={toAbsoluteUrl("/svg/mysql.svg")} alt="mysql" className="icon" />
           {loading ? (
             <Skeleton />
@@ -105,7 +105,7 @@ export function DataBasePage() {
           </Button>
         </Grid>
 
-        <Grid item xs={12} md={6} lg={4} className={classes.db}>
+        <Grid item xs={12} md={6} xl={4} className={classes.db}>
           <img src={toAbsoluteUrl("/svg/sqlite.svg")} alt="sqlite" className="icon" />
           {loading ? (
             <Skeleton />
