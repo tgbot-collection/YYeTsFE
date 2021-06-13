@@ -117,8 +117,8 @@ export function DataBasePage() {
               </Typography>
             </Typography>
           )}
-          {loading ? <Skeleton /> : <Typography className="date">Update: {db["yyets_mongo.gz"].date}</Typography>}
-          <Button variant="outlined" href="/data/yyets_mongo.gz">
+          {loading ? <Skeleton /> : <Typography className="date">Update: {db["yyets_sqlite.zip"].date}</Typography>}
+          <Button variant="outlined" href="/data/yyets_sqlite.zip">
             下载 SQLite
           </Button>
         </Grid>
