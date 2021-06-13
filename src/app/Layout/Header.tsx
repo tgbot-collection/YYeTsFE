@@ -136,10 +136,8 @@ export function Header() {
               <MenuItem className={classes.nowrap} disabled dense>
                 {username}
               </MenuItem>
-              <MenuItem onClick={loginPopupState.close}>
-                <Link to="/me" style={{ color: "inherit", textDecoration: "none" }}>
-                  个人中心
-                </Link>
+              <MenuItem onClick={loginPopupState.close} component={Link} to="/me">
+                个人中心
               </MenuItem>
 
               <Divider />
