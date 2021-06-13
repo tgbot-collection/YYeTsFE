@@ -3,12 +3,14 @@ import * as yup from "yup";
 import { Button, Container, createStyles, makeStyles, TextField, Theme } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
+import { useHistory, useLocation } from "react-router-dom";
+import queryString from "query-string";
 
-import { RankComponent } from "./Rank";
 import { cancelGetTop, getSearchKw, getTop, GetTopRes, ResourceInfo } from "API";
+import { setTitle } from "utils";
 import { SectionComponent } from "./Section";
 import { SearchListComponent } from "./SearchList";
-import { setTitle } from "utils";
+import { RankComponent } from "./Rank";
 
 const validationSchema = yup.object({
   search: yup.string().required("请输入电影名"),
@@ -38,10 +40,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export function SearchPage() {
-  setTitle("搜索资源");
-
   const { enqueueSnackbar } = useSnackbar();
+  const history = useHistory();
 
+  const parsedQuery = queryString.parse(useLocation().search);
+
+  /* 显示模式，热门还是搜索列表 */
   const [mode, setMode] = React.useState<"top" | "list">("top");
   const ref = React.useRef<HTMLInputElement>(null!);
 
@@ -51,45 +55,60 @@ export function SearchPage() {
   const [listLoading, setListLoading] = React.useState<boolean>(true);
   const [list, setList] = React.useState<Array<ResourceInfo>>([]);
 
+  const searchByKw = (search: string) => {
+    setTitle(search + " - 搜索结果");
+    getSearchKw(search)
+      .then((res) => {
+        setListLoading(false);
+
+        setList(res.data.data.map((item) => item.data.info));
+      })
+      .catch((error) => {
+        enqueueSnackbar(`搜索出错：${error.message}`, { variant: "error" });
+      });
+  };
+
   const formik = useFormik({
     initialValues: {
-      search: "",
+      search: (parsedQuery.kw as string) || "",
     },
     validationSchema,
     onSubmit: (values) => {
       ref.current.blur();
-      setMode("list");
+
+      history.replace({ pathname: "/search", search: `?kw=${values.search}` });
 
       setTimeout(() => {
+        setMode("list");
         setListLoading(true);
       }, 100);
 
-      getSearchKw(values.search)
-        .then((res) => {
-          setListLoading(false);
-
-          setList(res.data.data.map((item) => item.data.info));
-        })
-        .catch((error) => {
-          enqueueSnackbar(`搜索出错：${error.message}`, { variant: "error" });
-        });
+      searchByKw(values.search);
     },
   });
 
   React.useEffect(() => {
-    getTop()
-      .then((res) => {
-        if (res) {
-          setTop(res.data);
+    if (parsedQuery.kw) {
+      setMode("list");
 
-          setRankLoading(false);
-        }
-      })
-      .catch((error) => {
-        enqueueSnackbar(error.message, { variant: "error" });
-      });
+      searchByKw(parsedQuery.kw as string);
+    } else {
+      setTitle("搜索资源");
+      getTop()
+        .then((res) => {
+          if (res) {
+            setTop(res.data);
+
+            setRankLoading(false);
+          }
+        })
+        .catch((error) => {
+          enqueueSnackbar(error.message, { variant: "error" });
+        });
+    }
 
     return cancelGetTop;
+    // eslint-disable-next-line
   }, [enqueueSnackbar]);
 
   const classes = useStyles();
@@ -101,7 +120,7 @@ export function SearchPage() {
           name="search"
           placeholder="搜索片名"
           className={classes.searchInput}
-          autoFocus
+          autoFocus={!parsedQuery.kw}
           value={formik.values.search}
           onChange={formik.handleChange}
           error={formik.touched.search && Boolean(formik.errors.search)}

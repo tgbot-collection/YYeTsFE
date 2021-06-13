@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: "3px 0",
     },
     empty: {
-      height: "60vh",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -144,7 +143,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
           {renderRow}
         </FixedSizeList>
       ) : (
-        <div className={classes.empty}>
+        <div className={classes.empty} style={{ height }}>
           <img src={toAbsoluteUrl("/svg/emptyAddress.svg")} alt="empty" />
           <Typography>暂无结果</Typography>
         </div>

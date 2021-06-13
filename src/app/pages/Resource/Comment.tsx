@@ -86,8 +86,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     comment: {
       width: "100%",
-      border: `1px solid ${theme.palette.divider}`,
-      borderRadius: "8px",
+      borderRadius: "4px",
       padding: theme.spacing(1),
       backgroundColor: theme.palette.background.paper,
       boxSizing: "border-box",
@@ -101,7 +100,7 @@ const useStyles = makeStyles((theme: Theme) =>
         outline: "none",
         resize: "none",
         minHeight: "146px",
-        borderRadius: "8px",
+        borderRadius: "4px",
         padding: theme.spacing(1),
         boxSizing: "border-box",
         border: `1px solid ${theme.palette.background.paper}`,
@@ -205,7 +204,7 @@ export function CommentComponent(props: CommentPropTypes) {
 
   const [postLoading, setPostLoading] = React.useState<boolean>(false);
 
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 20;
   const [page, setPage] = React.useState<number>(1);
   const [count, setCount] = React.useState<number>(0);
   const [hasMore, setHasMore] = React.useState<boolean>(false);

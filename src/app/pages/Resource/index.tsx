@@ -24,7 +24,6 @@ import { AddressComponent } from "./Address";
 import { useSnackbar } from "notistack";
 import { CommentComponent } from "./Comment";
 import { setTitle } from "utils";
-import { History } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
