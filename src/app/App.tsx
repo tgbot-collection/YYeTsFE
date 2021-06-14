@@ -1,10 +1,10 @@
 import * as React from "react";
 import { SnackbarKey, SnackbarProvider } from "notistack";
+import { Button } from "@material-ui/core";
 
 import { Routes } from "./Routes";
 import { ThemeProvider } from "./Layout/ThemeProvider";
 import { UserProvider } from "./Layout/UserContext";
-import { Button } from "@material-ui/core";
 
 function App() {
   const notistackRef = React.useRef<SnackbarProvider>(null!);
