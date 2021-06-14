@@ -85,9 +85,25 @@ export function DataBasePage() {
               </Typography>
             </Typography>
           )}
-          {loading ? <Skeleton /> : <Typography className="date">Update: {db["yyets_mongo.gz"].date}</Typography>}
-          <Button variant="outlined" href="/data/yyets_mongo.gz">
-            下载 MongoDB {db["yyets_mongo.gz"]?.size}
+          {loading ? (
+            <Skeleton />
+          ) : (
+            <Typography className="date">
+              Update:&nbsp;
+              <Typography component="span" variant="body2">
+                {db["yyets_mongo.gz"].date}
+              </Typography>
+            </Typography>
+          )}
+          <Button
+            variant="outlined"
+            href="/data/yyets_mongo.gz"
+            onClick={() => {
+              gtag("event", "database", { type: "mongoDB" });
+            }}
+            style={{ textTransform: "none" }}
+          >
+            下载 mongoDB {db["yyets_mongo.gz"]?.size}
           </Button>
         </Grid>
 
@@ -103,8 +119,24 @@ export function DataBasePage() {
               </Typography>
             </Typography>
           )}
-          {loading ? <Skeleton /> : <Typography className="date">Update: {db["yyets_mysql.zip"].date}</Typography>}
-          <Button variant="outlined" href="/data/yyets_mysql.zip">
+          {loading ? (
+            <Skeleton />
+          ) : (
+            <Typography className="date">
+              Update:&nbsp;
+              <Typography component="span" variant="body2">
+                {db["yyets_mysql.zip"].date}
+              </Typography>
+            </Typography>
+          )}
+          <Button
+            variant="outlined"
+            href="/data/yyets_mysql.zip"
+            onClick={() => {
+              gtag("event", "database", { type: "MySQL" });
+            }}
+            style={{ textTransform: "none" }}
+          >
             下载 MySQL 5.7 {db["yyets_mysql.zip"]?.size}
           </Button>
         </Grid>
@@ -121,8 +153,24 @@ export function DataBasePage() {
               </Typography>
             </Typography>
           )}
-          {loading ? <Skeleton /> : <Typography className="date">Update: {db["yyets_sqlite.zip"].date}</Typography>}
-          <Button variant="outlined" href="/data/yyets_sqlite.zip">
+          {loading ? (
+            <Skeleton />
+          ) : (
+            <Typography className="date">
+              Update:&nbsp;
+              <Typography component="span" variant="body2">
+                {db["yyets_sqlite.zip"].date}
+              </Typography>
+            </Typography>
+          )}
+          <Button
+            variant="outlined"
+            href="/data/yyets_sqlite.zip"
+            onClick={() => {
+              gtag("event", "database", { type: "SQLite" });
+            }}
+            style={{ textTransform: "none" }}
+          >
             下载 SQLite {db["yyets_sqlite.zip"]?.size}
           </Button>
         </Grid>
