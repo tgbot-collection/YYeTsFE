@@ -69,12 +69,12 @@ export function Footer() {
               </Typography>
               <ul>
                 <li>
-                  <Link href="https://t.me/BennyThink" color="inherit" variant="body1">
+                  <Link href="https://t.me/BennyThink" color="inherit" variant="body1" target="_blank">
                     Benny 小可爱
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://dmesg.app/" color="inherit" variant="body1">
+                  <Link href="https://dmesg.app/" color="inherit" variant="body1" target="_blank">
                     Blog
                   </Link>
                 </li>
@@ -87,22 +87,22 @@ export function Footer() {
               </Typography>
               <ul>
                 <li>
-                  <Link href="https://t.me/yyets_bot" color="inherit" variant="body1">
+                  <Link href="https://t.me/yyets_bot" color="inherit" variant="body1" target="_blank">
                     Telegram Bot
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://t.me/mikuri520" color="inherit" variant="body1">
+                  <Link href="https://t.me/mikuri520" color="inherit" variant="body1" target="_blank">
                     Telegram Channel
                   </Link>
                 </li>
                 <li>
-                  <Link color="inherit" variant="body1" component={RouterLink} to="/database">
+                  <Link color="inherit" variant="body1" component={RouterLink} to="/database" target="_blank">
                     数据库下载
                   </Link>
                 </li>
                 <li>
-                  <Link color="inherit" variant="body1" component={RouterLink} to="/help">
+                  <Link color="inherit" variant="body1" component={RouterLink} to="/help" target="_blank">
                     帮助页
                   </Link>
                 </li>
@@ -112,7 +112,7 @@ export function Footer() {
 
           <Typography color="textSecondary" variant="body2">
             Web Design by&nbsp;
-            <Link href="https://blog.zuiyu1818.cn" color="secondary">
+            <Link href="https://blog.zuiyu1818.cn" color="secondary" target="_blank">
               Zuiyu
             </Link>
             ，Copyright © 2019 - {new Date().getFullYear()} YYeTs

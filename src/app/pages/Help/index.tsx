@@ -70,8 +70,14 @@ export function HelpPage() {
         </Typography>
         <Typography>
           谢谢你哦！可以通过点 🌟，宣传，使用等方式来支持。当然你也可以通过
-          <Link href="https://afdian.net/@BennyThink">Buy Me a Coffee</Link>或
-          <Link href="https://www.buymeacoffee.com/bennythink">爱发电</Link>来支持我！
+          <Link href="https://afdian.net/@BennyThink" target="_blank">
+            Buy Me a Coffee
+          </Link>
+          或
+          <Link href="https://www.buymeacoffee.com/bennythink" target="_blank">
+            爱发电
+          </Link>
+          来支持我！
         </Typography>
       </div>
 
@@ -90,7 +96,10 @@ export function HelpPage() {
           有一点需要先声明，我不会进行如加入会员制度等商业化行为。所有用户等捐赠是自发性并且不具有强制性。
         </Typography>
         <Typography>
-          本项目使用<Link href="https://github.com/tgbot-collection/YYeTsBot/blob/master/LICENSE">MIT协议</Link>
+          本项目使用
+          <Link href="https://github.com/tgbot-collection/YYeTsBot/blob/master/LICENSE" target="_blank">
+            MIT协议
+          </Link>
           授权，因此你可以进行商业化，以任意形式进行分发、修改以及私有使用。你只要保持保持版权声明就可以了。
         </Typography>
       </div>

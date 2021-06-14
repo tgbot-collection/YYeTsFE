@@ -113,12 +113,12 @@ export function Header() {
           transformOrigin={{ vertical: "top", horizontal: "left" }}
         >
           <MenuItem onClick={githubPopupState.close}>
-            <MuLink href="https://github.com/tgbot-collection/YYeTsBot" color="inherit">
+            <MuLink href="https://github.com/tgbot-collection/YYeTsBot" color="inherit" target="_blank">
               YYeTsBot
             </MuLink>
           </MenuItem>
           <MenuItem onClick={githubPopupState.close}>
-            <MuLink href="https://github.com/wyx1818/YYeTsFE" color="inherit">
+            <MuLink href="https://github.com/wyx1818/YYeTsFE" color="inherit" target="_blank">
               YYeTsFE
             </MuLink>
           </MenuItem>

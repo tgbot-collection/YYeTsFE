@@ -154,7 +154,12 @@ export function ResourcePage() {
               <div>
                 <ButtonGroup variant="contained" disableElevation>
                   <Button onClick={handleClose}>取消</Button>
-                  <Button color="primary" href={`/resource.html${location.search}`} onClick={handleBack}>
+                  <Button
+                    color="primary"
+                    href={`/resource.html${location.search}`}
+                    onClick={handleBack}
+                    target="_blank"
+                  >
                     确认
                   </Button>
                 </ButtonGroup>
