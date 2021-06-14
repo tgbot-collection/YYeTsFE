@@ -95,6 +95,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
         to={{
           pathname: "/resource",
           search: `?id=${list[index].id}`,
+          state: { title: list[index].cnname },
         }}
       >
         <ListItemAvatar>

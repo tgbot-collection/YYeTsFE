@@ -67,6 +67,7 @@ export function RankComponent(props: RankPropTypes) {
                     to={{
                       pathname: "/resource",
                       search: `?id=${movieItem.id}`,
+                      state: { title: movieItem.cnname },
                     }}
                     color={index < 3 ? "secondary" : "inherit"}
                     style={{ textDecoration: "none" }}

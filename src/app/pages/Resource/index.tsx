@@ -69,9 +69,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export function ResourcePage() {
-  setTitle("资源信息");
-  const location = useLocation();
+  const location = useLocation<{ title: string }>();
   const { id } = queryString.parse(location.search);
+
+  setTitle(location.state?.title || String(id));
 
   const { enqueueSnackbar } = useSnackbar();
 
