@@ -87,7 +87,7 @@ export function InfoComponent(props: InfoPropTypes) {
       return;
     }
 
-    if (isLike) gtag("event", "add_to_favorite", { resource_id: id, form: "resource" });
+    if (!isLike) gtag("event", "add_to_favorite", { resource_id: id, form: "resource" });
     else gtag("event", "remove_from_favorite", { resource_id: id, form: "resource" });
 
     setLikeLoading(true);
