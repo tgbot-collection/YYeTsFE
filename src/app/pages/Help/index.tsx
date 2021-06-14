@@ -1,7 +1,6 @@
 import * as React from "react";
 import { setTitle } from "utils";
 import { Container, createStyles, Link, makeStyles, Theme, Typography } from "@material-ui/core";
-import { postMetrics } from "../../../API";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,10 +20,6 @@ export function HelpPage() {
   setTitle("帮助页");
   const classes = useStyles();
 
-  React.useEffect(() => {
-    postMetrics("help").catch();
-  }, []);
-
   return (
     <Container className={classes.container}>
       <Typography variant="h5" component="h2" className={classes.title}>
@@ -35,9 +30,8 @@ export function HelpPage() {
         <Typography variant="h6" component="h3" gutterBottom>
           如何下载
         </Typography>
-        <Typography>
-          一般来说，分享页面的下载链接是有电驴、磁力链和网盘的。网盘就去下载对应的客户端，电驴和磁力链，可以尝试下迅雷。
-        </Typography>
+        <Typography>一般来说，分享页面的下载链接是有电驴、磁力链和网盘的。</Typography>
+        <Typography>网盘就去下载对应的客户端，电驴和磁力链，可以尝试下迅雷。</Typography>
         <Typography>磁力链还可以试试uTorrent、BitCommet，并且记得去同步一份最新的tracker哦。</Typography>
         <Typography> 另外值得一提的是，有些网盘支持离线资源，可以把磁力、ed2k贴进去。</Typography>
       </div>
@@ -123,7 +117,15 @@ export function HelpPage() {
         <Typography>3. 我使用了Cloudflare，请参考Cloudflare的隐私政策。</Typography>
         <Typography>
           4. 我记录了metrics信息，用于优化日后访问量，此信息不包含个人信息，无法用于追踪你。 可以
-          <Link href={`${process.env.REACT_APP_DOMAIN}/api/metrics`}>点击这里查看</Link>。
+          <Link
+            href={`${process.env.REACT_APP_DOMAIN}/api/metrics`}
+            onClick={() => {
+              gtag("event", "metrics");
+            }}
+          >
+            点击这里查看
+          </Link>
+          。
         </Typography>
         <Typography>
           5. 如果你选择注册，我会保存你的用户名、加密后的密码、注册时间、UA等信息。此类信息不会被公开或与第三方分享。

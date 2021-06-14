@@ -118,7 +118,7 @@ export function ResourcePage() {
   }, [enqueueSnackbar, id, location.search]);
 
   const handleBack = () => {
-    postMetrics("backOld").catch();
+    gtag("event", "back_old", { resource_id: id });
   };
 
   const classes = useStyles();
@@ -174,7 +174,7 @@ export function ResourcePage() {
 
         <Divider className={classes.hr} />
 
-        <AddressComponent loading={loading} resourceAddress={resourceAddress} />
+        <AddressComponent loading={loading} resourceAddress={resourceAddress} resourceId={id as string} />
 
         <Divider className={classes.hr} />
 

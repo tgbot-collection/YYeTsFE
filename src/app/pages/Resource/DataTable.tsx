@@ -23,7 +23,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
 
-import { postMetrics, ResourceDetail } from "API";
+import { ResourceDetail } from "API";
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -104,10 +104,11 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
 interface ButtonProps {
   downItem: ResourceDetail["files"][0];
   enqueueSnackbar: ProviderContext["enqueueSnackbar"];
+  resourceId: string;
 }
 
 const CopyButton = (props: ButtonProps) => {
-  const { downItem, enqueueSnackbar } = props;
+  const { downItem, enqueueSnackbar, resourceId } = props;
 
   return (
     <CopyToClipboard
@@ -116,7 +117,7 @@ const CopyButton = (props: ButtonProps) => {
         enqueueSnackbar(`${downItem.way_cn} 下载地址复制成功`, {
           variant: "success",
         });
-        postMetrics("download").catch();
+        gtag("event", "download", { resource_id: resourceId, type: downItem.way_cn });
       }}
     >
       <Button
@@ -134,7 +135,7 @@ const CopyButton = (props: ButtonProps) => {
 };
 
 const HrefButton = (props: ButtonProps) => {
-  const { downItem, enqueueSnackbar } = props;
+  const { downItem, enqueueSnackbar, resourceId } = props;
 
   return (
     <CopyToClipboard
@@ -143,7 +144,7 @@ const HrefButton = (props: ButtonProps) => {
         enqueueSnackbar("网盘密码已复制", {
           variant: "success",
         });
-        postMetrics("download").catch();
+        gtag("event", "download", { resource_id: resourceId, type: downItem.way_cn });
       }}
     >
       <Button
@@ -194,10 +195,11 @@ const useStyles = makeStyles((theme: Theme) =>
 interface DataTablePropTypes {
   season: string;
   tableData: Array<ResourceDetail>;
+  resourceId: string;
 }
 
 export function DataTableComponent(props: DataTablePropTypes) {
-  const { season, tableData } = props;
+  const { season, tableData, resourceId } = props;
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -292,9 +294,9 @@ export function DataTableComponent(props: DataTablePropTypes) {
                         key={downItem.way}
                       >
                         {downItem.way !== "1" && downItem.way !== "2" ? (
-                          <HrefButton downItem={downItem} enqueueSnackbar={enqueueSnackbar} />
+                          <HrefButton downItem={downItem} enqueueSnackbar={enqueueSnackbar} resourceId={resourceId} />
                         ) : (
-                          <CopyButton downItem={downItem} enqueueSnackbar={enqueueSnackbar} />
+                          <CopyButton downItem={downItem} enqueueSnackbar={enqueueSnackbar} resourceId={resourceId} />
                         )}
                       </TableCell>
                     ))}

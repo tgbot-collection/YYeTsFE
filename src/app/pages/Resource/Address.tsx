@@ -45,9 +45,10 @@ const useStyles = makeStyles((theme: Theme) =>
 interface AddressPropTypes {
   loading: boolean;
   resourceAddress: Array<AddressInfo>;
+  resourceId: string;
 }
 export function AddressComponent(props: AddressPropTypes) {
-  const { loading, resourceAddress = [] } = props;
+  const { loading, resourceAddress = [], resourceId } = props;
 
   const [season, setSeason] = React.useState<number>(0);
   const [quality, setQuality] = React.useState<string>("");
@@ -126,6 +127,7 @@ export function AddressComponent(props: AddressPropTypes) {
           <DataTableComponent
             tableData={resourceAddress[season].items[quality]}
             season={resourceAddress[season].season_cn}
+            resourceId={resourceId}
           />
         </TabContext>
       ) : (

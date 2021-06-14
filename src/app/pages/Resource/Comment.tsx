@@ -10,10 +10,10 @@ import clsx from "clsx";
 import dayjs from "dayjs";
 import { useHistory } from "react-router-dom";
 
-import { cancelGetCaptcha, Comment, getCaptcha, getComment, postComment, postMetrics } from "API";
+import { cancelGetCaptcha, Comment, getCaptcha, getComment, postComment } from "API";
 import { randomString } from "utils";
+import { useLogin } from "hooks";
 import { UserContext } from "../../Layout/UserContext";
-import { useLogin } from "../../../Hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -277,7 +277,7 @@ export function CommentComponent(props: CommentPropTypes) {
         })
         .finally(() => {
           setPostLoading(false);
-          postMetrics("comment").catch();
+          gtag("event", "comment", { resource_id: id });
         });
     },
   });

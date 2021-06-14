@@ -56,7 +56,7 @@ export function SearchPage() {
   const [list, setList] = React.useState<Array<ResourceInfo>>([]);
 
   const searchByKw = (search: string) => {
-    setTitle(`${search  } - 搜索结果`);
+    setTitle(`${search} - 搜索结果`);
     getSearchKw(search)
       .then((res) => {
         setListLoading(false);
@@ -73,13 +73,14 @@ export function SearchPage() {
 
   const formik = useFormik({
     initialValues: {
-      search: (parsedQuery.kw as string) || "",
+      search: (parsedQuery.keyword as string) || "",
     },
     validationSchema,
     onSubmit: (values) => {
       ref.current.blur();
 
-      history.replace({ pathname: "/search", search: `?kw=${values.search}` });
+      history.replace({ pathname: "/search", search: `?keyword=${values.search}` });
+      gtag("event", "search", { search_term: values.search });
 
       setTimeout(() => {
         setMode("list");
@@ -91,10 +92,10 @@ export function SearchPage() {
   });
 
   React.useEffect(() => {
-    if (parsedQuery.kw) {
+    if (parsedQuery.keyword) {
       setMode("list");
 
-      searchByKw(parsedQuery.kw as string);
+      searchByKw(parsedQuery.keyword as string);
     } else {
       setTitle("搜索资源");
       getTop()
@@ -126,7 +127,7 @@ export function SearchPage() {
           name="search"
           placeholder="搜索片名"
           className={classes.searchInput}
-          autoFocus={!parsedQuery.kw}
+          autoFocus={!parsedQuery.keyword}
           value={formik.values.search}
           onChange={formik.handleChange}
           error={formik.touched.search && Boolean(formik.errors.search)}

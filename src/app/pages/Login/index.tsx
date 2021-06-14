@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import { useSnackbar } from "notistack";
 
 import { logout, setTitle, toAbsoluteUrl } from "utils";
-import { postMetrics, postUser } from "API";
+import { postUser } from "API";
 import { UserContext } from "../../Layout/UserContext";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -92,6 +92,8 @@ export function LoginPage() {
     validationSchema,
     onSubmit: (values) => {
       setLoading(true);
+      gtag("event", "login", { method: "password" });
+
       postUser(values)
         .then(() => {
           setTimeout(() => {
@@ -102,8 +104,6 @@ export function LoginPage() {
           setName(values.username);
           localStorage.setItem("username", values.username);
           enqueueSnackbar("登录成功", { variant: "success" });
-
-          postMetrics("user").catch();
         })
         .catch((error) => {
           setLoading(false);

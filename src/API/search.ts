@@ -36,6 +36,6 @@ interface GetSearchKwRes {
 }
 
 /* 搜索剧集 */
-export function getSearchKw(kw: string) {
-  return axios.get<GetSearchKwRes>("/api/resource", { params: { kw } });
+export function getSearchKw(keyword: string) {
+  return axios.get<GetSearchKwRes>("/api/resource", { params: { keyword } });
 }

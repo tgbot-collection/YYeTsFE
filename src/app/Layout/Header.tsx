@@ -20,7 +20,7 @@ import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/ho
 import { useSnackbar } from "notistack";
 
 import { logout, toAbsoluteUrl } from "utils";
-import { useLogin } from "Hooks";
+import { useLogin } from "hooks";
 import { UserContext } from "./UserContext";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -70,6 +70,7 @@ export function Header() {
   const handleLogout = () => {
     setName("");
     loginPopupState.close();
+    gtag("event", "logout");
 
     logout();
     enqueueSnackbar("退出成功", { variant: "warning" });

@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-import { getLike, patchUser, postMetrics, ResourceInfo } from "API";
+import { getLike, patchUser, ResourceInfo } from "API";
 import { useSnackbar } from "notistack";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { Skeleton } from "@material-ui/lab";
@@ -101,9 +101,6 @@ export function MePage() {
       })
       .catch((error) => {
         enqueueSnackbar(`获取收藏资源失败: ${error.message}`, { variant: "error" });
-      })
-      .finally(() => {
-        postMetrics("me").catch();
       });
   }, [enqueueSnackbar]);
 
@@ -133,7 +130,7 @@ export function MePage() {
         enqueueSnackbar(err.message, { variant: "error" });
       })
       .finally(() => {
-        postMetrics("favorite").catch();
+        gtag("event", "remove_from_favorite", { resource_id: id, form: "me" });
       });
   };
 
@@ -219,7 +216,7 @@ export function MePage() {
                         text={`${process.env.REACT_APP_DOMAIN}/resource?id=${item.id}`}
                         onCopy={() => {
                           enqueueSnackbar("地址复制成功，快去分享给小伙伴吧", { variant: "success" });
-                          postMetrics("share").catch();
+                          gtag("event", "share", { resource_id: item.id, form: "me" });
                         }}
                       >
                         <Button size="small" color="primary" variant="contained" disableElevation>
