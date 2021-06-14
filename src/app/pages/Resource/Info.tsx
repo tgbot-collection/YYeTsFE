@@ -13,8 +13,8 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
 
 import { ResourceInfo, patchUser, postMetrics } from "API";
-import { UserContext } from "../../Layout/UserContext";
 import { useHistory } from "react-router-dom";
+import { UserContext } from "../../Layout/UserContext";
 import { useLogin } from "../../../Hooks";
 
 const useStyles = makeStyles((theme: Theme) =>

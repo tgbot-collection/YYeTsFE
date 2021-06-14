@@ -1,7 +1,11 @@
 import * as React from "react";
 import { createMuiTheme, CssBaseline, ThemeProvider as MaterialTheme, useMediaQuery } from "@material-ui/core";
 
-export const ThemeProvider: React.FC = (props) => {
+interface ThemeProviderPropTypes {
+  children: React.ReactNode;
+}
+
+export const ThemeProvider = (props: ThemeProviderPropTypes) => {
   const { children } = props;
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 

@@ -50,21 +50,31 @@ export interface GetResourceByIDRes {
   status: number;
   is_like: boolean;
 }
+
+// eslint-disable-next-line import/no-mutable-exports
 export let cancelGetResourceByID: Canceler;
 
 /* 资源页 */
 export function getResourceByID(id: string) {
   return axios.get<GetResourceByIDRes>("/api/resource", {
     params: { id },
-    cancelToken: new CancelToken((c) => (cancelGetResourceByID = c)),
+    cancelToken: new CancelToken((c) => {
+      cancelGetResourceByID = c;
+    }),
   });
 }
 
+// eslint-disable-next-line import/no-mutable-exports
 export let cancelGetCaptcha: Canceler;
 
 /* 验证码 */
 export function getCaptcha(id: string) {
-  return axios.get("/api/captcha", { params: { id }, cancelToken: new CancelToken((c) => (cancelGetCaptcha = c)) });
+  return axios.get("/api/captcha", {
+    params: { id },
+    cancelToken: new CancelToken((c) => {
+      cancelGetCaptcha = c;
+    }),
+  });
 }
 
 interface PostCommentParams {

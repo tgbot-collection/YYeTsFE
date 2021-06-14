@@ -79,7 +79,7 @@ export function MePage() {
     getLike()
       .then((res) => {
         if (res) {
-          let category: { [key: string]: Array<ResourceInfo> } = {};
+          const category: { [key: string]: Array<ResourceInfo> } = {};
           const data = res.data.LIKE.map((item) => item.data.info);
 
           data.forEach((item) => {
@@ -100,13 +100,12 @@ export function MePage() {
         }
       })
       .catch((error) => {
-        console.log(error);
         enqueueSnackbar(`获取收藏资源失败: ${error.message}`, { variant: "error" });
       })
       .finally(() => {
         postMetrics("me").catch();
       });
-  }, []);
+  }, [enqueueSnackbar]);
 
   const handleUnfavorite = (event: React.SyntheticEvent<HTMLElement>) => {
     const target = event.target as HTMLElement;
@@ -124,9 +123,10 @@ export function MePage() {
       .then((res) => {
         enqueueSnackbar(res.data, { variant: "success" });
         setLikeList((pre) => {
-          pre[category!] = pre[category!].filter((item) => item.id !== Number(id));
+          const newList = pre;
+          newList[category!] = newList[category!].filter((item) => item.id !== Number(id));
 
-          return Object.assign({}, pre);
+          return { ...newList };
         });
       })
       .catch((err) => {
@@ -148,6 +148,7 @@ export function MePage() {
           <Skeleton variant="rect" width={80} height={32} style={{ marginBottom: 7 }} />
           <Grid container spacing={mobile ? 1 : 2}>
             {Array.from(new Array(8)).map((item, index) => (
+              // eslint-disable-next-line react/no-array-index-key
               <Grid item xs={6} sm={4} md={3} key={index}>
                 <Skeleton variant="rect" width="100%" height={122} />
               </Grid>

@@ -58,20 +58,19 @@ export function SectionComponent(props: SectionPropTypes) {
   const mobile = useMediaQuery("(max-width: 600px)");
   const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
 
-  const formatData: (data: Array<MovieList>) => Array<ResourceInfo> = (data) => {
-    if (mobile) return data.map((item) => item.data.info).slice(0, 10);
+  const formatData: (listData: Array<MovieList>) => Array<ResourceInfo> = (listData) => {
+    if (mobile) return listData.map((item) => item.data.info).slice(0, 10);
 
-    return data.map((item) => item.data.info);
+    return listData.map((item) => item.data.info);
   };
 
-  const formatSection = (data: { [key: string]: string }) => {
-    return Object.keys(data)
+  const formatSection = (sectionData: { [key: string]: string }) =>
+    Object.keys(sectionData)
       .map((key) => ({
         key,
-        name: data[key],
+        name: sectionData[key],
       }))
       .filter((item) => !(item.key === "ALL" || item.key === "LIKE"));
-  };
 
   const handleClickSection = (key: string, name: string) => {
     // @ts-ignore

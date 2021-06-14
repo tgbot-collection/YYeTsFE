@@ -1,14 +1,14 @@
 import axios from "axios";
+
 const instance = axios.create({
   timeout: 5000,
 });
 
 instance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
     if (axios.isCancel(error)) {
+      // eslint-disable-next-line no-console
       if (process.env.NODE_ENV === "development") console.log("Request canceled", error.message);
 
       return null;
@@ -21,6 +21,6 @@ instance.interceptors.response.use(
   }
 );
 
-export const CancelToken = axios.CancelToken;
+export const { CancelToken } = axios;
 
 export default instance;

@@ -19,11 +19,11 @@ import {
 import queryString from "query-string";
 
 import { getResourceByID, ResourceInfo, AddressInfo, cancelGetResourceByID, postMetrics } from "API";
+import { useSnackbar } from "notistack";
+import { setTitle } from "utils";
 import { InfoComponent } from "./Info";
 import { AddressComponent } from "./Address";
-import { useSnackbar } from "notistack";
 import { CommentComponent } from "./Comment";
-import { setTitle } from "utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -107,7 +107,6 @@ export function ResourcePage() {
         }
       })
       .catch((error) => {
-        console.log(error);
         enqueueSnackbar(`获取资源信息错误：${error.message}`, { variant: "error" });
       })
       .finally(() => {

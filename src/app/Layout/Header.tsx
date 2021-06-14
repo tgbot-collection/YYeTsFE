@@ -20,8 +20,8 @@ import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/ho
 import { useSnackbar } from "notistack";
 
 import { logout, toAbsoluteUrl } from "utils";
-import { UserContext } from "./UserContext";
 import { useLogin } from "Hooks";
+import { UserContext } from "./UserContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

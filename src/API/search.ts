@@ -19,12 +19,15 @@ export interface GetTopRes {
   };
 }
 
+// eslint-disable-next-line import/no-mutable-exports
 export let cancelGetTop: Canceler;
 
 /* 获取排行榜 */
 export function getTop() {
   return axios.get<GetTopRes>("/api/top", {
-    cancelToken: new CancelToken((c) => (cancelGetTop = c)),
+    cancelToken: new CancelToken((c) => {
+      cancelGetTop = c;
+    }),
   });
 }
 

@@ -16,6 +16,7 @@
     "@types/react-window": "^1.8.3",
     "axios": "^0.21.1",
     "bowser": "^2.11.0",
+    "clsx": "^1.1.1",
     "crypto-js": "^4.0.0",
     "dayjs": "^1.10.5",
     "formik": "^2.2.9",
@@ -27,6 +28,7 @@
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.0.3",
     "react-dom": "^17.0.2",
+    "react-ga": "^3.3.0",
     "react-github-btn": "^1.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -43,10 +45,24 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
     "extends": [
       "react-app",
+      "airbnb-typescript",
       "prettier"
-    ]
+    ],
+    "rules": {
+      "import/prefer-default-export": "off",
+      "import/no-default-export": "off",
+      "react/jsx-props-no-spreading": "off",
+      "react/require-default-props": "off"
+    }
   },
   "prettier": {
     "printWidth": 120
@@ -68,6 +84,7 @@
     "@types/js-cookie": "^2.2.6",
     "@types/react-copy-to-clipboard": "^5.0.0",
     "@types/react-router-dom": "^5.1.7",
+    "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.3.1"
   }

@@ -1,10 +1,10 @@
 import * as React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       flex: "1 0 100%",
@@ -12,7 +12,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Layout: React.FC = (props) => {
+interface LayoutPropTypes {
+  children: React.ReactNode;
+}
+
+export const Layout = (props: LayoutPropTypes) => {
   const { children } = props;
 
   const classes = useStyles();

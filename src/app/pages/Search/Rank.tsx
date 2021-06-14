@@ -40,10 +40,10 @@ export function RankComponent(props: RankPropTypes) {
 
   const mobile = useMediaQuery("(max-width: 600px)");
 
-  const formatData: (data: Array<MovieList>) => Array<ResourceInfo> = (data) => {
-    if (mobile) return data.map((item) => item.data.info).slice(0, 10);
+  const formatData: (movieList: Array<MovieList>) => Array<ResourceInfo> = (movieList) => {
+    if (mobile) return movieList.map((item) => item.data.info).slice(0, 10);
 
-    return data.map((item) => item.data.info);
+    return movieList.map((item) => item.data.info);
   };
 
   const classes = useStyles();

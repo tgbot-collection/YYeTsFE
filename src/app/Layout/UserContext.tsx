@@ -1,11 +1,13 @@
 import * as React from "react";
 import Cookies from "js-cookie";
 
+// eslint-disable-next-line no-prototype-builtins
 const isLogin = Cookies.get().hasOwnProperty("username") ? localStorage.getItem("username") || "" : "";
 
 export const UserContext = React.createContext({
   name: isLogin,
-  setName: (value: any) => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setName: (value: string) => {},
 });
 
 interface UserPropTypes {

@@ -56,7 +56,7 @@ export function SearchPage() {
   const [list, setList] = React.useState<Array<ResourceInfo>>([]);
 
   const searchByKw = (search: string) => {
-    setTitle(search + " - 搜索结果");
+    setTitle(`${search  } - 搜索结果`);
     getSearchKw(search)
       .then((res) => {
         setListLoading(false);

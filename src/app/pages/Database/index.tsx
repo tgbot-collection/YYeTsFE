@@ -4,6 +4,7 @@ import { Button, Container, createStyles, Grid, makeStyles, Theme, Typography } 
 
 import { getDatabase, GetDatabaseRes, postMetrics } from "API";
 import { Skeleton } from "@material-ui/lab";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,6 +45,7 @@ export function DataBasePage() {
   setTitle("数据库下载");
 
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [db, setDb] = React.useState<GetDatabaseRes>({} as GetDatabaseRes);
 
@@ -57,12 +59,12 @@ export function DataBasePage() {
         setDb(res.data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        enqueueSnackbar(`获取数据库信息出错: ${err.message}`, { variant: "error" });
       });
 
     postMetrics("database").catch();
-  }, []);
+  }, [enqueueSnackbar]);
 
   return (
     <Container className={classes.container}>

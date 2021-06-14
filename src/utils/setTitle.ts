@@ -1,3 +1,3 @@
 export function setTitle(title: string) {
-  document.title = title + " - 人人影视下载分享站";
+  document.title = `${title  } - 人人影视下载分享站`;
 }

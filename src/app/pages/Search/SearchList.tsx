@@ -84,8 +84,8 @@ export function SearchListComponent(props: SearchListPropTypes) {
 
   const classes = useStyles();
 
-  function renderRow(props: ListChildComponentProps) {
-    const { index, style } = props;
+  function renderRow(renderProps: ListChildComponentProps) {
+    const { index, style } = renderProps;
 
     return index !== list.length ? (
       <Link
@@ -137,6 +137,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
       <div className={classes.root}>
         <div style={{ height: height + 46, overflow: "hidden" }}>
           {Array.from(new Array(Math.ceil(height / 46) + 1)).map((item, index) => (
+            // eslint-disable-next-line react/no-array-index-key
             <Skeleton variant="rect" height={40} width="100%" key={index} className={classes.skeleton} />
           ))}
         </div>

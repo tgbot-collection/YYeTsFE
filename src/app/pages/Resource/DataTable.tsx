@@ -192,7 +192,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface DataTablePropTypes {
-  quality: string;
   season: string;
   tableData: Array<ResourceDetail>;
 }
@@ -230,12 +229,11 @@ export function DataTableComponent(props: DataTablePropTypes) {
     setSelected([]);
   };
 
-  const handleClickMultipleDown = () => {
-    return selected.reduce((pre, current) => {
+  const handleClickMultipleDown = () =>
+    selected.reduce((pre, current) => {
       const add = tableData[current].files?.find((address) => address?.way === "2");
-      return pre + (add ? add.address + "\n" : "");
+      return pre + (add ? `${add.address}\n` : "");
     }, "");
-  };
 
   React.useEffect(() => {
     setSelected([]);
@@ -286,11 +284,11 @@ export function DataTableComponent(props: DataTablePropTypes) {
                       </TableCell>
                     )}
 
-                    {row.files?.map((downItem, index) => (
+                    {row.files?.map((downItem, rowIndex) => (
                       <TableCell
                         align="left"
                         className={clsx(classes.noWarp, classes.downBtn)}
-                        padding={index === row.files.length - 1 ? undefined : "none"}
+                        padding={rowIndex === row.files.length - 1 ? undefined : "none"}
                         key={downItem.way}
                       >
                         {downItem.way !== "1" && downItem.way !== "2" ? (

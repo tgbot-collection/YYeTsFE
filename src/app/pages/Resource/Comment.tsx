@@ -190,7 +190,7 @@ interface CommentPropTypes {
 }
 
 export function CommentComponent(props: CommentPropTypes) {
-  const { id, loading, title } = props;
+  const { id, loading, title = "" } = props;
 
   const history = useHistory();
   const login = useLogin();
@@ -213,6 +213,11 @@ export function CommentComponent(props: CommentPropTypes) {
   const [listLoading, setListLoading] = React.useState<boolean>(false);
   const [loadingMore, setLoadingMore] = React.useState<boolean>(false);
   const [commentList, setCommentList] = React.useState<Array<Comment>>([]);
+
+  const refreshCaptcha = () => {
+    if (captchaLoading) return;
+    setCaptchaID(randomString());
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -276,11 +281,6 @@ export function CommentComponent(props: CommentPropTypes) {
         });
     },
   });
-
-  const refreshCaptcha = () => {
-    if (captchaLoading) return;
-    setCaptchaID(randomString());
-  };
 
   const handleLoadMore = () => {
     if (hasMore) setPage((pre) => pre + 1);
@@ -364,6 +364,7 @@ export function CommentComponent(props: CommentPropTypes) {
 
         <div className={classes.commentFooter}>
           <div className="left">
+            {/* eslint-disable-next-line */}
             <img src={captcha} alt="验证码" onClick={refreshCaptcha} />
             <input
               placeholder="验证码"
@@ -398,6 +399,7 @@ export function CommentComponent(props: CommentPropTypes) {
       <section className={classes.commentList}>
         {listLoading &&
           Array.from(new Array(4)).map((item, index) => (
+            // eslint-disable-next-line react/no-array-index-key
             <div className={classes.commentItem} key={index}>
               <Skeleton variant="circle" className="avatar" />
               <Skeleton variant="rect" className="name" width={180} height={32} />

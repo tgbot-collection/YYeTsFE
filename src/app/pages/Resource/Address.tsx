@@ -126,7 +126,6 @@ export function AddressComponent(props: AddressPropTypes) {
           <DataTableComponent
             tableData={resourceAddress[season].items[quality]}
             season={resourceAddress[season].season_cn}
-            quality={quality}
           />
         </TabContext>
       ) : (
