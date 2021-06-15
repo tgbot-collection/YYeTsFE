@@ -97,12 +97,12 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link color="inherit" variant="body1" component={RouterLink} to="/database" target="_blank">
+                  <Link color="inherit" variant="body1" component={RouterLink} to="/database">
                     数据库下载
                   </Link>
                 </li>
                 <li>
-                  <Link color="inherit" variant="body1" component={RouterLink} to="/help" target="_blank">
+                  <Link color="inherit" variant="body1" component={RouterLink} to="/help">
                     帮助页
                   </Link>
                 </li>

@@ -75,6 +75,7 @@ export function MePage() {
 
   React.useEffect(() => {
     setLoading(true);
+    postMetrics("me").catch();
 
     getLike()
       .then((res) => {

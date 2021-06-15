@@ -1,6 +1,8 @@
 import * as React from "react";
 import { setTitle } from "utils";
 import { Container, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
+import { postMetrics } from "API";
+
 import { CommentComponent } from "../Resource/Comment";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -15,6 +17,11 @@ export function DiscussPage() {
   setTitle("留言板");
 
   const classes = useStyles();
+
+  React.useEffect(() => {
+    postMetrics("discuss").catch();
+  }, []);
+
   return (
     <Container className={classes.container}>
       <Typography component="h2" variant="h4" gutterBottom>

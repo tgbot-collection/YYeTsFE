@@ -13,6 +13,7 @@ import axios from "./axiosConfig";
  * download: 下载资源
  * share: 分享
  * resource: 资源页
+ * discuss: 留言版
  */
 type MetricsType =
   | "top"
@@ -28,6 +29,7 @@ type MetricsType =
   | "comment"
   | "download"
   | "share"
+  | "discuss"
   | "backOld";
 
 export function postMetrics(type: MetricsType) {
