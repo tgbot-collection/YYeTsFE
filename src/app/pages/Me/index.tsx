@@ -129,11 +129,10 @@ export function MePage() {
       })
       .catch((err) => {
         enqueueSnackbar(err.message, { variant: "error" });
-      })
-      .finally(() => {
-        gtag("event", "remove_from_favorite", { resource_id: id, form: "me" });
-        postMetrics("unFavorite").catch();
       });
+
+    gtag("event", "remove_from_favorite", { resource_id: id, form: "me" });
+    postMetrics("unFavorite").catch();
   };
 
   if (loading)

@@ -18,7 +18,7 @@ instance.interceptors.response.use(
       return Promise.reject(new Error("请求超时，请重试"));
     }
 
-    if (error.isAxiosError && error.response.status === 401) {
+    if (error.isAxiosError && error.response?.status === 401) {
       return Promise.reject(new Error("401, 请尝试重新登录"));
     }
 

@@ -65,10 +65,9 @@ export function SearchPage() {
       })
       .catch((error) => {
         enqueueSnackbar(`搜索出错：${error.message}`, { variant: "error" });
-      })
-      .finally(() => {
-        postMetrics("search").catch();
       });
+
+    postMetrics("search").catch();
   };
 
   const formik = useFormik({
@@ -108,10 +107,8 @@ export function SearchPage() {
         })
         .catch((error) => {
           enqueueSnackbar(error.message, { variant: "error" });
-        })
-        .finally(() => {
-          postMetrics("top").catch();
         });
+      postMetrics("top").catch();
     }
 
     return cancelGetTop;

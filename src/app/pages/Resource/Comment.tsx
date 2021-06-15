@@ -249,6 +249,8 @@ export function CommentComponent(props: CommentPropTypes) {
 
       postComment({ resource_id: id, captcha: values.captcha, content: values.content, id: captchaID })
         .then((res) => {
+          setPostLoading(false);
+
           if (res) {
             resetForm();
             setCount((pre) => pre + 1);
@@ -269,17 +271,17 @@ export function CommentComponent(props: CommentPropTypes) {
           }
         })
         .catch((error) => {
+          setPostLoading(false);
+
           if (error.isAxiosError) {
             enqueueSnackbar(`评论出错: ${error.response.data.message}`, { variant: "error" });
             return;
           }
           enqueueSnackbar(`评论出错: ${error.message}`, { variant: "error" });
-        })
-        .finally(() => {
-          setPostLoading(false);
-          gtag("event", "comment", { resource_id: id });
-          postMetrics("comment").catch();
         });
+
+      gtag("event", "comment", { resource_id: id });
+      postMetrics("comment").catch();
     },
   });
 

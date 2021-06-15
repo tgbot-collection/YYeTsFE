@@ -109,10 +109,8 @@ export function ResourcePage() {
       })
       .catch((error) => {
         enqueueSnackbar(`获取资源信息错误：${error.message}`, { variant: "error" });
-      })
-      .finally(() => {
-        postMetrics("resource").catch();
       });
+    postMetrics("resource").catch();
 
     return cancelGetResourceByID;
   }, [enqueueSnackbar, id, location.search]);
