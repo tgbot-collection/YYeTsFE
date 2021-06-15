@@ -10,7 +10,7 @@ import clsx from "clsx";
 import dayjs from "dayjs";
 import { useHistory } from "react-router-dom";
 
-import { cancelGetCaptcha, Comment, getCaptcha, getComment, postComment } from "API";
+import { cancelGetCaptcha, Comment, getCaptcha, getComment, postComment, postMetrics } from "API";
 import { randomString } from "utils";
 import { useLogin } from "hooks";
 import { UserContext } from "../../Layout/UserContext";
@@ -278,6 +278,7 @@ export function CommentComponent(props: CommentPropTypes) {
         .finally(() => {
           setPostLoading(false);
           gtag("event", "comment", { resource_id: id });
+          postMetrics("comment").catch();
         });
     },
   });

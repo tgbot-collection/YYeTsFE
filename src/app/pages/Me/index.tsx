@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-import { getLike, patchUser, ResourceInfo } from "API";
+import { getLike, patchUser, postMetrics, ResourceInfo } from "API";
 import { useSnackbar } from "notistack";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { Skeleton } from "@material-ui/lab";
@@ -131,6 +131,7 @@ export function MePage() {
       })
       .finally(() => {
         gtag("event", "remove_from_favorite", { resource_id: id, form: "me" });
+        postMetrics("unFavorite").catch();
       });
   };
 
@@ -217,6 +218,7 @@ export function MePage() {
                         onCopy={() => {
                           enqueueSnackbar("地址复制成功，快去分享给小伙伴吧", { variant: "success" });
                           gtag("event", "share", { resource_id: item.id, form: "me" });
+                          postMetrics("share").catch();
                         }}
                       >
                         <Button size="small" color="primary" variant="contained" disableElevation>

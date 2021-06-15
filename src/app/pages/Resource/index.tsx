@@ -118,6 +118,7 @@ export function ResourcePage() {
   }, [enqueueSnackbar, id, location.search]);
 
   const handleBack = () => {
+    postMetrics("backOld").catch();
     gtag("event", "back_old", { resource_id: id });
   };
 

@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import { useSnackbar } from "notistack";
 
 import { logout, setTitle, toAbsoluteUrl } from "utils";
-import { postUser } from "API";
+import { postMetrics, postUser } from "API";
 import { UserContext } from "../../Layout/UserContext";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -93,6 +93,7 @@ export function LoginPage() {
     onSubmit: (values) => {
       setLoading(true);
       gtag("event", "login", { method: "password" });
+      postMetrics("user").catch();
 
       postUser(values)
         .then(() => {
@@ -111,7 +112,6 @@ export function LoginPage() {
 
           if (error.isAxiosError) {
             enqueueSnackbar(error.response.data, { variant: "error" });
-
             return;
           }
 

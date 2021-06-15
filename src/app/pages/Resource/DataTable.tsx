@@ -23,7 +23,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
 
-import { ResourceDetail } from "API";
+import { postMetrics, ResourceDetail } from "API";
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -118,6 +118,7 @@ const CopyButton = (props: ButtonProps) => {
           variant: "success",
         });
         gtag("event", "download", { resource_id: resourceId, type: downItem.way_cn });
+        postMetrics("download").catch();
       }}
     >
       <Button
@@ -145,6 +146,7 @@ const HrefButton = (props: ButtonProps) => {
           variant: "success",
         });
         gtag("event", "download", { resource_id: resourceId, type: downItem.way_cn });
+        postMetrics("download").catch();
       }}
     >
       <Button

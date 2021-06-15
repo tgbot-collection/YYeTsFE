@@ -13,7 +13,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
 import { useHistory } from "react-router-dom";
 
-import { ResourceInfo, patchUser } from "API";
+import { ResourceInfo, patchUser, postMetrics } from "API";
 import { useLogin } from "hooks";
 import { UserContext } from "../../Layout/UserContext";
 
@@ -87,8 +87,13 @@ export function InfoComponent(props: InfoPropTypes) {
       return;
     }
 
-    if (!isLike) gtag("event", "add_to_favorite", { resource_id: id, form: "resource" });
-    else gtag("event", "remove_from_favorite", { resource_id: id, form: "resource" });
+    if (!isLike) {
+      gtag("event", "add_to_favorite", { resource_id: id, form: "resource" });
+      postMetrics("favorite").catch();
+    } else {
+      gtag("event", "remove_from_favorite", { resource_id: id, form: "resource" });
+      postMetrics("unFavorite").catch();
+    }
 
     setLikeLoading(true);
     patchUser({ resource_id: id })
@@ -170,6 +175,7 @@ export function InfoComponent(props: InfoPropTypes) {
               onCopy={() => {
                 enqueueSnackbar("页面地址复制成功，快去分享给小伙伴吧", { variant: "success" });
                 gtag("event", "share", { resource_id: id, form: "resource" });
+                postMetrics("share").catch();
               }}
             >
               <Button variant="contained" color="primary" size="small" startIcon={<ShareIcon />}>

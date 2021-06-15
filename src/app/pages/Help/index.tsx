@@ -1,6 +1,7 @@
 import * as React from "react";
 import { setTitle } from "utils";
 import { Container, createStyles, Link, makeStyles, Theme, Typography } from "@material-ui/core";
+import { postMetrics } from "API";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,6 +20,10 @@ const useStyles = makeStyles((theme: Theme) =>
 export function HelpPage() {
   setTitle("帮助页");
   const classes = useStyles();
+
+  React.useEffect(() => {
+    postMetrics("help").catch();
+  }, []);
 
   return (
     <Container className={classes.container}>
