@@ -6,6 +6,7 @@
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
+    "@sentry/cli": "^1.66.0",
     "@sentry/react": "^6.7.0",
     "@sentry/tracing": "^6.7.0",
     "@testing-library/jest-dom": "^5.11.4",
@@ -35,11 +36,13 @@
     "react-scripts": "4.0.3",
     "react-transition-group": "^4.4.2",
     "react-window": "^1.8.6",
+    "source-map-explorer": "^2.5.2",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1",
     "yup": "^0.32.9"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
