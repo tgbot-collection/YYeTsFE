@@ -5,7 +5,7 @@ const fse = require("fs-extra");
 
 async function createReleaseAndUpload() {
   const date = new Date();
-  const release = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} `;
+  const release = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
   const cli = new SentryCli();
 
