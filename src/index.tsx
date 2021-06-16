@@ -5,10 +5,11 @@ import { Integrations } from "@sentry/tracing";
 
 import App from "./app/App";
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV !== "development") {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_DSN,
     integrations: [new Integrations.BrowserTracing()],
+    release: '2020-06-16',
 
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
