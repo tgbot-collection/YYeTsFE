@@ -4,8 +4,12 @@ const fs = require("fs");
 const fse = require("fs-extra");
 
 async function createReleaseAndUpload() {
-  const date = new Date();
-  const release = '2020-06-16';
+  const release = process.env.REACT_APP_SENTRY_RELEASE;
+  if (!release) {
+    console.warn("REACT_APP_SENTRY_RELEASE is not set");
+
+    return;
+  }
 
   const cli = new SentryCli();
 
