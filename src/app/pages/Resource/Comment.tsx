@@ -330,11 +330,13 @@ export function CommentComponent(props: CommentPropTypes) {
         }
 
         setListLoading(false);
+        setLoadingMore(false)
       })
       .catch((error) => {
         enqueueSnackbar(`获取评论列表出错: ${error.message}`, { variant: "error" });
 
         setListLoading(false);
+        setLoadingMore(false)
       });
   }, [page, id, enqueueSnackbar]);
 
