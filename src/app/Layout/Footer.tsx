@@ -107,7 +107,7 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://yysubgits.com" color="inherit" variant="body1" target="_blank">
+                  <Link href="https://yysubs.com" color="inherit" variant="body1" target="_blank">
                     加入字幕组
                   </Link>
                 </li>
