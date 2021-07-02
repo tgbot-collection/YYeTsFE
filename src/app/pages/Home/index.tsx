@@ -88,12 +88,18 @@ export function HomePage() {
           <Typography className={classes.title} variant="h3" component="h1" color="inherit" gutterBottom>
             人人影视分享站
           </Typography>
-          <Typography variant="h5" component="p" color="textSecondary">
+          <Typography variant="h5" component="p" color="textSecondary" gutterBottom>
             本站数据库
             <Link component={RouterLink} to="/database" color="secondary">
               永久开源免费
             </Link>
             ，请不要做无意义的爬虫。
+          </Typography>
+          <Typography variant="h5" component="p" color="textSecondary">
+            如有疑问可以先查看
+            <Link component={RouterLink} to="/help">
+              帮助页
+            </Link>
           </Typography>
 
           <Button className={classes.button} variant="outlined" color="primary" component={RouterLink} to="/search">
