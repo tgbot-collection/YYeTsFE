@@ -1,11 +1,11 @@
 import * as React from "react";
-import { ResourceInfo } from "API";
+import { ExtraResult, ResourceInfo } from "API";
 import { Avatar, createStyles, ListItemAvatar, makeStyles, Theme, Typography } from "@material-ui/core";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import { Skeleton } from "@material-ui/lab";
 import { Link } from "react-router-dom";
 import { lighten } from "@material-ui/core/styles";
-import { deepOrange, deepPurple } from "@material-ui/core/colors";
+import { deepOrange, deepPurple, pink } from "@material-ui/core/colors";
 import clsx from "clsx";
 
 import { toAbsoluteUrl } from "utils";
@@ -71,16 +71,21 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.getContrastText(deepPurple[500]),
       backgroundColor: deepPurple[500],
     },
+    extra: {
+      color: theme.palette.getContrastText(pink[500]),
+      backgroundColor: pink[500],
+    },
   })
 );
 
 interface SearchListPropTypes {
   loading: boolean;
   list: Array<ResourceInfo>;
+  extraList: Array<ExtraResult>;
 }
 
 export function SearchListComponent(props: SearchListPropTypes) {
-  const { list, loading } = props;
+  const { list, extraList, loading } = props;
 
   const classes = useStyles();
 
@@ -147,14 +152,37 @@ export function SearchListComponent(props: SearchListPropTypes) {
 
   return (
     <div className={classes.root}>
-      {list.length > 0 ? (
+      {list.length > 0 && (
         <>
           <Typography style={{ height: 46, lineHeight: "46px" }}>共 {list.length} 条搜索结果</Typography>
           <FixedSizeList height={height} width="100%" itemSize={46} itemCount={list.length + 1}>
             {renderRow}
           </FixedSizeList>
         </>
-      ) : (
+      )}
+      {extraList.length > 0 && (
+        <>
+          <Typography style={{ height: 46, lineHeight: "46px" }}>
+            本站无结果，外站找到了 {extraList.length} 条相关记录
+          </Typography>
+          {extraList.map((extraItem) => (
+            <a className={classes.item} href={extraItem.url} style={{ height: 46 }}>
+              <ListItemAvatar>
+                <Avatar className={clsx(classes.channel, classes.extra)}>外站</Avatar>
+              </ListItemAvatar>
+              <div className={classes.warp}>
+                <Typography noWrap className={classes.itemInfo}>
+                  {extraItem.name}
+                </Typography>
+                <Typography variant="caption" noWrap className={classes.itemInfo} color="textSecondary">
+                  来自: {extraItem.class || "---"}
+                </Typography>
+              </div>
+            </a>
+          ))}
+        </>
+      )}
+      {list.length === 0 && extraList.length === 0 && (
         <div className={classes.empty} style={{ height }}>
           <img src={toAbsoluteUrl("/svg/emptyAddress.svg")} alt="empty" />
           <Typography>暂无结果</Typography>

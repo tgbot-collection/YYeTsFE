@@ -31,8 +31,16 @@ export function getTop() {
   });
 }
 
+export interface ExtraResult {
+  name: string;
+  url: string;
+  class: string;
+}
+
 interface GetSearchKwRes {
   data: Array<{ data: { info: ResourceInfo } }>;
+  /* 外站结果 */
+  extra: Array<ExtraResult>;
 }
 
 /* 搜索剧集 */
