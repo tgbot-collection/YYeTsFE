@@ -69,12 +69,12 @@ export function Footer() {
               </Typography>
               <ul>
                 <li>
-                  <Link href="https://t.me/BennyThink" color="inherit" variant="body1" target="_blank">
+                  <Link href="https://t.me/BennyThink" color="inherit" variant="body1">
                     Benny 小可爱
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://dmesg.app/" color="inherit" variant="body1" target="_blank">
+                  <Link href="https://dmesg.app/" color="inherit" variant="body1">
                     Blog
                   </Link>
                 </li>
@@ -87,12 +87,12 @@ export function Footer() {
               </Typography>
               <ul>
                 <li>
-                  <Link href="https://t.me/yyets_bot" color="inherit" variant="body1" target="_blank">
+                  <Link href="https://t.me/yyets_bot" color="inherit" variant="body1">
                     Telegram Bot
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://t.me/mikuri520" color="inherit" variant="body1" target="_blank">
+                  <Link href="https://t.me/mikuri520" color="inherit" variant="body1">
                     Telegram Channel
                   </Link>
                 </li>
@@ -107,7 +107,7 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://yysubs.com" color="inherit" variant="body1" target="_blank">
+                  <Link href="https://yysubs.com" color="inherit" variant="body1">
                     加入字幕组
                   </Link>
                 </li>
@@ -117,7 +117,7 @@ export function Footer() {
 
           <Typography color="textSecondary" variant="body2">
             Web Design by&nbsp;
-            <Link href="https://blog.zuiyu1818.cn" color="secondary" target="_blank">
+            <Link href="https://blog.zuiyu1818.cn" color="secondary">
               Zuiyu
             </Link>
             ，Copyright © 2019 - {new Date().getFullYear()} YYeTs
