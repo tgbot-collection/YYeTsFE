@@ -54,7 +54,7 @@ export function Footer() {
       <Container maxWidth="md">
         <footer className={classes.footer}>
           <Grid container>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={3}>
               <div className={classes.logo}>
                 <img src={toAbsoluteUrl("/logo.png")} alt="logo" />
                 <Link color="inherit" variant="body1" component={RouterLink} to="/">
@@ -63,7 +63,7 @@ export function Footer() {
               </div>
             </Grid>
 
-            <Grid item xs={6} sm={4} className={classes.list}>
+            <Grid item xs={6} sm={3} className={classes.list}>
               <Typography component="h2" gutterBottom>
                 项目作者
               </Typography>
@@ -81,7 +81,7 @@ export function Footer() {
               </ul>
             </Grid>
 
-            <Grid item xs={6} sm={4} className={classes.list}>
+            <Grid item xs={6} sm={3} className={classes.list}>
               <Typography component="h2" gutterBottom>
                 相关资源
               </Typography>
@@ -101,6 +101,14 @@ export function Footer() {
                     数据库下载
                   </Link>
                 </li>
+              </ul>
+            </Grid>
+
+            <Grid item xs={6} sm={3} className={classes.list}>
+              <Typography component="h2" gutterBottom>
+                其他
+              </Typography>
+              <ul>
                 <li>
                   <Link color="inherit" variant="body1" component={RouterLink} to="/help">
                     帮助页
