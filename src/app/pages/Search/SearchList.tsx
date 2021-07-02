@@ -166,9 +166,9 @@ export function SearchListComponent(props: SearchListPropTypes) {
             本站无结果，外站找到了 {extraList.length} 条相关记录
           </Typography>
           {extraList.map((extraItem) => (
-            <a className={classes.item} href={extraItem.url} style={{ height: 46 }}>
+            <a className={classes.item} href={extraItem.url} style={{ height: 46 }} key={extraItem.url}>
               <ListItemAvatar>
-                <Avatar className={clsx(classes.channel, classes.extra)}>外站</Avatar>
+                <Avatar className={clsx(classes.channel, classes.extra)}>外链</Avatar>
               </ListItemAvatar>
               <div className={classes.warp}>
                 <Typography noWrap className={classes.itemInfo}>
