@@ -28,6 +28,7 @@ type MetricsType =
   | "unFavorite"
   | "comment"
   | "download"
+  | "multiDownload"
   | "share"
   | "discuss"
   | "extra"

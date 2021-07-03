@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import {
   Backdrop,
   Button,
@@ -72,6 +72,8 @@ export function ResourcePage() {
   const location = useLocation<{ title: string }>();
   const { id } = queryString.parse(location.search);
 
+  const history = useHistory();
+
   setTitle(location.state?.title || String(id));
 
   const { enqueueSnackbar } = useSnackbar();
@@ -90,6 +92,12 @@ export function ResourcePage() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  React.useEffect(() => {
+    if (id === "233") {
+      history.replace("/discuss");
+    }
+  }, [history, id]);
 
   React.useEffect(() => {
     getResourceByID(id as string)
