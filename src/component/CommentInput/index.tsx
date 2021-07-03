@@ -20,11 +20,15 @@ const validationSchema = yup.object({
 
 interface CommentInputPropTypes {
   resourceId: number;
+  commentId?: string;
+  style?: React.CSSProperties;
+  placeholder?: string;
+  replyUser?: string;
   // todo: 增加评论成功后的回调
 }
 
 export function CommentInput(props: CommentInputPropTypes) {
-  const { resourceId } = props;
+  const { resourceId, style, placeholder, commentId, replyUser } = props;
 
   const classes = useStyles();
 
@@ -72,7 +76,13 @@ export function CommentInput(props: CommentInputPropTypes) {
 
       setPostLoading(true);
 
-      postComment({ resource_id: resourceId, captcha: values.captcha, content: values.content, id: captchaID })
+      postComment({
+        resource_id: resourceId,
+        captcha: values.captcha,
+        content: replyUser ? `回复 @${replyUser}: ${values.content}` : values.content,
+        id: captchaID,
+        comment_id: commentId,
+      })
         .then((res) => {
           setPostLoading(false);
 
@@ -119,11 +129,11 @@ export function CommentInput(props: CommentInputPropTypes) {
   }, [captchaID, enqueueSnackbar, resourceId]);
 
   return (
-    <form className={classes.comment} onSubmit={formik.handleSubmit}>
+    <form className={classes.comment} onSubmit={formik.handleSubmit} style={style}>
       <textarea
         name="content"
         maxLength={400}
-        placeholder={name ? `欢迎 ${name}，畅所欲言吧～` : "您还未登陆哦，先去登陆吧～"}
+        placeholder={placeholder || (name ? `欢迎 ${name}，畅所欲言吧～` : "您还未登陆哦，先去登陆吧～")}
         autoComplete="off"
         value={formik.values.content}
         onChange={formik.handleChange}

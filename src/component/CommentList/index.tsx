@@ -24,7 +24,7 @@ export function CommentList(props: CommentListPropTypes) {
   const [page, setPage] = React.useState<number>(1);
   const [count, setCount] = React.useState<number>(0);
   const [hasMore, setHasMore] = React.useState<boolean>(false);
-  const [listLoading, setListLoading] = React.useState<boolean>(false);
+  const [listLoading, setListLoading] = React.useState<boolean>(true);
   const [loadingMore, setLoadingMore] = React.useState<boolean>(false);
   const [commentList, setCommentList] = React.useState<Array<Comment>>([]);
 
@@ -72,7 +72,7 @@ export function CommentList(props: CommentListPropTypes) {
             <Skeleton variant="circle" className="avatar" />
             <Skeleton variant="rect" className="name" width={180} height={32} />
             <Skeleton variant="rect" className="ua" width={240} height={18} />
-            <Skeleton variant="rect" className="comment" style={{ borderBottom: "none" }} height={72} />
+            <Skeleton variant="rect" className="comment" height={32} />
           </div>
         ))}
       {!listLoading && commentList.length === 0 && (
@@ -85,6 +85,8 @@ export function CommentList(props: CommentListPropTypes) {
           <div>
             {commentList.map((comment, index) => (
               <CommentCard
+                resourceId={id}
+                commentId={comment.id}
                 username={comment.username}
                 key={comment.id}
                 date={comment.date}

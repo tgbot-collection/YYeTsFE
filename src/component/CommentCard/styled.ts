@@ -4,7 +4,6 @@ export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     commentItem: {
       margin: theme.spacing(2, 0),
-      position: "relative",
       display: "grid",
       gridTemplateAreas: `
        'avatar name'
@@ -35,6 +34,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         gridArea: "ua",
         borderBottom: `1px dashed ${theme.palette.divider}`,
         paddingBottom: theme.spacing(1),
+        position: "relative",
       },
       "& .comment": {
         gridArea: "comment",
@@ -50,7 +50,6 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
       "& .floor": {
         position: "absolute",
-        bottom: 8,
         right: 4,
       },
     },
@@ -61,6 +60,12 @@ export const useStyles = makeStyles((theme: Theme) =>
       "&:last-child": {
         marginRight: theme.spacing(0),
       },
+    },
+    reply: {
+      padding: 0,
+      fontSize: "0.75rem",
+      lineHeight: 1.66,
+      minWidth: 40,
     },
   })
 );

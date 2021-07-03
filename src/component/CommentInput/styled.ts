@@ -41,7 +41,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     commentFooter: {
       display: "flex",
-      marginTop: theme.spacing(3),
+      marginTop: theme.spacing(0.5),
       justifyContent: "space-between",
 
       "& .left": {

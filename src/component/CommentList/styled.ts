@@ -37,13 +37,9 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
       "& .ua": {
         gridArea: "ua",
-        position: "relative",
-        top: "-4px",
       },
       "& .comment": {
         gridArea: "comment",
-        paddingBottom: theme.spacing(2.5),
-        borderBottom: `1px dashed ${theme.palette.divider}`,
       },
     },
   })

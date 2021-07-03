@@ -16,6 +16,8 @@ export function getCaptcha(id: string) {
 
 interface PostCommentParams {
   resource_id: number;
+  /* 回复楼中楼时需要 */
+  comment_id?: string;
   content: string;
   id: string;
   captcha: string;
@@ -38,10 +40,11 @@ interface GetCommentParams {
 export type UserGroup = "admin" | "user";
 
 export interface Comment {
+  id: string;
+  resource_id: number;
   date: string;
   username: string;
   content: string;
-  id: number;
   browser: string;
   children: Array<Comment>;
   childrenCount: number;
