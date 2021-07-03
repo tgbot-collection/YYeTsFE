@@ -13,3 +13,8 @@ export const formatAvatar = (name: string) => {
   }
   return name.substr(0, 3);
 };
+
+export const formatComment = (comment: string) => {
+  console.log(comment);
+  return comment;
+};

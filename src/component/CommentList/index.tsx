@@ -94,6 +94,8 @@ export function CommentList(props: CommentListPropTypes) {
                 floor={count - index}
                 content={comment.content}
                 group={comment.group}
+                childrenComment={comment.children}
+                parentId={comment.id}
               />
             ))}
           </div>

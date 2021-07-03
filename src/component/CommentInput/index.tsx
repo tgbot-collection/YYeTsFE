@@ -21,6 +21,7 @@ const validationSchema = yup.object({
 interface CommentInputPropTypes {
   resourceId: number;
   commentId?: string;
+  parentId?: string;
   style?: React.CSSProperties;
   placeholder?: string;
   replyUser?: string;
@@ -28,7 +29,7 @@ interface CommentInputPropTypes {
 }
 
 export function CommentInput(props: CommentInputPropTypes) {
-  const { resourceId, style, placeholder, commentId, replyUser } = props;
+  const { resourceId, style, placeholder, commentId, replyUser, parentId } = props;
 
   const classes = useStyles();
 
@@ -79,9 +80,11 @@ export function CommentInput(props: CommentInputPropTypes) {
       postComment({
         resource_id: resourceId,
         captcha: values.captcha,
-        content: replyUser ? `回复 @${replyUser}: ${values.content}` : values.content,
+        content: replyUser
+          ? `回复 <a href="#${commentId}" class="at">@${replyUser}</a>: ${values.content}`
+          : values.content,
         id: captchaID,
-        comment_id: commentId,
+        comment_id: parentId === commentId ? undefined : parentId,
       })
         .then((res) => {
           setPostLoading(false);

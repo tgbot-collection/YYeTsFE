@@ -1,25 +1,41 @@
 import * as React from "react";
 import dayjs from "dayjs";
+import clsx from "clsx";
 import { Avatar, Button, SvgIcon, Typography } from "@material-ui/core";
 
-import { formatAvatar, formatBrowser } from "utils";
-import { UserGroup } from "API";
+import { formatAvatar, formatBrowser, formatComment } from "utils";
+import { UserGroup, Comment } from "API";
 import { useStyles } from "./styled";
 import { CommentInput } from "../CommentInput";
 
 interface CommentCardPropTypes {
   resourceId: number;
   commentId: string;
+  parentId?: string;
   username: string;
   date: string;
   ua: string;
-  floor: number;
+  floor?: number;
   content: string;
   group: Array<UserGroup>;
+  childrenComment?: Array<Comment>;
+  borderBottom?: boolean;
 }
 
 export function CommentCard(props: CommentCardPropTypes) {
-  const { username, ua, date, floor, content, group, commentId, resourceId } = props;
+  const {
+    username,
+    ua,
+    date,
+    floor,
+    content,
+    group,
+    commentId,
+    parentId,
+    resourceId,
+    childrenComment = [],
+    borderBottom = true,
+  } = props;
 
   const [replyState, setReplyState] = React.useState<boolean>(false);
 
@@ -33,7 +49,7 @@ export function CommentCard(props: CommentCardPropTypes) {
 
   return (
     <>
-      <div className={classes.commentItem}>
+      <div className={classes.commentItem} id={commentId}>
         <div className="avatar">
           <Avatar style={{ fontSize: "0.875rem" }}>{formatAvatar(username)}</Avatar>
           {group.includes("admin") && (
@@ -57,9 +73,9 @@ export function CommentCard(props: CommentCardPropTypes) {
           </Typography>
         </div>
 
-        <Typography className="comment">{content}</Typography>
+        <Typography className="comment" dangerouslySetInnerHTML={{ __html: content }} />
 
-        <div className="ua">
+        <div className={clsx("ua", { [classes.bottomBorder]: borderBottom })}>
           {os !== " " && (
             <Typography variant="caption" component="span" color="textSecondary" className={classes.browser}>
               {os}
@@ -74,9 +90,27 @@ export function CommentCard(props: CommentCardPropTypes) {
             回复
           </Button>
 
-          <Typography className="floor" variant="body2" component="span" color="textSecondary">
-            # {floor}
-          </Typography>
+          {!!childrenComment.length &&
+            childrenComment.map((item) => (
+              <CommentCard
+                key={item.id}
+                resourceId={resourceId}
+                commentId={item.id}
+                parentId={commentId}
+                username={item.username}
+                date={item.date}
+                ua={item.browser}
+                content={formatComment(item.content)}
+                group={item.group}
+                borderBottom={false}
+              />
+            ))}
+
+          {floor && (
+            <Typography className="floor" variant="body2" component="span" color="textSecondary">
+              # {floor}
+            </Typography>
+          )}
 
           {replyState && (
             <CommentInput
@@ -84,6 +118,7 @@ export function CommentCard(props: CommentCardPropTypes) {
               style={{ marginTop: "8px" }}
               placeholder={`@${username}`}
               commentId={commentId}
+              parentId={parentId}
               replyUser={username}
             />
           )}

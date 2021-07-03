@@ -32,7 +32,6 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
       "& .ua": {
         gridArea: "ua",
-        borderBottom: `1px dashed ${theme.palette.divider}`,
         paddingBottom: theme.spacing(1),
         position: "relative",
       },
@@ -52,6 +51,9 @@ export const useStyles = makeStyles((theme: Theme) =>
         position: "absolute",
         right: 4,
       },
+    },
+    bottomBorder: {
+      borderBottom: `1px dashed ${theme.palette.divider}`,
     },
     browser: {
       borderRadius: "4px",
