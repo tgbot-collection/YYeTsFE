@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ExtraResult, ResourceInfo } from "API";
+import { ExtraResult, postMetrics, ResourceInfo } from "API";
 import { Avatar, createStyles, ListItemAvatar, makeStyles, Theme, Typography } from "@material-ui/core";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import { Skeleton } from "@material-ui/lab";
@@ -89,6 +89,15 @@ export function SearchListComponent(props: SearchListPropTypes) {
 
   const classes = useStyles();
 
+  const handleToExtra = (event: React.SyntheticEvent, href: string) => {
+    event.preventDefault();
+    postMetrics("extra").catch();
+    setTimeout(() => {
+      // eslint-disable-next-line no-restricted-globals
+      location.href = href;
+    }, 500);
+  };
+
   function renderRow(renderProps: ListChildComponentProps) {
     const { index, style } = renderProps;
 
@@ -166,7 +175,13 @@ export function SearchListComponent(props: SearchListPropTypes) {
             本站无结果，外站找到了 {extraList.length} 条相关记录
           </Typography>
           {extraList.map((extraItem) => (
-            <a className={classes.item} href={extraItem.url} style={{ height: 46 }} key={extraItem.url}>
+            <a
+              className={classes.item}
+              href={extraItem.url}
+              style={{ height: 46 }}
+              key={extraItem.url}
+              onClick={(e) => handleToExtra(e, extraItem.url)}
+            >
               <ListItemAvatar>
                 <Avatar className={clsx(classes.channel, classes.extra)}>外链</Avatar>
               </ListItemAvatar>
@@ -180,6 +195,9 @@ export function SearchListComponent(props: SearchListPropTypes) {
               </div>
             </a>
           ))}
+          <Typography style={{ height: 46 }} className={classes.end} color="secondary">
+            我是有底线哒 o(≧口≦)o
+          </Typography>
         </>
       )}
       {list.length === 0 && extraList.length === 0 && (

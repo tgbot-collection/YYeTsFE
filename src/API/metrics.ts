@@ -30,6 +30,7 @@ type MetricsType =
   | "download"
   | "share"
   | "discuss"
+  | "extra"
   | "backOld";
 
 export function postMetrics(type: MetricsType) {
