@@ -141,6 +141,10 @@ interface ButtonProps {
 const CopyButton = (props: ButtonProps) => {
   const { downItem, enqueueSnackbar, resourceId } = props;
 
+  const handleClick = (event: React.SyntheticEvent) => {
+    event.stopPropagation();
+  };
+
   return (
     <CopyToClipboard
       text={downItem.address}
@@ -157,6 +161,7 @@ const CopyButton = (props: ButtonProps) => {
         size="small"
         startIcon={<FileCopyIcon />}
         title={downItem.address}
+        onClick={handleClick}
         disableRipple
         disableElevation
       >
@@ -168,6 +173,10 @@ const CopyButton = (props: ButtonProps) => {
 
 const HrefButton = (props: ButtonProps) => {
   const { downItem, enqueueSnackbar, resourceId } = props;
+
+  const handleClick = (event: React.SyntheticEvent) => {
+    event.stopPropagation();
+  };
 
   return (
     <CopyToClipboard
@@ -189,7 +198,7 @@ const HrefButton = (props: ButtonProps) => {
         size="small"
         startIcon={<CloudIcon />}
         href={downItem.address}
-        onClick={(e) => e.preventDefault()}
+        onClick={handleClick}
         title={`网盘密码：${downItem.passwd || "无密码"}`}
         color="primary"
         disableRipple
@@ -304,8 +313,13 @@ export function DataTableComponent(props: DataTablePropTypes) {
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
-                  <TableRow hover key={row.name} selected={isItemSelected}>
-                    <TableCell padding="checkbox" onClick={(event) => handleClick(event, index)} tabIndex={index}>
+                  <TableRow
+                    hover
+                    key={row.name}
+                    selected={isItemSelected}
+                    onClick={(event) => handleClick(event, index)}
+                  >
+                    <TableCell padding="checkbox" tabIndex={index}>
                       <Checkbox checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
                     </TableCell>
                     <TableCell

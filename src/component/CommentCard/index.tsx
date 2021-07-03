@@ -103,6 +103,17 @@ export function CommentCard(props: CommentCardPropTypes) {
             回复
           </Button>
 
+          {replyId === commentId && (
+            <CommentInput
+              resourceId={resourceId}
+              style={{ marginTop: "8px" }}
+              placeholder={`@${username}`}
+              commentId={commentId}
+              parentId={parentId}
+              replyUser={username}
+            />
+          )}
+
           {!!childrenComment.length &&
             childrenComment.map((item) => (
               <CommentCard
@@ -125,17 +136,6 @@ export function CommentCard(props: CommentCardPropTypes) {
             <Typography className="floor" variant="body2" component="span" color="textSecondary">
               # {floor}
             </Typography>
-          )}
-
-          {replyId === commentId && (
-            <CommentInput
-              resourceId={resourceId}
-              style={{ marginTop: "8px" }}
-              placeholder={`@${username}`}
-              commentId={commentId}
-              parentId={parentId}
-              replyUser={username}
-            />
           )}
         </div>
       </div>
