@@ -21,6 +21,7 @@ export function CommentComponent(props: CommentPropTypes) {
       )}
 
       <CommentInput resourceId={id} />
+      <br />
       <CommentList id={id} loading={loading} />
     </div>
   );

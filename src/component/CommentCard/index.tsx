@@ -20,6 +20,9 @@ interface CommentCardPropTypes {
   group: Array<UserGroup>;
   childrenComment?: Array<Comment>;
   borderBottom?: boolean;
+  /* 处于回复状态的id */
+  replyId: string | number;
+  setReplyId: (id: string) => void;
 }
 
 export function CommentCard(props: CommentCardPropTypes) {
@@ -35,14 +38,14 @@ export function CommentCard(props: CommentCardPropTypes) {
     resourceId,
     childrenComment = [],
     borderBottom = true,
+    replyId,
+    setReplyId = () => {},
   } = props;
-
-  const [replyState, setReplyState] = React.useState<boolean>(false);
 
   const { os } = formatBrowser(ua);
 
   const handleClickReply = () => {
-    setReplyState((pre) => !pre);
+    setReplyId(commentId);
   };
 
   const classes = useStyles();
@@ -113,6 +116,8 @@ export function CommentCard(props: CommentCardPropTypes) {
                 content={formatComment(item.content)}
                 group={item.group}
                 borderBottom={false}
+                replyId={replyId}
+                setReplyId={setReplyId}
               />
             ))}
 
@@ -122,7 +127,7 @@ export function CommentCard(props: CommentCardPropTypes) {
             </Typography>
           )}
 
-          {replyState && (
+          {replyId === commentId && (
             <CommentInput
               resourceId={resourceId}
               style={{ marginTop: "8px" }}

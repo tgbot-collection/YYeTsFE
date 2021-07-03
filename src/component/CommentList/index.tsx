@@ -29,6 +29,8 @@ export function CommentList(props: CommentListPropTypes) {
   const [loadingMore, setLoadingMore] = React.useState<boolean>(false);
   const [commentList, setCommentList] = React.useState<Array<Comment>>([]);
 
+  const [replyId, setReplyId] = React.useState<number | string>(id);
+
   const handleLoadMore = () => {
     if (hasMore) setPage((pre) => pre + 1);
   };
@@ -97,6 +99,8 @@ export function CommentList(props: CommentListPropTypes) {
                 group={comment.group}
                 childrenComment={comment.children}
                 parentId={comment.id}
+                replyId={replyId}
+                setReplyId={setReplyId}
               />
             ))}
           </div>
