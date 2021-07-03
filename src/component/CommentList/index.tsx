@@ -91,6 +91,7 @@ export function CommentList(props: CommentListPropTypes) {
                 ua={comment.browser}
                 floor={count - index}
                 content={comment.content}
+                group={comment.group}
               />
             ))}
           </div>

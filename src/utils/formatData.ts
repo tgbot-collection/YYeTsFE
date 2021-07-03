@@ -1,0 +1,15 @@
+import * as Bowser from "bowser";
+
+export const formatBrowser = (browser: string) => {
+  const result = Bowser.parse(browser);
+  return {
+    os: `${result.os.name}`,
+  };
+};
+
+export const formatAvatar = (name: string) => {
+  if (/^[\u4E00-\u9FFF]{2}/.test(name)) {
+    return name.substr(0, 2);
+  }
+  return name.substr(0, 3);
+};

@@ -21,20 +21,11 @@ export const useStyles = makeStyles((theme: Theme) =>
       display: "grid",
       gridTemplateAreas: `
        'avatar name'
-       'avatar ua'
        'avatar comment'
+       'avatar ua'
       `,
-      gridTemplateColumns: "44px 1fr",
+      gridTemplateColumns: "50px 1fr",
       gridGap: theme.spacing(1),
-
-      [theme.breakpoints.up("sm")]: {
-        gridTemplateColumns: "62px 1fr",
-
-        "& .avatar": {
-          width: "50px",
-          height: "50px",
-        },
-      },
 
       "& .avatar": {
         gridArea: "avatar",

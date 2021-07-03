@@ -35,6 +35,7 @@ interface GetCommentParams {
   size: number;
   page: number;
 }
+export type UserGroup = "admin" | "user";
 
 export interface Comment {
   date: string;
@@ -42,6 +43,9 @@ export interface Comment {
   content: string;
   id: number;
   browser: string;
+  children: Array<Comment>;
+  childrenCount: number;
+  group: Array<UserGroup>;
 }
 
 interface GetCommentRes {
