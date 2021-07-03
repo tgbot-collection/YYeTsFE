@@ -15,6 +15,10 @@ export const formatAvatar = (name: string) => {
 };
 
 export const formatComment = (comment: string) => {
-  console.log(comment);
-  return comment;
+  const reg = /<reply value="(.*)">@(.*)<\/reply>/;
+  const group = reg.exec(comment);
+  if (group) {
+    return { text: comment.replace(reg, ""), id: group[1], name: group[2] };
+  }
+  return { text: comment };
 };

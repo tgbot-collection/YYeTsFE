@@ -16,7 +16,7 @@ interface CommentCardPropTypes {
   date: string;
   ua: string;
   floor?: number;
-  content: string;
+  content: { text: string; id?: string; name?: string };
   group: Array<UserGroup>;
   childrenComment?: Array<Comment>;
   borderBottom?: boolean;
@@ -73,7 +73,17 @@ export function CommentCard(props: CommentCardPropTypes) {
           </Typography>
         </div>
 
-        <Typography className="comment" dangerouslySetInnerHTML={{ __html: content }} />
+        <Typography className="comment">
+          {content.id && (
+            <>
+              <a href={`#${content.id}`} className="at">
+                @{content.name}
+              </a>
+              ，
+            </>
+          )}
+          {content.text}
+        </Typography>
 
         <div className={clsx("ua", { [classes.bottomBorder]: borderBottom })}>
           {os !== " " && (

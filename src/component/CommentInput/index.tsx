@@ -80,9 +80,7 @@ export function CommentInput(props: CommentInputPropTypes) {
       postComment({
         resource_id: resourceId,
         captcha: values.captcha,
-        content: replyUser
-          ? `回复 <a href="#${commentId}" class="at">@${replyUser}</a>: ${values.content}`
-          : values.content,
+        content: replyUser ? `<reply value="${commentId}">@${replyUser}</reply>${values.content}` : values.content,
         id: captchaID,
         comment_id: parentId,
       })

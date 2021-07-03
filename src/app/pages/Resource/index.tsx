@@ -74,8 +74,6 @@ export function ResourcePage() {
 
   const history = useHistory();
 
-  setTitle(location.state?.title || String(id));
-
   const { enqueueSnackbar } = useSnackbar();
 
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -97,7 +95,8 @@ export function ResourcePage() {
     if (id === "233") {
       history.replace("/discuss");
     }
-  }, [history, id]);
+    setTitle(location.state?.title || String(id));
+  }, [history, id, location.state?.title]);
 
   React.useEffect(() => {
     getResourceByID(id as string)

@@ -43,6 +43,9 @@ export const useStyles = makeStyles((theme: Theme) =>
         [theme.breakpoints.up("sm")]: {
           fontSize: "1rem",
         },
+        "& .at": {
+          color: theme.palette.type === "light" ? theme.palette.success.light : theme.palette.success.dark,
+        },
       },
       "&:last-child .ua": {
         borderBottom: `none`,

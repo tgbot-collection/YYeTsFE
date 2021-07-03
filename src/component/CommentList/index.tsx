@@ -7,6 +7,7 @@ import { Comment, getComment } from "API";
 import { CommentCard } from "../CommentCard";
 
 import { useStyles } from "./styled";
+import { formatComment } from "../../utils";
 
 interface CommentListPropTypes {
   id: number;
@@ -92,7 +93,7 @@ export function CommentList(props: CommentListPropTypes) {
                 date={comment.date}
                 ua={comment.browser}
                 floor={count - index}
-                content={comment.content}
+                content={formatComment(comment.content)}
                 group={comment.group}
                 childrenComment={comment.children}
                 parentId={comment.id}
