@@ -84,7 +84,7 @@ export function CommentInput(props: CommentInputPropTypes) {
           ? `回复 <a href="#${commentId}" class="at">@${replyUser}</a>: ${values.content}`
           : values.content,
         id: captchaID,
-        comment_id: parentId === commentId ? undefined : parentId,
+        comment_id: parentId,
       })
         .then((res) => {
           setPostLoading(false);
