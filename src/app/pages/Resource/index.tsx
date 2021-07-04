@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, Link as RouterLinker } from "react-router-dom";
 import {
   Backdrop,
   Button,
@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
+      maxWidth: "80vw",
     },
   })
 );
@@ -154,14 +155,29 @@ export function ResourcePage() {
         >
           <Fade in={open}>
             <div className={classes.paper}>
-              <Typography variant="h6" gutterBottom>
-                返回旧版页面
+              <Typography variant="h6">返回旧版页面</Typography>
+              <Typography>
+                现在已经支持
+                <Typography color="secondary" component="span">
+                  电驴的批量下载
+                </Typography>
+                啦
               </Typography>
-              <div>
+              <Typography gutterBottom>
+                若您对新版还有什么不满意欢迎到
+                <Typography component={RouterLinker} to="/discuss" color="inherit">
+                  留言板
+                </Typography>
+                反馈哦
+              </Typography>
+              <br />
+              <div className={classes.modal}>
                 <ButtonGroup variant="contained" disableElevation>
-                  <Button onClick={handleClose}>取消</Button>
+                  <Button color="secondary" component={RouterLinker} to="/discuss">
+                    反馈意见
+                  </Button>
                   <Button color="primary" href={`/resource.html${location.search}`} onClick={handleBack}>
-                    确认
+                    前往旧版
                   </Button>
                 </ButtonGroup>
               </div>

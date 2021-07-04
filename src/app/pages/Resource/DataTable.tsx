@@ -162,7 +162,6 @@ const CopyButton = (props: ButtonProps) => {
         startIcon={<FileCopyIcon />}
         title={downItem.address}
         onClick={handleClick}
-        disableRipple
         disableElevation
       >
         {downItem.way_cn}
@@ -176,6 +175,7 @@ const HrefButton = (props: ButtonProps) => {
 
   const handleClick = (event: React.SyntheticEvent) => {
     event.stopPropagation();
+    event.preventDefault();
   };
 
   return (
@@ -201,7 +201,6 @@ const HrefButton = (props: ButtonProps) => {
         onClick={handleClick}
         title={`网盘密码：${downItem.passwd || "无密码"}`}
         color="primary"
-        disableRipple
         disableElevation
       >
         {downItem.way_cn}
