@@ -2,11 +2,12 @@ import * as React from "react";
 import { SnackbarKey, SnackbarProvider } from "notistack";
 import { Button } from "@material-ui/core";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
-import { store } from "_redux";
-import { ThemeProvider } from "Layout";
+import { persistor, store } from "_redux";
+import { ThemeProvider } from "layout";
 import { Routes } from "./Routes";
-import { UserProvider } from "../Layout/core/UserContext";
+import { UserProvider } from "../layout/core/UserContext";
 
 function App() {
   const notistackRef = React.useRef<SnackbarProvider>(null!);
@@ -16,25 +17,27 @@ function App() {
 
   return (
     <Provider store={store}>
-      <UserProvider>
-        <ThemeProvider>
-          <SnackbarProvider
-            ref={notistackRef}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            autoHideDuration={3000}
-            action={(key) => (
-              <Button onClick={onClickDismiss(key)} color="inherit">
-                关闭
-              </Button>
-            )}
-          >
-            <Routes />
-          </SnackbarProvider>
-        </ThemeProvider>
-      </UserProvider>
+      <PersistGate persistor={persistor} loading={null}>
+        <UserProvider>
+          <ThemeProvider>
+            <SnackbarProvider
+              ref={notistackRef}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              autoHideDuration={3000}
+              action={(key) => (
+                <Button onClick={onClickDismiss(key)} color="inherit">
+                  关闭
+                </Button>
+              )}
+            >
+              <Routes />
+            </SnackbarProvider>
+          </ThemeProvider>
+        </UserProvider>
+      </PersistGate>
     </Provider>
   );
 }

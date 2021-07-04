@@ -1,7 +1,7 @@
 import * as React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
-import { Layout } from "Layout";
+import { AppFrame } from "layout";
 import { LoginPage, NotFoundPage } from "./pages";
 import { BasePage } from "./BasePage";
 
@@ -14,9 +14,9 @@ export function Routes() {
         <Route exact path="/login" component={LoginPage} />
 
         <Route>
-          <Layout>
+          <AppFrame>
             <BasePage />
-          </Layout>
+          </AppFrame>
         </Route>
       </Switch>
     </BrowserRouter>

@@ -1,2 +1,2 @@
-export * from "./frame/Layout";
+export * from "./frame/AppFrame";
 export * from "./core/ThemeProvider";
