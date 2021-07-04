@@ -2,8 +2,8 @@ import * as React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 import { useLogin } from "hooks";
+import { UserContext } from "Layout/UserContext";
 import { DataBasePage, DiscussPage, HelpPage, HomePage, MePage, ResourcePage, SearchPage } from "./pages";
-import { UserContext } from "./Layout/UserContext";
 
 export function BasePage() {
   const { name } = React.useContext(UserContext);

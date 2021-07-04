@@ -1,7 +1,8 @@
 import * as React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+
+import { Layout } from "Layout";
 import { LoginPage, NotFoundPage } from "./pages";
-import { Layout } from "./Layout";
 import { BasePage } from "./BasePage";
 
 export function Routes() {

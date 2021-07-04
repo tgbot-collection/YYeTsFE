@@ -8,7 +8,7 @@ import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 
 import { cancelGetCaptcha, getCaptcha, postComment, postMetrics } from "API";
-import { UserContext } from "app/Layout/UserContext";
+import { UserContext } from "Layout/UserContext";
 import { randomString } from "utils";
 import { useLogin } from "hooks";
 import { useStyles } from "./styled";
