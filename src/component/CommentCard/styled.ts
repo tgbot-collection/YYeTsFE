@@ -1,4 +1,5 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { purple } from "@material-ui/core/colors";
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,6 +72,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       fontSize: "0.75rem",
       lineHeight: 1.66,
       minWidth: 40,
+    },
+    purple: {
+      color: theme.palette.getContrastText(purple[500]),
+      backgroundColor: purple[500],
     },
   })
 );

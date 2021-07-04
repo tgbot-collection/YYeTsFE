@@ -49,13 +49,16 @@ export function CommentCard(props: CommentCardPropTypes) {
   };
 
   const classes = useStyles();
+  const admin = group.includes("admin");
 
   return (
     <>
       <div className={classes.commentItem} id={commentId}>
         <div className="avatar">
-          <Avatar style={{ fontSize: "0.875rem" }}>{formatAvatar(username)}</Avatar>
-          {group.includes("admin") && (
+          <Avatar style={{ fontSize: "0.875rem" }} className={clsx({ [classes.purple]: admin })}>
+            {formatAvatar(username)}
+          </Avatar>
+          {admin && (
             <SvgIcon className="circle" viewBox="0 0 1024 1024" titleAccess="管理员">
               ad
               <path
@@ -71,7 +74,7 @@ export function CommentCard(props: CommentCardPropTypes) {
         </div>
 
         <div className="name">
-          <Typography component="span" variant="h5" color="textPrimary">
+          <Typography component="span" variant="h6" color="textPrimary">
             {username}
           </Typography>
         </div>

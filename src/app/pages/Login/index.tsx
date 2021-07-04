@@ -93,7 +93,6 @@ export function LoginPage() {
     onSubmit: (values) => {
       setLoading(true);
       gtag("event", "login", { method: "password" });
-      postMetrics("user").catch();
 
       postUser(values)
         .then(() => {
@@ -101,6 +100,7 @@ export function LoginPage() {
             setLoading(false);
             history.push(state.ref || "/search");
           }, 1000);
+          postMetrics("user").catch();
 
           setName(values.username);
           localStorage.setItem("username", values.username);
