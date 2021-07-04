@@ -15,7 +15,7 @@ import { useHistory } from "react-router-dom";
 
 import { ResourceInfo, patchUser, postMetrics } from "API";
 import { useLogin } from "hooks";
-import { UserContext } from "Layout/UserContext";
+import { UserContext } from "Layout/core/UserContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

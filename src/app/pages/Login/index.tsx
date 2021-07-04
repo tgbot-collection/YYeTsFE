@@ -8,7 +8,7 @@ import { useSnackbar } from "notistack";
 
 import { logout, setTitle, toAbsoluteUrl } from "utils";
 import { postMetrics, postUser } from "API";
-import { UserContext } from "Layout/UserContext";
+import { UserContext } from "Layout/core/UserContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

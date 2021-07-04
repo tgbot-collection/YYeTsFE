@@ -4,9 +4,9 @@ import { Button } from "@material-ui/core";
 import { Provider } from "react-redux";
 
 import { store } from "_redux";
+import { ThemeProvider } from "Layout";
 import { Routes } from "./Routes";
-import { ThemeProvider } from "../Layout/ThemeProvider";
-import { UserProvider } from "../Layout/UserContext";
+import { UserProvider } from "../Layout/core/UserContext";
 
 function App() {
   const notistackRef = React.useRef<SnackbarProvider>(null!);

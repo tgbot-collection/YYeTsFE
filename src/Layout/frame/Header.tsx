@@ -21,7 +21,7 @@ import { useSnackbar } from "notistack";
 
 import { logout, toAbsoluteUrl } from "utils";
 import { useLogin } from "hooks";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../core/UserContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

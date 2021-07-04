@@ -10,6 +10,3 @@ export const store = configureStore({
 if (process.env.NODE_ENV === "development" && module.hot) {
   module.hot.accept("./rootReducer", () => store.replaceReducer(rootReducer));
 }
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;

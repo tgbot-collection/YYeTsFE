@@ -2,7 +2,7 @@ import * as React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 import { useLogin } from "hooks";
-import { UserContext } from "Layout/UserContext";
+import { UserContext } from "Layout/core/UserContext";
 import { DataBasePage, DiscussPage, HelpPage, HomePage, MePage, ResourcePage, SearchPage } from "./pages";
 
 export function BasePage() {
