@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 
 import { cancelGetCaptcha, getCaptcha, postComment, postMetrics } from "API";
 import { randomString } from "utils";
-import { useAuth, useLogin } from "hooks";
+import { useAuth, useLoginBack } from "hooks";
 import { useStyles } from "./styled";
 
 const validationSchema = yup.object({
@@ -40,7 +40,7 @@ export function CommentInput(props: CommentInputPropTypes) {
   const { username } = useAuth();
 
   const history = useHistory();
-  const login = useLogin();
+  const login = useLoginBack();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const refreshCaptcha = () => {
