@@ -9,7 +9,7 @@ import { useSnackbar } from "notistack";
 import { logout, setTitle, toAbsoluteUrl } from "utils";
 import { postMetrics, postUser } from "API";
 import { useAppDispatch } from "hooks";
-import { setUsername } from "app/commonSlice";
+import { setUsername } from "app/pages/login/userSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

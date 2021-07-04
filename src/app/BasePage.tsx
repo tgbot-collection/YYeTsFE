@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
-import { useAuth, useLogin } from "hooks";
+import { useAuth, useLoginBack } from "hooks";
 import { DataBasePage, DiscussPage, HelpPage, HomePage, MePage, ResourcePage, SearchPage } from "./pages";
 
 export function BasePage() {
   const { username } = useAuth();
 
-  const login = useLogin();
+  const login = useLoginBack();
 
   return (
     <Switch>

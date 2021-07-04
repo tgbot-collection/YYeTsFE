@@ -20,8 +20,8 @@ import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/ho
 import { useSnackbar } from "notistack";
 
 import { logout, toAbsoluteUrl } from "utils";
-import { useAppDispatch, useAuth, useLogin } from "hooks";
-import { setUsername } from "app/commonSlice";
+import { useAppDispatch, useAuth, useLoginBack } from "hooks";
+import { setUsername } from "app/pages/login/userSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,7 +60,7 @@ export function Header() {
   const { username } = useAuth();
   const dispatch = useAppDispatch();
 
-  const login = useLogin();
+  const login = useLoginBack();
 
   const loginPopupState = usePopupState({ variant: "popover", popupId: "loginMenu" });
   const githubPopupState = usePopupState({ variant: "popover", popupId: "githubMenu" });

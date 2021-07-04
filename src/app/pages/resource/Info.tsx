@@ -14,7 +14,7 @@ import { useSnackbar } from "notistack";
 import { useHistory } from "react-router-dom";
 
 import { ResourceInfo, patchUser, postMetrics } from "API";
-import { useAuth, useLogin } from "hooks";
+import { useAuth, useLoginBack } from "hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,7 +59,7 @@ export function InfoComponent(props: InfoPropTypes) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const history = useHistory();
-  const login = useLogin();
+  const login = useLoginBack();
 
   const { username } = useAuth();
 

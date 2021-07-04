@@ -1,6 +1,6 @@
 import { LinkProps, useLocation } from "react-router-dom";
 
-export function useLogin() {
+export function useLoginBack() {
   const location = useLocation();
 
   const url: LinkProps<{ ref: string }>["to"] = {
