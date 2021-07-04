@@ -1,9 +1,9 @@
 import * as React from "react";
 import { setTitle } from "utils";
 import { Container, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
-import { postMetrics } from "API";
 
-import { CommentComponent } from "../Resource/Comment";
+import { postMetrics } from "API";
+import { CommentComponent } from "features";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
