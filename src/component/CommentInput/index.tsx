@@ -8,9 +8,8 @@ import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 
 import { cancelGetCaptcha, getCaptcha, postComment, postMetrics } from "API";
-import { UserContext } from "layout/core/UserContext";
 import { randomString } from "utils";
-import { useLogin } from "hooks";
+import { useAuth, useLogin } from "hooks";
 import { useStyles } from "./styled";
 
 const validationSchema = yup.object({
@@ -38,7 +37,7 @@ export function CommentInput(props: CommentInputPropTypes) {
   const [captcha, setCaptcha] = React.useState<string>("");
   const [captchaID, setCaptchaID] = React.useState<string>(randomString());
 
-  const { name } = React.useContext(UserContext);
+  const { username } = useAuth();
 
   const history = useHistory();
   const login = useLogin();
@@ -56,7 +55,7 @@ export function CommentInput(props: CommentInputPropTypes) {
     },
     validationSchema,
     onSubmit: (values, { resetForm }) => {
-      if (!name) {
+      if (!username) {
         enqueueSnackbar("请先登陆后评论", {
           variant: "warning",
           action: (key) => (
@@ -134,7 +133,7 @@ export function CommentInput(props: CommentInputPropTypes) {
       <textarea
         name="content"
         maxLength={400}
-        placeholder={placeholder || (name ? `欢迎 ${name}，畅所欲言吧～` : "您还未登陆哦，先去登陆吧～")}
+        placeholder={placeholder || (username ? `欢迎 ${username}，畅所欲言吧～` : "您还未登陆哦，先去登陆吧～")}
         autoComplete="off"
         value={formik.values.content}
         onChange={formik.handleChange}

@@ -14,8 +14,7 @@ import { useSnackbar } from "notistack";
 import { useHistory } from "react-router-dom";
 
 import { ResourceInfo, patchUser, postMetrics } from "API";
-import { useLogin } from "hooks";
-import { UserContext } from "layout/core/UserContext";
+import { useAuth, useLogin } from "hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,14 +61,14 @@ export function InfoComponent(props: InfoPropTypes) {
   const history = useHistory();
   const login = useLogin();
 
-  const { name } = React.useContext(UserContext);
+  const { username } = useAuth();
 
   const [likeLoading, setLikeLoading] = React.useState<boolean>(false);
 
   const classes = useStyles();
 
   const handleClickFavorite = () => {
-    if (!name) {
+    if (!username) {
       enqueueSnackbar("请先登录", {
         variant: "warning",
         action: (key) => (
