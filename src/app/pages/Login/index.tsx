@@ -8,7 +8,7 @@ import { useSnackbar } from "notistack";
 
 import { logout, setTitle, toAbsoluteUrl } from "utils";
 import { postMetrics, postUser } from "API";
-import { UserContext } from "Layout/core/UserContext";
+import { UserContext } from "layout/core/UserContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -92,7 +92,6 @@ export function LoginPage() {
     validationSchema,
     onSubmit: (values) => {
       setLoading(true);
-      gtag("event", "login", { method: "password" });
 
       postUser(values)
         .then(() => {
@@ -100,6 +99,7 @@ export function LoginPage() {
             setLoading(false);
             history.push(state.ref || "/search");
           }, 1000);
+          gtag("event", "login", { method: "password" });
           postMetrics("user").catch();
 
           setName(values.username);
