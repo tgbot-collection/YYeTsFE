@@ -7,6 +7,7 @@ import { setTitle, toAbsoluteUrl } from "utils";
 import { postMetrics } from "API";
 import { useStyles } from "./Styled";
 import { LastComment } from "./LastComment";
+import { Announce } from "./Announce";
 
 export function HomePage() {
   setTitle("首页");
@@ -79,6 +80,8 @@ export function HomePage() {
       </div>
 
       <Container maxWidth="md">
+        <Announce />
+        <br />
         <LastComment />
       </Container>
     </>
