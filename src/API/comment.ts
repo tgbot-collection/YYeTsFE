@@ -61,3 +61,26 @@ interface GetCommentRes {
 export function getComment(params: GetCommentParams) {
   return axios.get<GetCommentRes>("/api/comment", { params });
 }
+
+interface LastCommentParams {
+  size: number;
+}
+
+export interface LastComment {
+  username: string;
+  date: string;
+  content: string;
+  resource_id: number;
+  id: string;
+  group: Array<UserGroup>;
+  cnname: string;
+}
+
+interface LastCommentRes {
+  count: number;
+  data: Array<LastComment>;
+}
+/* 获取最新评论 */
+export function getLastComment(params: LastCommentParams) {
+  return axios.get<LastCommentRes>("/api/comment/newest", { params });
+}
