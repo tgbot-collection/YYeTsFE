@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     source: {
       position: "absolute",
       right: 16,
-      bottom: -2,
+      top: 16,
     },
     sketch: {
       display: "grid",
@@ -36,6 +36,11 @@ export const useStyles = makeStyles((theme: Theme) =>
       "& .comment": {
         gridArea: "comment",
       },
+    },
+    noWrap: {
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
     },
   })
 );

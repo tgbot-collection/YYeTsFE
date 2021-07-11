@@ -55,7 +55,7 @@ export function LastComment() {
             // eslint-disable-next-line react/no-array-index-key
             <div key={index} className={classes.sketch}>
               <Skeleton variant="circle" className="avatar" />
-              <Skeleton variant="rect" className="name" height={24} />
+              <Skeleton variant="rect" className="name" width={200} height={24} />
               <Skeleton variant="rect" className="comment" height={20} />
             </div>
           ))}
@@ -105,9 +105,10 @@ export function LastComment() {
                     </Typography>
                   </>
                 }
+                classes={{ secondary: classes.noWrap }}
               />
               <Typography variant="caption" className={classes.source} color="secondary">
-                来自: {item.cnname}
+                {item.cnname}
               </Typography>
             </ListItem>
           );
