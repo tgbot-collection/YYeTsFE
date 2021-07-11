@@ -1,16 +1,20 @@
 import * as React from "react";
 import { Typography } from "@material-ui/core";
 import { useSnackbar } from "notistack";
+import { Skeleton } from "@material-ui/lab";
 
 import { AnnounceObject, getAnnounce } from "API/announce";
 
 export function Announce() {
-  const [announce, setAnnounce] = React.useState<Array<AnnounceObject>>([]);
   const { enqueueSnackbar } = useSnackbar();
+
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [announce, setAnnounce] = React.useState<Array<AnnounceObject>>([]);
 
   React.useEffect(() => {
     getAnnounce({ size: 10, page: 1 })
       .then((res) => {
+        setLoading(false);
         if (Array.isArray(res.data.data)) {
           setAnnounce(res.data.data.slice(0, 1));
         }
@@ -20,10 +24,6 @@ export function Announce() {
       });
   }, [enqueueSnackbar]);
 
-  if (announce.length === 0) {
-    return null;
-  }
-
   return (
     <section>
       <Typography variant="h5" component="h2" gutterBottom>
@@ -31,9 +31,11 @@ export function Announce() {
       </Typography>
 
       <div style={{ padding: "0 16px" }}>
-        {announce.map((item) => (
-          <Typography key={item.content}>{item.content}</Typography>
-        ))}
+        {announce.length > 0 ? (
+          announce.map((item) => <Typography key={item.content}>{item.content}</Typography>)
+        ) : (
+          <Typography>{loading ? <Skeleton /> : "暂无公告"}</Typography>
+        )}
       </div>
     </section>
   );
