@@ -13,10 +13,11 @@ interface LineData {
 interface ColumnPropTypes {
   data: Array<MetricsInfo>;
   loading: boolean;
+  theme: "light" | "dark";
 }
 
 export function Visitor(props: ColumnPropTypes) {
-  const { data, loading = true } = props;
+  const { data, loading = true, theme } = props;
 
   const VISITOR_CHART = ["home", "top", "resource"];
   const labelMap = {
@@ -42,6 +43,7 @@ export function Visitor(props: ColumnPropTypes) {
 
   const config: ColumnConfig = {
     data: formatData(data),
+    theme,
     loading,
     isGroup: true,
     xField: "date",

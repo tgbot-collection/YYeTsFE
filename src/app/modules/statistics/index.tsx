@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Container, Grid, Typography, useMediaQuery } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 
 import { getMetrics, MetricsInfo } from "API";
@@ -11,6 +11,8 @@ export default function Statistics() {
 
   const [loading, setLoading] = React.useState<boolean>(true);
   const [data, setData] = useState<Array<MetricsInfo>>([]);
+
+  const theme = useMediaQuery("(prefers-color-scheme: dark)") ? "dark" : "light";
 
   useEffect(() => {
     getMetrics()
@@ -35,7 +37,7 @@ export default function Statistics() {
 
       <Grid container spacing={8}>
         <Grid item xs={12}>
-          <Visitor data={data} loading={loading} />
+          <Visitor data={data} loading={loading} theme={theme} />
         </Grid>
       </Grid>
     </Container>
