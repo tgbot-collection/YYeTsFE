@@ -1,19 +1,25 @@
 import * as React from "react";
-import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@material-ui/core";
-import clsx from "clsx";
+import { List, ListItem, ListItemAvatar, ListItemText, Typography } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
+import { useHistory } from "react-router-dom";
 
 import { getLastComment, LastComment as LastCommentData } from "API";
-import { formatAvatar, formatComment } from "utils";
+import { formatComment } from "utils";
+import { Avatar } from "component";
 import { useStyles } from "./Styled";
 
 export function LastComment() {
+  const [loading, setLoading] = React.useState<boolean>(true);
   const [lastComment, setLastComment] = React.useState<Array<LastCommentData>>([]);
+
   const { enqueueSnackbar } = useSnackbar();
+  const history = useHistory();
 
   React.useEffect(() => {
     getLastComment({ size: 5 })
       .then((res) => {
+        setLoading(false);
         if (res.data) {
           setLastComment(res.data.data);
         }
@@ -23,7 +29,40 @@ export function LastComment() {
       });
   }, [enqueueSnackbar]);
 
+  const handleClick = (id: number, title: string) => {
+    if (id === 233) {
+      history.push("/discuss");
+    } else {
+      history.push({
+        pathname: "/resource",
+        search: `?id=${id}`,
+        state: { title },
+      });
+    }
+  };
+
   const classes = useStyles();
+
+  if (loading) {
+    return (
+      <section>
+        <Typography variant="h5" component="h2">
+          最新评论
+        </Typography>
+
+        <div style={{ padding: "8px 0" }}>
+          {Array.from(new Array(5)).map((item, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={index} className={classes.sketch}>
+              <Skeleton variant="circle" className="avatar" />
+              <Skeleton variant="rect" className="name" height={24} />
+              <Skeleton variant="rect" className="comment" height={20} />
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section>
@@ -36,14 +75,14 @@ export function LastComment() {
           const content = formatComment(item.content);
 
           return (
-            <ListItem alignItems="flex-start" key={item.id}>
+            <ListItem
+              alignItems="flex-start"
+              key={item.id}
+              onClick={() => handleClick(item.resource_id, item.cnname)}
+              button
+            >
               <ListItemAvatar>
-                <Avatar
-                  style={{ fontSize: "0.875rem" }}
-                  className={clsx({ [classes.purple]: item.group.includes("admin") })}
-                >
-                  {formatAvatar(item.username)}
-                </Avatar>
+                <Avatar admin={item.group.includes("admin")} username={item.username} />
               </ListItemAvatar>
               <ListItemText
                 primary={

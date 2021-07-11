@@ -1,12 +1,13 @@
 import * as React from "react";
 import dayjs from "dayjs";
 import clsx from "clsx";
-import { Avatar, Button, SvgIcon, Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 
-import { formatAvatar, formatBrowser, formatComment } from "utils";
+import { formatBrowser, formatComment } from "utils";
 import { UserGroup, Comment } from "API";
 import { useStyles } from "./styled";
 import { CommentInput } from "../CommentInput";
+import { Avatar } from "../Avatar";
 
 interface CommentCardPropTypes {
   resourceId: number;
@@ -54,24 +55,7 @@ export function CommentCard(props: CommentCardPropTypes) {
   return (
     <>
       <div className={classes.commentItem} id={commentId}>
-        <div className="avatar">
-          <Avatar style={{ fontSize: "0.875rem" }} className={clsx({ [classes.purple]: admin })}>
-            {formatAvatar(username)}
-          </Avatar>
-          {admin && (
-            <SvgIcon className="circle" viewBox="0 0 1024 1024" titleAccess="管理员">
-              ad
-              <path
-                d="M515.040168 509.675166m-487.499826 0a487.499825 487.499825 0 1 0 974.999651 0 487.499825 487.499825 0 1 0-974.999651 0Z"
-                fill="#fecc11"
-              />
-              <path
-                d="M328.695774 497.693329l169.176388 33.799511-140.205379 314.210269L701.563395 472.835487l-194.749563-31.832343 93.35103-267.355921z"
-                fill="#FFFFFF"
-              />
-            </SvgIcon>
-          )}
-        </div>
+        <Avatar className="avatar" admin={admin} username={username} />
 
         <div className="name">
           <Typography component="span" variant="h6" color="textPrimary">
