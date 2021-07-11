@@ -22,6 +22,8 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>人人影视分享下载站</title>
+    <!-- SPLASH SCREEN-->
+    <link rel="stylesheet" href="%PUBLIC_URL%/index.css">
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -30,5 +32,13 @@
       Github: https://github.com/wyx1818/YYeTsFE
     -->
     <div id="root"></div>
+
+    <!-- loading -->
+    <div id="splash-screen">
+      <img src="%PUBLIC_URL%/logo.png" alt="logo" class="logo" />
+      <svg class="splash-spinner hidden" viewBox="0 0 50 50">
+        <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+      </svg>
+    </div>
   </body>
 </html>

@@ -4,6 +4,7 @@ import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 
 import App from "./app/App";
+import { SplashScreenProvider } from "./layout";
 
 if (process.env.NODE_ENV !== "development" && process.env.REACT_APP_SENTRY_RELEASE) {
   Sentry.init({
@@ -18,4 +19,11 @@ if (process.env.NODE_ENV !== "development" && process.env.REACT_APP_SENTRY_RELEA
   });
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <React.StrictMode>
+    <SplashScreenProvider>
+      <App />
+    </SplashScreenProvider>
+  </React.StrictMode>,
+  document.getElementById("root")
+);
