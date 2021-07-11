@@ -37,3 +37,19 @@ type MetricsType =
 export function postMetrics(type: MetricsType) {
   return axios.post("/api/metrics", { type });
 }
+
+type MetricsObject = {
+  [p in MetricsType]?: number;
+};
+
+export interface MetricsInfo extends MetricsObject {
+  date: string;
+}
+
+interface MetricsRes {
+  metrics: Array<MetricsInfo>;
+}
+
+export function getMetrics() {
+  return axios.get<MetricsRes>("/api/metrics");
+}

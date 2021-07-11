@@ -5,6 +5,8 @@ import { useAuth, useLoginBack } from "hooks";
 import { SplashScreen } from "layout";
 import { DataBasePage, DiscussPage, HelpPage, HomePage, MePage, ResourcePage, SearchPage } from "./pages";
 
+const StatisticPage = React.lazy(() => import("./modules/statistics"));
+
 export function BasePage() {
   const location = useLocation();
 
@@ -27,6 +29,8 @@ export function BasePage() {
         </Route>
         <Route exact path="/database" component={DataBasePage} />
         <Route exact path="/help" component={HelpPage} />
+
+        <Route exact path="/statistics" component={StatisticPage} />
 
         <Route>
           <Redirect to="/404" />

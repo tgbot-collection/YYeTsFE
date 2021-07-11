@@ -129,7 +129,7 @@ export function HelpPage() {
         <Typography>
           4. 我记录了metrics信息，用于优化日后访问量，此信息不包含个人信息，无法用于追踪你。 可以
           <Link
-            href={`${process.env.REACT_APP_DOMAIN}/api/metrics`}
+            href="/statistics"
             onClick={() => {
               gtag("event", "metrics");
             }}
