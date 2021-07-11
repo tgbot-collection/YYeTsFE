@@ -1,7 +1,7 @@
 import axios from "./axiosConfig";
 import { ResourceInfo } from "./resource";
 
-interface PostUserParams {
+export interface PostUserParams {
   username: string;
   password: string;
 }

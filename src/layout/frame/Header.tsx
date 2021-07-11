@@ -20,8 +20,8 @@ import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/ho
 import { useSnackbar } from "notistack";
 
 import { logout, toAbsoluteUrl } from "utils";
-import { useLogin } from "hooks";
-import { UserContext } from "./UserContext";
+import { useAppDispatch, useAuth, useLoginBack } from "hooks";
+import { setUsername } from "app/pages/login/userSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -57,18 +57,18 @@ const useStyles = makeStyles((theme: Theme) =>
 export function Header() {
   const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
+  const { username } = useAuth();
+  const dispatch = useAppDispatch();
 
-  const login = useLogin();
+  const login = useLoginBack();
 
   const loginPopupState = usePopupState({ variant: "popover", popupId: "loginMenu" });
   const githubPopupState = usePopupState({ variant: "popover", popupId: "githubMenu" });
 
-  const { name: username, setName } = React.useContext(UserContext);
-
   const classes = useStyles();
 
   const handleLogout = () => {
-    setName("");
+    dispatch(setUsername(""));
     loginPopupState.close();
     gtag("event", "logout");
 

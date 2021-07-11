@@ -16,7 +16,7 @@ interface LayoutPropTypes {
   children: React.ReactNode;
 }
 
-export const Layout = (props: LayoutPropTypes) => {
+export const AppFrame = (props: LayoutPropTypes) => {
   const { children } = props;
 
   const classes = useStyles();

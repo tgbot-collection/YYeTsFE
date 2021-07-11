@@ -8,7 +8,8 @@ import { useSnackbar } from "notistack";
 
 import { logout, setTitle, toAbsoluteUrl } from "utils";
 import { postMetrics, postUser } from "API";
-import { UserContext } from "../../Layout/UserContext";
+import { useAppDispatch } from "hooks";
+import { setUsername } from "app/pages/login/userSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,7 +81,7 @@ export function LoginPage() {
   const history = useHistory();
   const { state } = useLocation<{ ref?: string }>();
   const { enqueueSnackbar } = useSnackbar();
-  const { setName } = React.useContext(UserContext);
+  const dispatch = useAppDispatch();
 
   const [loading, setLoading] = React.useState(false);
 
@@ -92,7 +93,6 @@ export function LoginPage() {
     validationSchema,
     onSubmit: (values) => {
       setLoading(true);
-      gtag("event", "login", { method: "password" });
 
       postUser(values)
         .then(() => {
@@ -100,9 +100,10 @@ export function LoginPage() {
             setLoading(false);
             history.push(state.ref || "/search");
           }, 1000);
+          gtag("event", "login", { method: "password" });
           postMetrics("user").catch();
 
-          setName(values.username);
+          dispatch(setUsername(values.username));
           localStorage.setItem("username", values.username);
           enqueueSnackbar("登录成功", { variant: "success" });
         })

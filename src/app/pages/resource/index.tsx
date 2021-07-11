@@ -17,13 +17,13 @@ import {
   Typography,
 } from "@material-ui/core";
 import queryString from "query-string";
+import { useSnackbar } from "notistack";
 
 import { getResourceByID, ResourceInfo, AddressInfo, cancelGetResourceByID, postMetrics } from "API";
-import { useSnackbar } from "notistack";
 import { setTitle } from "utils";
+import { CommentComponent } from "features";
 import { InfoComponent } from "./Info";
 import { AddressComponent } from "./Address";
-import { CommentComponent } from "./Comment";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
