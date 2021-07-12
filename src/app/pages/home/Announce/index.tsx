@@ -34,7 +34,7 @@ export function Announce() {
         {announce.length > 0 ? (
           announce.map((item) => <Typography key={item.content}>{item.content}</Typography>)
         ) : (
-          <Typography>{loading ? <Skeleton /> : "暂无公告"}</Typography>
+          <Typography>{loading ? <Skeleton height={24} /> : "暂无公告"}</Typography>
         )}
       </div>
     </section>

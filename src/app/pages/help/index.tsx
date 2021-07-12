@@ -1,6 +1,8 @@
 import * as React from "react";
 import { setTitle } from "utils";
-import { Container, createStyles, Link, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Container, createStyles, Link as MuiLink, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
+
 import { postMetrics } from "API";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -39,7 +41,10 @@ export function HelpPage() {
         <Typography>网盘就去下载对应的客户端，电驴和磁力链，可以尝试下迅雷。</Typography>
         <Typography>
           磁力链还可以试试 qBittorrent、uTorrent、BitCommet，并且记得去同步一份最新的
-          <Link href="https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"> tracker </Link>
+          <MuiLink href="https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt">
+            {" "}
+            tracker{" "}
+          </MuiLink>
           哦。
         </Typography>
         <Typography> 另外值得一提的是，有些网盘支持离线资源，可以把磁力、ed2k贴进去。</Typography>
@@ -79,8 +84,8 @@ export function HelpPage() {
         </Typography>
         <Typography>
           谢谢你哦！可以通过点 🌟，宣传，使用等方式来支持。当然你也可以通过
-          <Link href="https://afdian.net/@BennyThink">Buy Me a Coffee</Link>或
-          <Link href="https://www.buymeacoffee.com/bennythink">爱发电</Link>
+          <MuiLink href="https://afdian.net/@BennyThink">Buy Me a Coffee</MuiLink>或
+          <MuiLink href="https://www.buymeacoffee.com/bennythink">爱发电</MuiLink>
           来支持我！
         </Typography>
       </div>
@@ -101,7 +106,7 @@ export function HelpPage() {
         </Typography>
         <Typography>
           本项目使用
-          <Link href="https://github.com/tgbot-collection/YYeTsBot/blob/master/LICENSE">MIT协议</Link>
+          <MuiLink href="https://github.com/tgbot-collection/YYeTsBot/blob/master/LICENSE">MIT协议</MuiLink>
           授权，因此你可以进行商业化，以任意形式进行分发、修改以及私有使用。你只要保持保持版权声明就可以了。
         </Typography>
       </div>
@@ -128,14 +133,15 @@ export function HelpPage() {
         <Typography>3. 我使用了Cloudflare，请参考Cloudflare的隐私政策。</Typography>
         <Typography>
           4. 我记录了metrics信息，用于优化日后访问量，此信息不包含个人信息，无法用于追踪你。 可以
-          <Link
-            href="/statistics"
+          <MuiLink
+            to="/statistics"
             onClick={() => {
               gtag("event", "metrics");
             }}
+            component={Link}
           >
             点击这里查看
-          </Link>
+          </MuiLink>
           。
         </Typography>
         <Typography>
