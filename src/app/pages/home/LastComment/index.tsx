@@ -3,11 +3,15 @@ import { List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mater
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
 import { useHistory } from "react-router-dom";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 import { getLastComment, LastComment as LastCommentData } from "API";
 import { formatComment } from "utils";
 import { Avatar } from "component";
 import { useStyles } from "./Styled";
+
+dayjs.extend(relativeTime);
 
 export function LastComment() {
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -89,7 +93,7 @@ export function LastComment() {
                   <>
                     <Typography component="span">{item.username}</Typography>
                     <Typography component="span" variant="body2" color="textSecondary" style={{ marginLeft: 8 }}>
-                      {item.date}
+                      {dayjs(item.date).locale("zh-cn").fromNow()}
                     </Typography>
                   </>
                 }
