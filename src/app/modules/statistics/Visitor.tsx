@@ -3,6 +3,7 @@ import { Column } from "@ant-design/charts";
 import { ColumnConfig } from "@ant-design/charts/es/column";
 
 import { MetricsInfo } from "API";
+import dayjs from "dayjs";
 
 interface LineData {
   date: string;
@@ -13,43 +14,58 @@ interface LineData {
 interface ColumnPropTypes {
   data: Array<MetricsInfo>;
   loading: boolean;
-  theme: "light" | "dark";
 }
 
 export function Visitor(props: ColumnPropTypes) {
-  const { data, loading = true, theme } = props;
+  const { data, loading = true } = props;
 
-  const VISITOR_CHART = ["home", "top", "resource"];
-  const labelMap = {
-    home: "首页",
-    top: "排行榜",
-    resource: "资源详情",
-  };
+  const [min, setMin] = React.useState<number>(0);
 
   const formatData = (rawData: Array<MetricsInfo>) => {
+    const VISITOR_CHART = ["home", "top", "resource"];
+    const labelMap = {
+      home: "首页",
+      top: "排行榜",
+      resource: "资源页",
+    };
+
     const newArr: LineData[] = [];
+    let computerMin = 99999;
     rawData.forEach((item) => {
       const { date } = item;
       Object.keys(item).forEach((key) => {
         if (VISITOR_CHART.includes(key)) {
           // @ts-ignore
-          newArr.push({ date, category: labelMap[key], value: item[key] });
+          const value = item[key];
+          if (value < computerMin) {
+            computerMin = value;
+          }
+          // @ts-ignore
+          newArr.unshift({ date, category: labelMap[key], value });
         }
       });
     });
 
+    setMin(computerMin);
     return newArr;
   };
 
+  const chartData = React.useMemo(() => formatData(data), [data]);
+
   const config: ColumnConfig = {
-    data: formatData(data),
-    theme,
+    data: chartData,
     loading,
     isGroup: true,
     xField: "date",
     yField: "value",
     seriesField: "category",
-    color: ["#1979C9", "#D62A0D", "#FAA219"],
+    xAxis: {
+      label: {
+        formatter: (datum) => dayjs(datum).format("MM-DD"),
+      },
+    },
+    yAxis: { min },
   };
+
   return <Column {...config} />;
 }
