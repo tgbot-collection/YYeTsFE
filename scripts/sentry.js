@@ -24,6 +24,9 @@ async function createReleaseAndUpload() {
       rewrite: false,
     });
 
+    console.log("Set commit integration");
+    await cli.releases.setCommits(release, { auto: true });
+
     console.log("Finalizing release");
     await cli.releases.finalize(release);
 
