@@ -19,7 +19,7 @@ export function DiscussPage() {
   const classes = useStyles();
 
   React.useEffect(() => {
-    postMetrics("discuss").catch();
+    postMetrics("discuss");
   }, []);
 
   return (

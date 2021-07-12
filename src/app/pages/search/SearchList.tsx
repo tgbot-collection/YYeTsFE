@@ -91,7 +91,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
 
   const handleToExtra = (event: React.SyntheticEvent, href: string) => {
     event.preventDefault();
-    postMetrics("extra").catch();
+    postMetrics("extra");
     setTimeout(() => {
       // eslint-disable-next-line no-restricted-globals
       location.href = href;

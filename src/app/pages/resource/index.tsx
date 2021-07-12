@@ -118,13 +118,13 @@ export function ResourcePage() {
       .catch((error) => {
         enqueueSnackbar(`获取资源信息错误：${error.message}`, { variant: "error" });
       });
-    postMetrics("resource").catch();
+    postMetrics("resource");
 
     return cancelGetResourceByID;
   }, [enqueueSnackbar, id, location.search]);
 
   const handleBack = () => {
-    postMetrics("backOld").catch();
+    postMetrics("backOld");
     gtag("event", "back_old", { resource_id: id });
   };
 

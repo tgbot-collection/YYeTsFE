@@ -63,7 +63,7 @@ export function DataBasePage() {
         enqueueSnackbar(`获取数据库信息出错: ${err.message}`, { variant: "error" });
       });
 
-    postMetrics("database").catch();
+    postMetrics("database");
   }, [enqueueSnackbar]);
 
   return (

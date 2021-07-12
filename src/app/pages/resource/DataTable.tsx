@@ -92,7 +92,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
               enqueueSnackbar("电驴地址已复制", {
                 variant: "success",
               });
-              postMetrics("multiDownload").catch();
+              postMetrics("multiDownload");
               gtag("event", "multiDownload", { type: "电驴" });
             }}
           >
@@ -111,7 +111,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
                 variant: "success",
               });
 
-              postMetrics("multiDownload").catch();
+              postMetrics("multiDownload");
               gtag("event", "multiDownload", { type: "磁链" });
             }}
           >
@@ -153,7 +153,7 @@ const CopyButton = (props: ButtonProps) => {
           variant: "success",
         });
         gtag("event", "download", { resource_id: resourceId, type: downItem.way_cn });
-        postMetrics("download").catch();
+        postMetrics("download");
       }}
     >
       <Button
@@ -186,7 +186,7 @@ const HrefButton = (props: ButtonProps) => {
           variant: "success",
         });
         gtag("event", "download", { resource_id: resourceId, type: downItem.way_cn });
-        postMetrics("download").catch();
+        postMetrics("download");
         setTimeout(() => {
           // eslint-disable-next-line no-restricted-globals
           location.href = downItem.address;

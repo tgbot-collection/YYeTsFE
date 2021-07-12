@@ -20,10 +20,8 @@ if (process.env.NODE_ENV !== "development" && process.env.REACT_APP_SENTRY_RELEA
 }
 
 ReactDOM.render(
-  <React.StrictMode>
-    <SplashScreenProvider>
-      <App />
-    </SplashScreenProvider>
-  </React.StrictMode>,
+  <SplashScreenProvider>
+    <App />
+  </SplashScreenProvider>,
   document.getElementById("root")
 );

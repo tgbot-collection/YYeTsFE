@@ -14,6 +14,10 @@ instance.interceptors.response.use(
       return null;
     }
 
+    if (error.isAxiosError && error.config.url === "/api/metrics") {
+      return null;
+    }
+
     if (error.code === "ECONNABORTED" && error.message.indexOf("timeout") !== -1) {
       return Promise.reject(new Error("请求超时，请重试"));
     }

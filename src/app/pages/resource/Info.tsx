@@ -88,10 +88,10 @@ export function InfoComponent(props: InfoPropTypes) {
 
     if (!isLike) {
       gtag("event", "add_to_favorite", { resource_id: id, form: "resource" });
-      postMetrics("favorite").catch();
+      postMetrics("favorite");
     } else {
       gtag("event", "remove_from_favorite", { resource_id: id, form: "resource" });
-      postMetrics("unFavorite").catch();
+      postMetrics("unFavorite");
     }
 
     setLikeLoading(true);
@@ -110,7 +110,7 @@ export function InfoComponent(props: InfoPropTypes) {
 
   return (
     <div>
-      <Box css={{ display: "flex", flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
         <Typography component="h1" variant="h4" className={classes.title}>
           {loading ? <Skeleton variant="rect" width={200} /> : resourceInfo.cnname}
         </Typography>
@@ -174,7 +174,7 @@ export function InfoComponent(props: InfoPropTypes) {
               onCopy={() => {
                 enqueueSnackbar("页面地址复制成功，快去分享给小伙伴吧", { variant: "success" });
                 gtag("event", "share", { resource_id: id, form: "resource" });
-                postMetrics("share").catch();
+                postMetrics("share");
               }}
             >
               <Button variant="contained" color="primary" size="small" startIcon={<ShareIcon />}>

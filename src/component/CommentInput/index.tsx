@@ -104,7 +104,7 @@ export function CommentInput(props: CommentInputPropTypes) {
         });
 
       gtag("event", "comment", { resource_id: resourceId });
-      postMetrics("comment").catch();
+      postMetrics("comment");
     },
   });
 

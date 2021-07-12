@@ -24,7 +24,7 @@ export function HelpPage() {
   const classes = useStyles();
 
   React.useEffect(() => {
-    postMetrics("help").catch();
+    postMetrics("help");
   }, []);
 
   return (

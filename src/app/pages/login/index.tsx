@@ -101,7 +101,7 @@ export function LoginPage() {
             history.push(state.ref || "/search");
           }, 1000);
           gtag("event", "login", { method: "password" });
-          postMetrics("user").catch();
+          postMetrics("user");
 
           dispatch(setUsername(values.username));
           localStorage.setItem("username", values.username);

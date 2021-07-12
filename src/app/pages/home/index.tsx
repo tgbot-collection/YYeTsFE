@@ -15,7 +15,7 @@ export function HomePage() {
   const classes = useStyles();
 
   React.useEffect(() => {
-    postMetrics("home").catch();
+    postMetrics("home");
   }, []);
 
   return (
