@@ -12,6 +12,7 @@ type GtagEvent =
   | "comment" // 评论
   | "add_to_favorite" // 添加到收藏
   | "remove_from_favorite" // 从收藏移除
+  | "timeout" // 请求超时
   | "share"; // 分享页面
 
 declare function gtag(event: "event", eventType: GtagEvent, option?: { [key: string]: any });

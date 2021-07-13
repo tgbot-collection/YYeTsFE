@@ -56,7 +56,7 @@ const HrefButton = (props: ButtonProps) => {
     <CopyToClipboard
       text={downItem.passwd || "无密码"}
       onCopy={() => {
-        enqueueSnackbar(`已复制网盘密码： ${downItem.passwd || "无密码"}`, {
+        enqueueSnackbar(`已复制网盘密码: ${downItem.passwd || "无密码"}`, {
           variant: "success",
         });
         gtag("event", "download", { resource_id: resourceId, type: downItem.way_cn });
@@ -94,20 +94,21 @@ const ResilioButton = (props: ButtonProps) => {
     <CopyToClipboard
       text={downItem.passwd || "无密码"}
       onCopy={() => {
-        enqueueSnackbar(`已复 key： ${downItem.passwd || "获取 key 失败"}`, {
+        enqueueSnackbar(`已复 Key: ${downItem.passwd || "获取 key 失败"}`, {
           variant: "success",
           action: () => (
             <Button href="https://zhuanlan.zhihu.com/p/280756218" color="inherit">
               使用帮助
             </Button>
           ),
+          autoHideDuration: 5000,
         });
         gtag("event", "ResilioSync", { resource_id: resourceId, type: downItem.way_cn });
         postMetrics("ResilioSync");
 
         setTimeout(() => {
           window.open(downItem.address);
-        }, 1000);
+        }, 1500);
       }}
     >
       <Button
