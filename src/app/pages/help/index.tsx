@@ -40,14 +40,26 @@ export function HelpPage() {
         <Typography>一般来说，分享页面的下载链接是有电驴、磁力链和网盘的。</Typography>
         <Typography>网盘就去下载对应的客户端，电驴和磁力链，可以尝试下迅雷。</Typography>
         <Typography>
-          磁力链还可以试试 qBittorrent、uTorrent、BitCommet，并且记得去同步一份最新的
+          磁力链还可以试试 qBittorrent、uTorrent、BitCommet，并且记得去同步一份最新的{" "}
           <MuiLink href="https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt">
-            {" "}
-            tracker{" "}
-          </MuiLink>
+            tracker
+          </MuiLink>{" "}
           哦。
         </Typography>
         <Typography> 另外值得一提的是，有些网盘支持离线资源，可以把磁力、ed2k贴进去。</Typography>
+      </div>
+
+      <div className={classes.item}>
+        <Typography variant="h6" component="h3" gutterBottom>
+          如何使用 Resilio Sync
+        </Typography>
+        <Typography>
+          推荐使用 Resilio Sync 来进行资源下载， 具体方法请移步
+          <MuiLink href="https://zhuanlan.zhihu.com/p/280756218">
+            它一度被墙，如今又悄然复活，为你轰开一个隐秘新世界
+          </MuiLink>
+          。
+        </Typography>
       </div>
 
       <div className={classes.item}>
@@ -83,10 +95,10 @@ export function HelpPage() {
           想要支持我
         </Typography>
         <Typography>
-          谢谢你哦！可以通过点 🌟，宣传，使用等方式来支持。当然你也可以通过
-          <MuiLink href="https://afdian.net/@BennyThink">Buy Me a Coffee</MuiLink>或
-          <MuiLink href="https://www.buymeacoffee.com/bennythink">爱发电</MuiLink>
-          来支持我！
+          谢谢你哦！可以通过点<MuiLink href="https://github.com/tgbot-collection/YYeTsBot">🌟</MuiLink>
+          ，宣传，使用等方式来支持。当然你也可以通过{" "}
+          <MuiLink href="https://afdian.net/@BennyThink">Buy Me a Coffee</MuiLink> 或
+          <MuiLink href="https://www.buymeacoffee.com/bennythink">爱发电</MuiLink>来支持我！
         </Typography>
       </div>
 
@@ -106,7 +118,7 @@ export function HelpPage() {
         </Typography>
         <Typography>
           本项目使用
-          <MuiLink href="https://github.com/tgbot-collection/YYeTsBot/blob/master/LICENSE">MIT协议</MuiLink>
+          <MuiLink href="https://github.com/tgbot-collection/YYeTsBot/blob/master/LICENSE"> MIT 协议</MuiLink>
           授权，因此你可以进行商业化，以任意形式进行分发、修改以及私有使用。你只要保持保持版权声明就可以了。
         </Typography>
       </div>
@@ -116,7 +128,8 @@ export function HelpPage() {
           网站打不开，无法搜索
         </Typography>
         <Typography>
-          呃这个应该不太可能啊。可能你网络连接到cloudflare不太稳？换个网络，再刷新试试看呢？还不行去GitHub报错给我吧。
+          呃这个应该不太可能啊。可能你网络连接到 cloudflare 不太稳？换个网络，再刷新试试看呢？还不行去 GitHub
+          报错给我吧。
         </Typography>
       </div>
 
@@ -129,8 +142,8 @@ export function HelpPage() {
           1.
           你的IP地址会被记录在Nginx的日志中。在面临攻击、爬虫等恶意行为时，我会找到这个IP然后加到防火墙中。我不会公开或与第三方分享访问日志；
         </Typography>
-        <Typography>2. 我使用了Google Analytics，请参考Google Analytics的隐私政策；</Typography>
-        <Typography>3. 我使用了Cloudflare，请参考Cloudflare的隐私政策。</Typography>
+        <Typography>2. 我使用了 Google Analytics，请参考 Google Analytics 的隐私政策；</Typography>
+        <Typography>3. 我使用了 Cloudflare，请参考 Cloudflare 的隐私政策。</Typography>
         <Typography>
           4. 我记录了metrics信息，用于优化日后访问量，此信息不包含个人信息，无法用于追踪你。 可以
           <MuiLink

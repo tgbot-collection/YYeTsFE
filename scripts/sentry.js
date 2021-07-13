@@ -30,13 +30,12 @@ async function createReleaseAndUpload() {
     console.log("Finalizing release");
     await cli.releases.finalize(release);
 
+    console.log("Remove source map");
     const sourcemapPath = path.resolve("./build/static/js");
     const mapList = fs.readdirSync(sourcemapPath).filter((file) => /js.map$/.test(file));
     mapList.forEach((file) => {
       fse.removeSync(path.resolve(sourcemapPath, file));
     });
-
-    console.log("Source maps is remove");
   } catch (e) {
     console.error("Source maps uploading failed:", e);
   }
