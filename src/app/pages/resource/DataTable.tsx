@@ -13,10 +13,8 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-  Button,
 } from "@material-ui/core";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { FileCopy as FileCopyIcon, Cloud as CloudIcon } from "@material-ui/icons";
 import { useSnackbar, ProviderContext } from "notistack";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -24,6 +22,7 @@ import "dayjs/locale/zh-cn";
 
 import { postMetrics, ResourceDetail } from "API";
 import { Ed2kIcon, MagnetIcon } from "Icon";
+import { DownloadBtn } from "./DownloadBtn";
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -122,83 +121,6 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         </>
       )}
     </Toolbar>
-  );
-};
-
-interface ButtonProps {
-  downItem: ResourceDetail["files"][0];
-  enqueueSnackbar: ProviderContext["enqueueSnackbar"];
-  resourceId: string;
-}
-
-const CopyButton = (props: ButtonProps) => {
-  const { downItem, enqueueSnackbar, resourceId } = props;
-
-  const handleClick = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-  };
-
-  return (
-    <CopyToClipboard
-      text={downItem.address}
-      onCopy={() => {
-        enqueueSnackbar(`${downItem.way_cn} 下载地址复制成功`, {
-          variant: "success",
-        });
-        gtag("event", "download", { resource_id: resourceId, type: downItem.way_cn });
-        postMetrics("download");
-      }}
-    >
-      <Button
-        variant="contained"
-        size="small"
-        startIcon={<FileCopyIcon />}
-        title={downItem.address}
-        onClick={handleClick}
-        disableElevation
-      >
-        {downItem.way_cn}
-      </Button>
-    </CopyToClipboard>
-  );
-};
-
-const HrefButton = (props: ButtonProps) => {
-  const { downItem, enqueueSnackbar, resourceId } = props;
-
-  const handleClick = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    event.preventDefault();
-  };
-
-  return (
-    <CopyToClipboard
-      text={downItem.passwd || "无密码"}
-      onCopy={() => {
-        enqueueSnackbar(`已复制网盘密码： ${downItem.passwd || "无密码"}`, {
-          variant: "success",
-        });
-        gtag("event", "download", { resource_id: resourceId, type: downItem.way_cn });
-        postMetrics("download");
-        setTimeout(() => {
-          // eslint-disable-next-line no-restricted-globals
-          location.href = downItem.address;
-        }, 1000);
-      }}
-    >
-      <Button
-        variant="contained"
-        size="small"
-        startIcon={<CloudIcon />}
-        href={downItem.address}
-        onClick={handleClick}
-        title={`网盘密码：${downItem.passwd || "无密码"}`}
-        color="primary"
-        disableElevation
-      >
-        {downItem.way_cn}
-      </Button>
-    </CopyToClipboard>
   );
 };
 
@@ -337,11 +259,7 @@ export function DataTableComponent(props: DataTablePropTypes) {
                         padding={rowIndex === row.files.length - 1 ? undefined : "none"}
                         key={downItem.way}
                       >
-                        {downItem.way !== "1" && downItem.way !== "2" ? (
-                          <HrefButton downItem={downItem} enqueueSnackbar={enqueueSnackbar} resourceId={resourceId} />
-                        ) : (
-                          <CopyButton downItem={downItem} enqueueSnackbar={enqueueSnackbar} resourceId={resourceId} />
-                        )}
+                        <DownloadBtn downItem={downItem} resourceId={resourceId} />
                       </TableCell>
                     ))}
                   </TableRow>

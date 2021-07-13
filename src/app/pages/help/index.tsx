@@ -53,7 +53,9 @@ export function HelpPage() {
           如何使用 Resilio Sync
         </Typography>
         <Typography>
-          推荐使用 Resilio Sync 来进行资源下载， 具体方法请移步
+          推荐使用 Resilio Sync 来进行资源下载，直接点击链接就可以。
+          <Typography>如果你无法访问链接，也可以在客户端直接使用点击链接之后复制的 Key。</Typography>
+          具体方法请移步
           <MuiLink href="https://zhuanlan.zhihu.com/p/280756218">
             它一度被墙，如今又悄然复活，为你轰开一个隐秘新世界
           </MuiLink>

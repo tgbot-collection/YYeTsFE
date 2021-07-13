@@ -1,38 +1,24 @@
 import axios from "./axiosConfig";
 
-/**
- * top: 排行榜
- * home: 首页
- * search: 搜索
- * me: 个人中心
- * database: 数据库
- * help: 帮助页
- * user: 注册｜登陆
- * favorite: 收藏
- * comment: 评论
- * download: 下载资源
- * share: 分享
- * resource: 资源页
- * discuss: 留言版
- */
 type MetricsType =
-  | "top"
-  | "home"
-  | "search"
-  | "me"
-  | "database"
-  | "resource"
-  | "help"
-  | "user"
-  | "favorite"
-  | "unFavorite"
-  | "comment"
-  | "download"
-  | "multiDownload"
-  | "share"
-  | "discuss"
-  | "extra"
-  | "backOld";
+  | "top" // 排行榜
+  | "home" // 首页
+  | "search" // 搜索
+  | "me" // 个人中心
+  | "database" // 数据库
+  | "resource" // 资源页
+  | "help" // 帮助页
+  | "user" // 注册｜登陆
+  | "favorite" // 收藏
+  | "unFavorite" // 取消收藏
+  | "comment" // 发布评论
+  | "download" // 下载
+  | "multiDownload" // 批量下载
+  | "ResilioSync" // 同步
+  | "share" // 分享
+  | "discuss" // 留言板
+  | "extra" // 外链
+  | "backOld"; // 返回旧版
 
 export function postMetrics(type: MetricsType) {
   return axios.post("/api/metrics", { type });
