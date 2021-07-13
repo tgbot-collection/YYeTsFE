@@ -1,7 +1,6 @@
 import * as React from "react";
 import { setTitle } from "utils";
 import { Container, createStyles, Link as MuiLink, makeStyles, Theme, Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
 
 import { postMetrics } from "API";
 
@@ -147,11 +146,10 @@ export function HelpPage() {
         <Typography>
           4. 我记录了metrics信息，用于优化日后访问量，此信息不包含个人信息，无法用于追踪你。 可以
           <MuiLink
-            to="/statistics"
+            href="/api/metrics"
             onClick={() => {
               gtag("event", "metrics");
             }}
-            component={Link}
           >
             点击这里查看
           </MuiLink>
