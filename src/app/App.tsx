@@ -30,6 +30,7 @@ function App() {
                 关闭
               </Button>
             )}
+            style={{ pointerEvents: "all" }}
           >
             <Routes />
           </SnackbarProvider>
