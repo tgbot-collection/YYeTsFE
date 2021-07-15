@@ -117,7 +117,7 @@ const ResilioButton = (props: ButtonProps) => {
         startIcon={<ResilioIcon />}
         href={downItem.address}
         onClick={handleClick}
-        title={`ResilioSync 密码：${downItem.passwd || "无密码"}`}
+        title={`ResilioSync Key：${downItem.passwd || "无 Key"}`}
         color="secondary"
         disableElevation
       >
