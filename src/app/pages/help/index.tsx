@@ -146,16 +146,7 @@ export function HelpPage() {
         <Typography>2. 我使用了 Google Analytics，请参考 Google Analytics 的隐私政策；</Typography>
         <Typography>3. 我使用了 Cloudflare，请参考 Cloudflare 的隐私政策。</Typography>
         <Typography>
-          4. 我记录了metrics信息，用于优化日后访问量，此信息不包含个人信息，无法用于追踪你。 可以
-          <MuiLink
-            href="/api/metrics"
-            onClick={() => {
-              gtag("event", "metrics");
-            }}
-          >
-            点击这里查看
-          </MuiLink>
-          。
+          4. 我记录了metrics信息，用于优化日后访问量，此信息不包含个人信息，无法用于追踪你。 
         </Typography>
         <Typography>
           5. 如果你选择注册，我会保存你的用户名、加密后的密码、注册时间、UA等信息。此类信息不会被公开或与第三方分享。
