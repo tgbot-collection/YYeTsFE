@@ -54,6 +54,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       "& .floor": {
         position: "absolute",
         right: 4,
+        bottom: 6,
       },
     },
     bottomBorder: {
