@@ -118,7 +118,7 @@ export function Header() {
             </MuLink>
           </MenuItem>
           <MenuItem onClick={githubPopupState.close}>
-            <MuLink href="https://github.com/wyx1818/YYeTsFE" color="inherit">
+            <MuLink href="https://github.com/tgbot-collection/YYeTsFE" color="inherit">
               YYeTsFE
             </MuLink>
           </MenuItem>
