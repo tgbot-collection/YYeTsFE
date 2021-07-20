@@ -49,7 +49,6 @@ const HrefButton = (props: ButtonProps) => {
 
   const handleClick = (event: React.SyntheticEvent) => {
     event.stopPropagation();
-    event.preventDefault();
   };
 
   return (
@@ -61,9 +60,6 @@ const HrefButton = (props: ButtonProps) => {
         });
         gtag("event", "download", { resource_id: resourceId, type: downItem.way_cn });
         postMetrics("download");
-        setTimeout(() => {
-          window.open(downItem.address);
-        }, 1000);
       }}
     >
       <Button
@@ -87,7 +83,6 @@ const ResilioButton = (props: ButtonProps) => {
 
   const handleClick = (event: React.SyntheticEvent) => {
     event.stopPropagation();
-    event.preventDefault();
   };
 
   return (
@@ -105,10 +100,6 @@ const ResilioButton = (props: ButtonProps) => {
         });
         gtag("event", "ResilioSync", { resource_id: resourceId, type: downItem.way_cn });
         postMetrics("ResilioSync");
-
-        setTimeout(() => {
-          window.open(downItem.address);
-        }, 1500);
       }}
     >
       <Button
