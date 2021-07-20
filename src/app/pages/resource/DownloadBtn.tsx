@@ -71,6 +71,7 @@ const HrefButton = (props: ButtonProps) => {
         title={`网盘密码：${downItem.passwd || "无密码"}`}
         color="primary"
         disableElevation
+        target="_blank"
       >
         {downItem.way_cn}
       </Button>
@@ -111,6 +112,7 @@ const ResilioButton = (props: ButtonProps) => {
         title={`ResilioSync Key：${downItem.passwd || "无 Key"}`}
         color="secondary"
         disableElevation
+        target="_blank"
       >
         {downItem.way_cn}
       </Button>
