@@ -263,6 +263,10 @@ export function InfoComponent(props: InfoPropTypes) {
               </Typography>
             )}
 
+            <Typography variant="caption" color="textSecondary">
+              以上信息根据关键字生成，仅供参考
+            </Typography>
+
             {/* 工具栏 */}
             <div style={{ marginTop: 16 }}>
               <Button

@@ -244,7 +244,9 @@ export function DataTableComponent(props: DataTablePropTypes) {
                     >
                       {season} {row.episode && `第${row.episode}集`}
                     </TableCell>
-                    <TableCell align="left">{row.name}</TableCell>
+                    <TableCell align="left" style={{ wordBreak: "break-all" }}>
+                      {row.name}
+                    </TableCell>
                     {row.size && row.size !== "0" && <TableCell align="left">{row.size}</TableCell>}
                     {row.dateline && (
                       <TableCell align="left" className={classes.noWarp}>
