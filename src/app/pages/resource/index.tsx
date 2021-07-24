@@ -19,12 +19,19 @@ import {
 import queryString from "query-string";
 import { useSnackbar } from "notistack";
 
-import { getResourceByID, ResourceInfo, AddressInfo, cancelGetResourceByID, postMetrics } from "API";
+import {
+  getResourceByID,
+  ResourceInfo,
+  AddressInfo,
+  cancelGetResourceByID,
+  postMetrics,
+  DoubanInfo,
+  getDoubanByID,
+} from "API";
 import { setTitle } from "utils";
 import { CommentComponent } from "features";
 import { InfoComponent } from "./Info";
 import { AddressComponent } from "./Address";
-import { DoubanComponent } from "./Douban";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -84,6 +91,7 @@ export function ResourcePage() {
   const [resourceInfo, setResourceInfo] = React.useState<ResourceInfo>({} as ResourceInfo);
   const [resourceAddress, setResourceAddress] = React.useState<Array<AddressInfo>>([]);
   const [isLike, setIsLike] = React.useState<boolean>(false);
+  const [doubanInfo, setDoubanInfo] = React.useState<DoubanInfo | null>(null);
 
   const handleOpen = () => {
     setOpen(true);
@@ -101,24 +109,24 @@ export function ResourcePage() {
   }, [history, id, location.state?.title]);
 
   React.useEffect(() => {
-    getResourceByID(id as string)
-      .then((res) => {
-        if (res) {
-          const {
-            data: { data: resourceData },
-          } = res;
+    Promise.all([getResourceByID(id as string), getDoubanByID(id as string)])
+      .then(([resourceRes, doubanRes]) => {
+        const {
+          data: { data: resourceData },
+        } = resourceRes;
+        setResourceInfo(resourceData.info);
+        setResourceAddress(resourceData.list);
+        setIsLike(resourceRes.data.is_like || false);
 
-          setResourceInfo(resourceData.info);
-          setResourceAddress(resourceData.list);
-          setIsLike(res.data.is_like || false);
+        setDoubanInfo(doubanRes.data);
 
-          setLoading(false);
-          setTitle(resourceData.info.cnname);
-        }
+        setLoading(false);
+        setTitle(resourceData.info.cnname);
       })
       .catch((error) => {
         enqueueSnackbar(`获取资源信息错误：${error.message}`, { variant: "error" });
       });
+
     postMetrics("resource");
 
     return cancelGetResourceByID;
@@ -193,9 +201,8 @@ export function ResourcePage() {
           isLike={isLike}
           setIsLike={setIsLike}
           id={id as string}
+          doubanInfo={doubanInfo}
         />
-
-        <DoubanComponent id={id as string} />
 
         <Divider className={classes.hr} />
 

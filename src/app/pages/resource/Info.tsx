@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Box, Button, createStyles, Grid, Hidden, makeStyles, Theme, Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import {
   Explore as ExploreIcon,
@@ -8,13 +8,15 @@ import {
   Share as ShareIcon,
   MovieFilter as MovieFilterIcon,
   Visibility as VisibilityIcon,
+  Warning as WarningIcon,
 } from "@material-ui/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
 import { useHistory } from "react-router-dom";
 
-import { ResourceInfo, patchUser, postMetrics } from "API";
-import { useAuth, useLoginBack } from "hooks";
+import { ResourceInfo, patchUser, postMetrics, DoubanInfo } from "API";
+import { useAuth, useDomeSize, useLoginBack } from "hooks";
+import { DoubanRateIcon } from "Icon";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,6 +44,37 @@ const useStyles = makeStyles((theme: Theme) =>
     label: {
       marginLeft: theme.spacing(1),
     },
+    doubanContainer: {
+      display: "flex",
+      marginTop: 16,
+    },
+    post: {
+      borderRadius: 4,
+      boxShadow: theme.shadows[4],
+      width: "30vw",
+      maxWidth: 170,
+      marginRight: 12,
+    },
+    info: {
+      flex: 1,
+      overflow: "hidden",
+      paddingBottom: 4,
+    },
+    introduction: {
+      position: "relative",
+      transition: theme.transitions.create("max-height", {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      overflow: "hidden",
+      marginBottom: 16,
+    },
+    button: {
+      position: "absolute",
+      top: 39,
+      right: 2,
+      backgroundColor: theme.palette.background.default,
+    },
   })
 );
 
@@ -52,20 +85,26 @@ interface InfoPropTypes {
   isLike: boolean;
   setIsLike: React.Dispatch<React.SetStateAction<boolean>>;
   id: string;
+  doubanInfo: DoubanInfo | null;
 }
 
 export function InfoComponent(props: InfoPropTypes) {
-  const { loading, resourceInfo, url, isLike, setIsLike, id } = props;
+  const { loading, resourceInfo, url, isLike, setIsLike, id, doubanInfo } = props;
+  const MAX_HEIGHT = 60;
+
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
   const history = useHistory();
-  const login = useLoginBack();
 
+  const login = useLoginBack();
+  const [rect, ref] = useDomeSize();
   const { username } = useAuth();
 
   const [likeLoading, setLikeLoading] = React.useState<boolean>(false);
+  const [showMore, setShowMore] = React.useState<boolean>(false);
 
-  const classes = useStyles();
+  const handleClick = () => {
+    setShowMore((pre) => !pre);
+  };
 
   const handleClickFavorite = () => {
     if (!username) {
@@ -108,6 +147,8 @@ export function InfoComponent(props: InfoPropTypes) {
       });
   };
 
+  const classes = useStyles();
+
   return (
     <div>
       <Box sx={{ display: "flex", flexWrap: "wrap" }}>
@@ -148,42 +189,160 @@ export function InfoComponent(props: InfoPropTypes) {
           </Box>
         </Grid>
       </Grid>
-      <Grid container className={classes.attribute}>
-        <Grid item xs={4} sm={3} md={2}>
-          {loading ? (
-            <Skeleton variant="rect" width={100} height={30} />
-          ) : (
-            <Button
-              variant="contained"
-              color="secondary"
-              size="small"
-              startIcon={isLike ? <UnFavoriteIcon /> : <FavoriteIcon />}
-              onClick={handleClickFavorite}
-              disabled={likeLoading}
-            >
-              {isLike ? "取消收藏" : "收藏资源"}
-            </Button>
-          )}
-        </Grid>
-        <Grid item xs={4} sm={3} md={2}>
-          {loading ? (
-            <Skeleton variant="rect" width={100} height={30} />
-          ) : (
-            <CopyToClipboard
-              text={url}
-              onCopy={() => {
-                enqueueSnackbar("页面地址复制成功，快去分享给小伙伴吧", { variant: "success" });
-                gtag("event", "share", { resource_id: id, form: "resource" });
-                postMetrics("share");
-              }}
-            >
-              <Button variant="contained" color="primary" size="small" startIcon={<ShareIcon />}>
-                分享页面
+
+      {doubanInfo ? (
+        <div className={classes.doubanContainer}>
+          {/* 海报 */}
+          <div>
+            <img src={`/api/douban?resource_id=${id}&type=image`} alt={doubanInfo.name} className={classes.post} />
+          </div>
+
+          {/* 详细信息 */}
+          <div className={classes.info}>
+            <Typography variant="body2" noWrap>
+              {doubanInfo.genre?.join("、")} | {doubanInfo.year}
+            </Typography>
+            <Typography variant="body2" noWrap style={{ marginBottom: 16 }}>
+              集数: {doubanInfo.episodeCount} 单集片长: {doubanInfo.episodeDuration}
+            </Typography>
+
+            {/* 简介 */}
+            <div className={classes.introduction} style={{ maxHeight: showMore ? `${rect.height}px` : MAX_HEIGHT }}>
+              <Typography variant="body2" ref={ref} style={{ wordBreak: "break-all" }} component="div">
+                <DoubanRateIcon rate={Number(doubanInfo.rating) || 0} style={{ float: "left", marginRight: 8 }} />
+                {doubanInfo.introduction}
+                {rect.height > MAX_HEIGHT && (
+                  <div
+                    className={classes.button}
+                    style={{ display: showMore ? "inline-block" : "block", position: showMore ? "static" : "absolute" }}
+                  >
+                    <Button
+                      onClick={handleClick}
+                      color="primary"
+                      style={{ padding: "0 4px", minWidth: "auto", lineHeight: "1.43", fontWeight: "bold" }}
+                      disableRipple
+                    >
+                      {showMore ? "收起" : "展开"}
+                    </Button>
+                  </div>
+                )}
+              </Typography>
+            </div>
+
+            {/* 人员信息 */}
+            {doubanInfo.directors?.length > 0 && (
+              <Typography variant="body2" noWrap>
+                <Typography component="span" style={{ fontWeight: "bold" }} variant="body2">
+                  导演:&nbsp;
+                </Typography>
+                {doubanInfo.directors.join("、")}
+              </Typography>
+            )}
+
+            {doubanInfo.writers?.length > 0 && (
+              <Typography variant="body2" noWrap>
+                <Typography component="span" style={{ fontWeight: "bold" }} variant="body2">
+                  编剧:&nbsp;
+                </Typography>
+                {doubanInfo.writers?.join("、")}
+              </Typography>
+            )}
+
+            {doubanInfo.actors?.length > 0 && (
+              <Typography variant="body2" noWrap>
+                <Typography component="span" style={{ fontWeight: "bold" }} variant="body2">
+                  演员:&nbsp;
+                </Typography>
+                {doubanInfo.actors.join("、")}
+              </Typography>
+            )}
+
+            {/* 工具栏 */}
+            <div style={{ marginTop: 16 }}>
+              <Button
+                variant="contained"
+                color="secondary"
+                size="small"
+                startIcon={isLike ? <UnFavoriteIcon /> : <FavoriteIcon />}
+                onClick={handleClickFavorite}
+                disabled={likeLoading}
+              >
+                {isLike ? "取消收藏" : "收藏资源"}
               </Button>
-            </CopyToClipboard>
-          )}
+
+              <CopyToClipboard
+                text={url}
+                onCopy={() => {
+                  enqueueSnackbar("页面地址复制成功，快去分享给小伙伴吧", { variant: "success" });
+                  gtag("event", "share", { resource_id: id, form: "resource" });
+                  postMetrics("share");
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  startIcon={<ShareIcon />}
+                  style={{ marginLeft: 8 }}
+                >
+                  分享页面
+                </Button>
+              </CopyToClipboard>
+
+              <Hidden smDown>
+                <Button
+                  variant="contained"
+                  color="default"
+                  size="small"
+                  startIcon={<WarningIcon />}
+                  onClick={handleClickFavorite}
+                  disabled={likeLoading}
+                  style={{ marginLeft: 8 }}
+                >
+                  反馈错误
+                </Button>
+              </Hidden>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <Grid container className={classes.attribute}>
+          <Grid item xs={4} sm={3} md={2}>
+            {loading ? (
+              <Skeleton variant="rect" width={100} height={30} />
+            ) : (
+              <Button
+                variant="contained"
+                color="secondary"
+                size="small"
+                startIcon={isLike ? <UnFavoriteIcon /> : <FavoriteIcon />}
+                onClick={handleClickFavorite}
+                disabled={likeLoading}
+              >
+                {isLike ? "取消收藏" : "收藏资源"}
+              </Button>
+            )}
+          </Grid>
+          <Grid item xs={4} sm={3} md={2}>
+            {loading ? (
+              <Skeleton variant="rect" width={100} height={30} />
+            ) : (
+              <CopyToClipboard
+                text={url}
+                onCopy={() => {
+                  enqueueSnackbar("页面地址复制成功，快去分享给小伙伴吧", { variant: "success" });
+                  gtag("event", "share", { resource_id: id, form: "resource" });
+                  postMetrics("share");
+                }}
+              >
+                <Button variant="contained" color="primary" size="small" startIcon={<ShareIcon />}>
+                  分享页面
+                </Button>
+              </CopyToClipboard>
+            )}
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </div>
   );
 }
