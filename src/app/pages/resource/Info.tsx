@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, createStyles, Grid, Hidden, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Box, Button, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import {
   Explore as ExploreIcon,
@@ -8,7 +8,6 @@ import {
   Share as ShareIcon,
   MovieFilter as MovieFilterIcon,
   Visibility as VisibilityIcon,
-  Warning as WarningIcon,
 } from "@material-ui/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
@@ -203,7 +202,7 @@ export function InfoComponent(props: InfoPropTypes) {
               {doubanInfo.genre?.join("、")} | {doubanInfo.year}
             </Typography>
             <Typography variant="body2" noWrap style={{ marginBottom: 16 }}>
-              集数: {doubanInfo.episodeCount} 单集片长: {doubanInfo.episodeDuration}
+              集数: {doubanInfo.episodeCount} | 单集片长: {doubanInfo.episodeDuration}
             </Typography>
 
             {/* 简介 */}
@@ -288,20 +287,6 @@ export function InfoComponent(props: InfoPropTypes) {
                   分享页面
                 </Button>
               </CopyToClipboard>
-
-              <Hidden smDown>
-                <Button
-                  variant="contained"
-                  color="default"
-                  size="small"
-                  startIcon={<WarningIcon />}
-                  onClick={handleClickFavorite}
-                  disabled={likeLoading}
-                  style={{ marginLeft: 8 }}
-                >
-                  反馈错误
-                </Button>
-              </Hidden>
             </div>
           </div>
         </div>
