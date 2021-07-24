@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 interface DOMReactOnly {
   bottom: number;
@@ -35,7 +35,7 @@ export function useDomeSize() {
         const contentRectSize = Array.isArray(entry.contentRect) ? entry.contentRect[0] : entry.contentRect;
         setRect(contentRectSize);
       }),
-    [],
+    []
   );
 
   const ref = React.useRef<HTMLElement>(null!);
@@ -47,15 +47,16 @@ export function useDomeSize() {
         ref.current = node;
       }
     },
-    [resizeObserver],
+    [resizeObserver]
   );
 
-  React.useEffect(
-    () => () => {
-      resizeObserver.unobserve(ref.current);
-    },
-    [resizeObserver],
-  );
+  React.useEffect(() => {
+    if (ref.current)
+      return () => {
+        resizeObserver.unobserve(ref.current);
+      };
+    return () => {};
+  }, [resizeObserver]);
 
   return [rect, refs, ref.current] as const;
 }

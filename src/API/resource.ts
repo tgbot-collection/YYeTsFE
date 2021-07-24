@@ -81,9 +81,14 @@ export interface DoubanInfo {
   year: string;
   introduction: string;
 }
+// eslint-disable-next-line import/no-mutable-exports
+export let cancelGetDoubanByID: Canceler;
 
 export function getDoubanByID(id: string) {
   return axios.get<DoubanInfo>("/api/douban", {
     params: { resource_id: id },
+    cancelToken: new CancelToken((c) => {
+      cancelGetDoubanByID = c;
+    }),
   });
 }

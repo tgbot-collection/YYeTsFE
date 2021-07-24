@@ -26,6 +26,7 @@ import {
   postMetrics,
   DoubanInfo,
   getDoubanByID,
+  cancelGetDoubanByID,
 } from "API";
 import { BackOldIcon } from "Icon";
 import { setTitle } from "utils";
@@ -109,16 +110,14 @@ export function ResourcePage() {
   }, [history, id, location.state?.title]);
 
   React.useEffect(() => {
-    Promise.all([getResourceByID(id as string), getDoubanByID(id as string)])
-      .then(([resourceRes, doubanRes]) => {
+    getResourceByID(id as string)
+      .then((resourceRes) => {
         const {
           data: { data: resourceData },
         } = resourceRes;
         setResourceInfo(resourceData.info);
         setResourceAddress(resourceData.list);
         setIsLike(resourceRes.data.is_like || false);
-
-        setDoubanInfo(doubanRes.data);
 
         setLoading(false);
         setTitle(resourceData.info.cnname);
@@ -127,9 +126,20 @@ export function ResourcePage() {
         enqueueSnackbar(`获取资源信息错误：${error.message}`, { variant: "error" });
       });
 
+    getDoubanByID(id as string)
+      .then((doubanRes) => {
+        if (doubanRes) setDoubanInfo(doubanRes.data);
+      })
+      .catch((error) => {
+        enqueueSnackbar(`获取豆瓣信息错误：${error.message}`, { variant: "error" });
+      });
+
     postMetrics("resource");
 
-    return cancelGetResourceByID;
+    return () => {
+      cancelGetResourceByID();
+      cancelGetDoubanByID();
+    };
   }, [enqueueSnackbar, id, location.search]);
 
   const handleBack = () => {
