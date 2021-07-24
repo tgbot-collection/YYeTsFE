@@ -7,8 +7,8 @@ dayjs.extend(relativeTime);
 export const formatBrowser = (browser: string) => {
   const result = Bowser.parse(browser);
   return {
-    browser: `${result.browser.name} ${result.browser.version?.split(".").slice(0, 2).join(".")}`,
-    os: `${result.os.name} ${result.os.version}`,
+    browser: `${result.browser.name || ""} ${result.browser.version?.split(".").slice(0, 2).join(".") || ""}`,
+    os: `${result.os.name || ""} ${result.os.version || ""}`,
   };
 };
 
@@ -36,7 +36,7 @@ export const formatDate = (rowDate: string) => {
 
   if (date.isAfter(now.startOf("day"))) return date.fromNow();
 
-  if (date.isAfter(now.startOf("year"))) return date.format("MM-DD HH:mm");
+  if (date.isAfter(now.startOf("year"))) return date.format("M-D HH:mm");
 
   return date.format("YYYY-MM-DD HH:mm");
 };
