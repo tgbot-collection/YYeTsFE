@@ -1,9 +1,8 @@
 import * as React from "react";
-import dayjs from "dayjs";
 import clsx from "clsx";
 import { Button, Hidden, Typography } from "@material-ui/core";
 
-import { formatBrowser, formatComment } from "utils";
+import { formatBrowser, formatComment, formatDate } from "utils";
 import { UserGroup, Comment } from "API";
 import { useStyles } from "./styled";
 import { CommentInput } from "../CommentInput";
@@ -90,7 +89,7 @@ export function CommentCard(props: CommentCardPropTypes) {
           </Hidden>
 
           <Typography variant="caption" component="span" color="textSecondary" className={classes.browser}>
-            {dayjs(date).format("YYYY-MM-DD HH:mm")}
+            {formatDate(date)}
           </Typography>
 
           <Button className={classes.reply} onClick={handleClickReply}>

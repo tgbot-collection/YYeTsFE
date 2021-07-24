@@ -1,9 +1,13 @@
 import * as Bowser from "bowser";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 export const formatBrowser = (browser: string) => {
   const result = Bowser.parse(browser);
   return {
-    browser: `${result.browser.name} ${result.browser.version}`,
+    browser: `${result.browser.name} ${result.browser.version?.split(".").slice(0, 2).join(".")}`,
     os: `${result.os.name} ${result.os.version}`,
   };
 };
@@ -22,4 +26,17 @@ export const formatComment = (comment: string) => {
     return { text: comment.replace(reg, ""), id: group[1], name: group[2] };
   }
   return { text: comment };
+};
+
+export const formatDate = (rowDate: string) => {
+  const date = dayjs(rowDate).locale("zh-cn");
+  const now = dayjs();
+
+  if (!date.isValid()) return "时间格式错误";
+
+  if (date.isAfter(now.startOf("day"))) return date.fromNow();
+
+  if (date.isAfter(now.startOf("year"))) return date.format("MM-DD HH:mm");
+
+  return date.format("YYYY-MM-DD HH:mm");
 };
