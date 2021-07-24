@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: "150%",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
+      backgroundPosition: "center center",
     },
     info: {
       flex: 1,
@@ -205,10 +206,10 @@ export function InfoComponent(props: InfoPropTypes) {
           {/* 详细信息 */}
           <div className={classes.info}>
             <Typography variant="body2" noWrap>
-              {doubanInfo.genre?.join("、")} | {doubanInfo.year}
+              {doubanInfo.year} | {doubanInfo.genre?.join("、")}
             </Typography>
             <Typography variant="body2" noWrap style={{ marginBottom: 16 }}>
-              集数: {doubanInfo.episodeCount} | 单集片长: {doubanInfo.episodeDuration}
+              集数: {doubanInfo.episodeCount} (约{doubanInfo.episodeDuration.trim()}/集)
             </Typography>
 
             {/* 简介 */}
