@@ -230,7 +230,7 @@ export function InfoComponent(props: InfoPropTypes) {
 
             {/* 人员信息 */}
             {doubanInfo.directors?.length > 0 && (
-              <Typography variant="body2" noWrap>
+              <Typography variant="body2" noWrap title={doubanInfo.directors.join("、")}>
                 <Typography component="span" style={{ fontWeight: "bold" }} variant="body2">
                   导演:&nbsp;
                 </Typography>
@@ -239,7 +239,7 @@ export function InfoComponent(props: InfoPropTypes) {
             )}
 
             {doubanInfo.writers?.length > 0 && (
-              <Typography variant="body2" noWrap>
+              <Typography variant="body2" noWrap title={doubanInfo.writers?.join("、")}>
                 <Typography component="span" style={{ fontWeight: "bold" }} variant="body2">
                   编剧:&nbsp;
                 </Typography>
@@ -248,7 +248,7 @@ export function InfoComponent(props: InfoPropTypes) {
             )}
 
             {doubanInfo.actors?.length > 0 && (
-              <Typography variant="body2" noWrap>
+              <Typography variant="body2" noWrap title={doubanInfo.actors.join("、")}>
                 <Typography component="span" style={{ fontWeight: "bold" }} variant="body2">
                   演员:&nbsp;
                 </Typography>
@@ -287,6 +287,8 @@ export function InfoComponent(props: InfoPropTypes) {
                   分享页面
                 </Button>
               </CopyToClipboard>
+
+              {/* TODO: 反馈豆瓣错误信息 */}
             </div>
           </div>
         </div>
