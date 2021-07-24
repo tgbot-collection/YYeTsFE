@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Box, Button, createStyles, Grid, Link, makeStyles, Theme, Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import {
   Explore as ExploreIcon,
@@ -196,12 +196,12 @@ export function InfoComponent(props: InfoPropTypes) {
       {doubanInfo ? (
         <div className={classes.doubanContainer}>
           {/* 海报 */}
-          <div>
+          <Link href={doubanInfo.doubanLink} target="_blank">
             <div
               style={{ backgroundImage: `url(/api/douban?resource_id=${id}&type=image)` }}
               className={classes.post}
             />
-          </div>
+          </Link>
 
           {/* 详细信息 */}
           <div className={classes.info}>
