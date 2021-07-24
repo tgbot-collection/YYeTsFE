@@ -63,3 +63,27 @@ export function getResourceByID(id: string) {
     }),
   });
 }
+
+export interface DoubanInfo {
+  name: string;
+  doubanId: number;
+  doubanLink: string;
+  posterLink: string;
+  resourceId: number;
+  rating: number;
+  actors: Array<string>;
+  directors: Array<string>;
+  genre: Array<string>;
+  releaseDate: string;
+  episodeCount: string;
+  episodeDuration: string;
+  writers: Array<string>;
+  year: string;
+  introduction: string;
+}
+
+export function getDoubanByID(id: string) {
+  return axios.get<DoubanInfo>("/api/douban", {
+    params: { resource_id: id },
+  });
+}

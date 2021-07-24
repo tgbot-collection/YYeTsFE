@@ -24,6 +24,7 @@ import { setTitle } from "utils";
 import { CommentComponent } from "features";
 import { InfoComponent } from "./Info";
 import { AddressComponent } from "./Address";
+import { DoubanComponent } from "./Douban";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -193,6 +194,8 @@ export function ResourcePage() {
           setIsLike={setIsLike}
           id={id as string}
         />
+
+        <DoubanComponent id={id as string} />
 
         <Divider className={classes.hr} />
 
