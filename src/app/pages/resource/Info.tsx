@@ -53,6 +53,9 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "30vw",
       maxWidth: 170,
       marginRight: 12,
+      paddingTop: "150%",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
     },
     info: {
       flex: 1,
@@ -193,7 +196,10 @@ export function InfoComponent(props: InfoPropTypes) {
         <div className={classes.doubanContainer}>
           {/* 海报 */}
           <div>
-            <img src={`/api/douban?resource_id=${id}&type=image`} alt={doubanInfo.name} className={classes.post} />
+            <div
+              style={{ backgroundImage: `url(/api/douban?resource_id=${id}&type=image)` }}
+              className={classes.post}
+            />
           </div>
 
           {/* 详细信息 */}
