@@ -1,7 +1,7 @@
 import * as React from "react";
 import dayjs from "dayjs";
 import clsx from "clsx";
-import { Button, Typography } from "@material-ui/core";
+import { Button, Hidden, Typography } from "@material-ui/core";
 
 import { formatBrowser, formatComment } from "utils";
 import { UserGroup, Comment } from "API";
@@ -43,7 +43,7 @@ export function CommentCard(props: CommentCardPropTypes) {
     setReplyId = () => {},
   } = props;
 
-  const { os } = formatBrowser(ua);
+  const { os, browser } = formatBrowser(ua);
 
   const handleClickReply = () => {
     setReplyId(commentId);
@@ -81,6 +81,13 @@ export function CommentCard(props: CommentCardPropTypes) {
               {os}
             </Typography>
           )}
+          <Hidden smDown>
+            {browser !== " " && (
+              <Typography variant="caption" component="span" color="textSecondary" className={classes.browser}>
+                {browser}
+              </Typography>
+            )}
+          </Hidden>
 
           <Typography variant="caption" component="span" color="textSecondary" className={classes.browser}>
             {dayjs(date).format("YYYY-MM-DD HH:mm")}
