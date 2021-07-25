@@ -29,7 +29,7 @@ import {
   cancelGetDoubanByID,
 } from "API";
 import { BackOldIcon } from "Icon";
-import { setTitle } from "utils";
+import { noop, setTitle } from "utils";
 import { CommentComponent } from "features";
 import { InfoComponent } from "./Info";
 import { AddressComponent } from "./Address";
@@ -130,11 +130,9 @@ export function ResourcePage() {
       .then((doubanRes) => {
         if (doubanRes) setDoubanInfo(doubanRes.data);
       })
-      .catch((error) => {
-        enqueueSnackbar(`获取豆瓣信息错误：${error.message}`, { variant: "error" });
-      });
+      .catch(noop);
 
-    postMetrics("resource");
+    postMetrics("resource").catch(noop);
 
     return () => {
       cancelGetResourceByID();
@@ -143,7 +141,7 @@ export function ResourcePage() {
   }, [enqueueSnackbar, id, location.search]);
 
   const handleBack = () => {
-    postMetrics("backOld");
+    postMetrics("backOld").catch(noop).catch(noop);
     gtag("event", "back_old", { resource_id: id });
   };
 

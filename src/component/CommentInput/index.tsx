@@ -8,7 +8,7 @@ import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 
 import { cancelGetCaptcha, getCaptcha, postComment, postMetrics } from "API";
-import { randomString } from "utils";
+import { noop, randomString } from "utils";
 import { useAuth, useLoginBack } from "hooks";
 import { useStyles } from "./styled";
 
@@ -104,7 +104,7 @@ export function CommentInput(props: CommentInputPropTypes) {
         });
 
       gtag("event", "comment", { resource_id: resourceId });
-      postMetrics("comment");
+      postMetrics("comment").catch(noop);
     },
   });
 

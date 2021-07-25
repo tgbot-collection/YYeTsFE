@@ -3,7 +3,7 @@ import GitHubButton from "react-github-btn";
 import { Button, Container, Link, Typography } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 
-import { setTitle, toAbsoluteUrl } from "utils";
+import { noop, setTitle, toAbsoluteUrl } from "utils";
 import { postMetrics } from "API";
 import { useStyles } from "./Styled";
 import { LastComment } from "./LastComment";
@@ -15,7 +15,7 @@ export function HomePage() {
   const classes = useStyles();
 
   React.useEffect(() => {
-    postMetrics("home");
+    postMetrics("home").catch(noop);
   }, []);
 
   return (

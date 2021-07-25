@@ -1,5 +1,5 @@
 import * as React from "react";
-import { setTitle, toAbsoluteUrl } from "utils";
+import { noop, setTitle, toAbsoluteUrl } from "utils";
 import { Button, Container, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 
 import { getDatabase, GetDatabaseRes, postMetrics } from "API";
@@ -63,7 +63,7 @@ export function DataBasePage() {
         enqueueSnackbar(`获取数据库信息出错: ${err.message}`, { variant: "error" });
       });
 
-    postMetrics("database");
+    postMetrics("database").catch(noop);
   }, [enqueueSnackbar]);
 
   return (

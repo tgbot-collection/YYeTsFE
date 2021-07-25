@@ -6,7 +6,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import { useSnackbar } from "notistack";
 
-import { logout, setTitle, toAbsoluteUrl } from "utils";
+import { logout, noop, setTitle, toAbsoluteUrl } from "utils";
 import { postMetrics, postUser } from "API";
 import { useAppDispatch } from "hooks";
 import { setUsername } from "app/pages/login/userSlice";
@@ -101,7 +101,7 @@ export function LoginPage() {
             history.push(state.ref || "/search");
           }, 1000);
           gtag("event", "login", { method: "password" });
-          postMetrics("user");
+          postMetrics("user").catch(noop);
 
           dispatch(setUsername(values.username));
           localStorage.setItem("username", values.username);

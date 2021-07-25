@@ -1,5 +1,5 @@
 import * as React from "react";
-import { setTitle } from "utils";
+import { noop, setTitle } from "utils";
 import { Container, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 
 import { postMetrics } from "API";
@@ -19,7 +19,7 @@ export function DiscussPage() {
   const classes = useStyles();
 
   React.useEffect(() => {
-    postMetrics("discuss");
+    postMetrics("discuss").catch(noop);
   }, []);
 
   return (

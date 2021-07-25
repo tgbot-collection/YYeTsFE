@@ -7,7 +7,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import queryString from "query-string";
 
 import { cancelGetTop, ExtraResult, getSearchKw, getTop, GetTopRes, postMetrics, ResourceInfo } from "API";
-import { setTitle } from "utils";
+import { noop, setTitle } from "utils";
 import { SectionComponent } from "./Section";
 import { SearchListComponent } from "./SearchList";
 import { RankComponent } from "./Rank";
@@ -69,7 +69,7 @@ export function SearchPage() {
         enqueueSnackbar(`搜索出错：${error.message}`, { variant: "error" });
       });
 
-    postMetrics("search");
+    postMetrics("search").catch(noop);
   };
 
   const formik = useFormik({
@@ -110,7 +110,7 @@ export function SearchPage() {
         .catch((error) => {
           enqueueSnackbar(error.message, { variant: "error" });
         });
-      postMetrics("top");
+      postMetrics("top").catch(noop);
     }
 
     return cancelGetTop;

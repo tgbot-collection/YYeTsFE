@@ -16,6 +16,7 @@ import { useHistory } from "react-router-dom";
 import { ResourceInfo, patchUser, postMetrics, DoubanInfo } from "API";
 import { useAuth, useDomeSize, useLoginBack } from "hooks";
 import { DoubanRateIcon } from "Icon";
+import { noop } from "utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -130,10 +131,10 @@ export function InfoComponent(props: InfoPropTypes) {
 
     if (!isLike) {
       gtag("event", "add_to_favorite", { resource_id: id, form: "resource" });
-      postMetrics("favorite");
+      postMetrics("favorite").catch(noop);
     } else {
       gtag("event", "remove_from_favorite", { resource_id: id, form: "resource" });
-      postMetrics("unFavorite");
+      postMetrics("unFavorite").catch(noop);
     }
 
     setLikeLoading(true);
@@ -209,7 +210,7 @@ export function InfoComponent(props: InfoPropTypes) {
               {doubanInfo.year} | {doubanInfo.genre?.join("、")}
             </Typography>
             <Typography variant="body2" noWrap style={{ marginBottom: 16 }}>
-              集数: {doubanInfo.episodeCount} (约{doubanInfo.episodeDuration.trim()}/集)
+              {doubanInfo.episodeCount && ` 集数: ${doubanInfo.episodeCount}`} 时长: {doubanInfo.episodeDuration}
             </Typography>
 
             {/* 简介 */}
@@ -285,7 +286,7 @@ export function InfoComponent(props: InfoPropTypes) {
                 onCopy={() => {
                   enqueueSnackbar("页面地址复制成功，快去分享给小伙伴吧", { variant: "success" });
                   gtag("event", "share", { resource_id: id, form: "resource" });
-                  postMetrics("share");
+                  postMetrics("share").catch(noop);
                 }}
               >
                 <Button
@@ -330,7 +331,7 @@ export function InfoComponent(props: InfoPropTypes) {
                 onCopy={() => {
                   enqueueSnackbar("页面地址复制成功，快去分享给小伙伴吧", { variant: "success" });
                   gtag("event", "share", { resource_id: id, form: "resource" });
-                  postMetrics("share");
+                  postMetrics("share").catch(noop);
                 }}
               >
                 <Button variant="contained" color="primary" size="small" startIcon={<ShareIcon />}>

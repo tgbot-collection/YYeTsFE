@@ -5,6 +5,7 @@ import { Button } from "@material-ui/core";
 import { Cloud as CloudIcon, FileCopy as FileCopyIcon, Sync as ResilioIcon } from "@material-ui/icons";
 
 import { postMetrics, ResourceDetail } from "API";
+import { noop } from "utils";
 
 interface ButtonProps {
   downItem: ResourceDetail["files"][0];
@@ -27,7 +28,7 @@ const CopyButton = (props: ButtonProps) => {
           variant: "success",
         });
         gtag("event", "download", { resource_id: resourceId, type: downItem.way_cn });
-        postMetrics("download");
+        postMetrics("download").catch(noop);
       }}
     >
       <Button
@@ -59,7 +60,7 @@ const HrefButton = (props: ButtonProps) => {
           variant: "success",
         });
         gtag("event", "download", { resource_id: resourceId, type: downItem.way_cn });
-        postMetrics("download");
+        postMetrics("download").catch(noop);
       }}
     >
       <Button
@@ -100,7 +101,7 @@ const ResilioButton = (props: ButtonProps) => {
           autoHideDuration: 5000,
         });
         gtag("event", "ResilioSync", { resource_id: resourceId, type: downItem.way_cn });
-        postMetrics("ResilioSync");
+        postMetrics("ResilioSync").catch(noop);
       }}
     >
       <Button

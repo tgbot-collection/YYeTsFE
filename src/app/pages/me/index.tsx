@@ -1,5 +1,5 @@
 import * as React from "react";
-import { setTitle, toAbsoluteUrl } from "utils";
+import { noop, setTitle, toAbsoluteUrl } from "utils";
 import {
   Button,
   Card,
@@ -75,7 +75,7 @@ export function MePage() {
 
   React.useEffect(() => {
     setLoading(true);
-    postMetrics("me");
+    postMetrics("me").catch(noop);
 
     getLike()
       .then((res) => {
@@ -132,7 +132,7 @@ export function MePage() {
       });
 
     gtag("event", "remove_from_favorite", { resource_id: id, form: "me" });
-    postMetrics("unFavorite");
+    postMetrics("unFavorite").catch(noop);
   };
 
   if (loading)
@@ -218,7 +218,7 @@ export function MePage() {
                         onCopy={() => {
                           enqueueSnackbar("地址复制成功，快去分享给小伙伴吧", { variant: "success" });
                           gtag("event", "share", { resource_id: item.id, form: "me" });
-                          postMetrics("share");
+                          postMetrics("share").catch(noop);
                         }}
                       >
                         <Button size="small" color="primary" variant="contained" disableElevation>

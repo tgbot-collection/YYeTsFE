@@ -8,7 +8,7 @@ import { lighten } from "@material-ui/core/styles";
 import { deepOrange, deepPurple, pink } from "@material-ui/core/colors";
 import clsx from "clsx";
 
-import { toAbsoluteUrl } from "utils";
+import { noop, toAbsoluteUrl } from "utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -91,7 +91,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
 
   const handleToExtra = (event: React.SyntheticEvent, href: string) => {
     event.preventDefault();
-    postMetrics("extra");
+    postMetrics("extra").catch(noop);
     setTimeout(() => {
       // eslint-disable-next-line no-restricted-globals
       location.href = href;

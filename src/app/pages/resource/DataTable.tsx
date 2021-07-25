@@ -21,6 +21,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
 
 import { postMetrics, ResourceDetail } from "API";
+import { noop } from "utils";
 import { Ed2kIcon, MagnetIcon } from "Icon";
 import { DownloadBtn } from "./DownloadBtn";
 
@@ -91,7 +92,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
               enqueueSnackbar("电驴地址已复制", {
                 variant: "success",
               });
-              postMetrics("multiDownload");
+              postMetrics("multiDownload").catch(noop);
               gtag("event", "multiDownload", { type: "电驴" });
             }}
           >
@@ -108,7 +109,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
                 variant: "success",
               });
 
-              postMetrics("multiDownload");
+              postMetrics("multiDownload").catch(noop);
               gtag("event", "multiDownload", { type: "磁链" });
             }}
           >
