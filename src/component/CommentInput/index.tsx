@@ -13,7 +13,7 @@ import { useAuth, useLoginBack } from "hooks";
 import { useStyles } from "./styled";
 
 const validationSchema = yup.object({
-  content: yup.string().required("请输入评论内容"),
+  content: yup.string().trim().required("请输入评论内容"),
   captcha: yup.string().min(4, "验证码至少4位").required("请输入验证码"),
 });
 
@@ -80,7 +80,9 @@ export function CommentInput(props: CommentInputPropTypes) {
       postComment({
         resource_id: resourceId,
         captcha: values.captcha,
-        content: replyUser ? `<reply value="${commentId}">@${replyUser}</reply>${values.content}` : values.content,
+        content: replyUser
+          ? `<reply value="${commentId}">@${replyUser}</reply>${values.content.trim()}`
+          : values.content.trim(),
         id: captchaID,
         comment_id: parentId,
       })

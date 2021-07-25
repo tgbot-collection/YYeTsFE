@@ -83,7 +83,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       position: "absolute",
-      bottom: 0,
+      bottom: 2,
       right: 0,
       backgroundColor: theme.palette.background.default,
     },
