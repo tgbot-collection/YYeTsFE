@@ -31,8 +31,8 @@ import {
 import { BackOldIcon } from "Icon";
 import { noop, setTitle } from "utils";
 import { CommentComponent } from "features";
-import { InfoComponent } from "./Info";
-import { AddressComponent } from "./Address";
+import { Info } from "./Info";
+import { Address } from "./Address";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -198,7 +198,7 @@ export function ResourcePage() {
           </Fade>
         </Modal>
 
-        <InfoComponent
+        <Info
           loading={loading}
           resourceInfo={resourceInfo}
           url={`${process.env.REACT_APP_DOMAIN}${location.pathname}${location.search}`}
@@ -210,7 +210,7 @@ export function ResourcePage() {
 
         <Divider className={classes.hr} />
 
-        <AddressComponent loading={loading} resourceAddress={resourceAddress} resourceId={id as string} />
+        <Address loading={loading} resourceAddress={resourceAddress} resourceId={id as string} />
 
         <Divider className={classes.hr} />
 

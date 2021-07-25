@@ -16,12 +16,9 @@ import {
 } from "@material-ui/core";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar, ProviderContext } from "notistack";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import "dayjs/locale/zh-cn";
 
 import { postMetrics, ResourceDetail } from "API";
-import { noop } from "utils";
+import { formatDate, noop } from "utils";
 import { Ed2kIcon, MagnetIcon } from "Icon";
 import { DownloadBtn } from "./DownloadBtn";
 
@@ -163,7 +160,7 @@ interface DataTablePropTypes {
   resourceId: string;
 }
 
-export function DataTableComponent(props: DataTablePropTypes) {
+export function DataTable(props: DataTablePropTypes) {
   const { tableData, resourceId } = props;
 
   const { enqueueSnackbar } = useSnackbar();
@@ -210,8 +207,6 @@ export function DataTableComponent(props: DataTablePropTypes) {
   const emptyRows = tableData.length < 5 ? 5 - tableData.length : 0;
 
   const classes = useStyles();
-  dayjs.extend(relativeTime);
-  dayjs.locale("zh-cn");
 
   return (
     <div className={classes.root}>
@@ -256,7 +251,7 @@ export function DataTableComponent(props: DataTablePropTypes) {
                     {row.size && row.size !== "0" && <TableCell align="left">{row.size}</TableCell>}
                     {row.dateline && (
                       <TableCell align="left" className={classes.noWarp}>
-                        {dayjs.unix(Number(row.dateline)).fromNow()}
+                        {formatDate(row.dateline)}
                       </TableCell>
                     )}
 

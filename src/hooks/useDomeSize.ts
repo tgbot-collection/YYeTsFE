@@ -25,38 +25,10 @@ export function useDomeSize() {
   };
 
   const [rect, setRect] = React.useState<DOMReactOnly>(initialRect);
-
-  const resizeObserver = React.useMemo(
-    () =>
-      new ResizeObserver((entries) => {
-        const entry = entries[0];
-
-        // Firefox implements `contentBoxSize` as a single content rect, rather than an array
-        const contentRectSize = Array.isArray(entry.contentRect) ? entry.contentRect[0] : entry.contentRect;
-        setRect(contentRectSize);
-      }),
-    []
-  );
-
-  const ref = React.useRef<HTMLElement>(null!);
-
-  const refs = React.useCallback(
-    (node: HTMLElement | null) => {
-      if (node !== null) {
-        resizeObserver.observe(node);
-        ref.current = node;
-      }
-    },
-    [resizeObserver]
-  );
-
-  React.useEffect(() => {
-    if (ref.current)
-      return () => {
-        resizeObserver.unobserve(ref.current);
-      };
-    return () => {};
-  }, [resizeObserver]);
-
-  return [rect, refs, ref.current] as const;
+  const ref = React.useCallback((node) => {
+    if (node !== null) {
+      setRect(node.getBoundingClientRect());
+    }
+  }, []);
+  return [rect, ref] as const;
 }

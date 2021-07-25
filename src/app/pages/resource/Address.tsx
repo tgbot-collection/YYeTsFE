@@ -6,7 +6,7 @@ import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/ho
 
 import { AddressInfo } from "API";
 import { toAbsoluteUrl } from "utils";
-import { DataTableComponent } from "./DataTable";
+import { DataTable } from "./DataTable";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,7 +47,7 @@ interface AddressPropTypes {
   resourceAddress: Array<AddressInfo>;
   resourceId: string;
 }
-export function AddressComponent(props: AddressPropTypes) {
+export function Address(props: AddressPropTypes) {
   const { loading, resourceAddress = [], resourceId } = props;
 
   const [season, setSeason] = React.useState<number>(0);
@@ -124,7 +124,7 @@ export function AddressComponent(props: AddressPropTypes) {
             </TabList>
           </AppBar>
 
-          <DataTableComponent tableData={resourceAddress[season].items[quality]} resourceId={resourceId} />
+          <DataTable tableData={resourceAddress[season].items[quality]} resourceId={resourceId} />
         </TabContext>
       ) : (
         <div className={classes.empty}>

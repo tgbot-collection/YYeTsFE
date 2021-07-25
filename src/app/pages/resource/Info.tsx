@@ -92,7 +92,7 @@ interface InfoPropTypes {
   doubanInfo: DoubanInfo | null;
 }
 
-export function InfoComponent(props: InfoPropTypes) {
+export function Info(props: InfoPropTypes) {
   const { loading, resourceInfo, url, isLike, setIsLike, id, doubanInfo } = props;
   const MAX_HEIGHT = 60;
 
