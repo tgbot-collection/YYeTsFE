@@ -98,7 +98,7 @@ export function LoginPage() {
         .then(() => {
           setTimeout(() => {
             setLoading(false);
-            history.push(state.ref || "/search");
+            history.push(state?.ref || "/search");
           }, 1000);
           gtag("event", "login", { method: "password" });
           postMetrics("user").catch(noop);
