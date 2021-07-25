@@ -46,7 +46,7 @@ export function CommentCard(props: CommentCardPropTypes) {
   const [rect, ref] = useDomeSize();
   console.log(rect);
   const [showMore, setShowMore] = React.useState<boolean>(false);
-  const MAX_HEIGHT = 70;
+  const MAX_HEIGHT = 72;
 
   const { os, browser } = formatBrowser(ua);
 
