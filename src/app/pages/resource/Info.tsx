@@ -193,7 +193,7 @@ export function InfoComponent(props: InfoPropTypes) {
         </Grid>
       </Grid>
 
-      {doubanInfo ? (
+      {doubanInfo && !loading ? (
         <div className={classes.doubanContainer}>
           {/* 海报 */}
           <Link href={doubanInfo.doubanLink} target="_blank">

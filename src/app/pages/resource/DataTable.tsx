@@ -150,17 +150,20 @@ const useStyles = makeStyles((theme: Theme) =>
     noBorderBottom: {
       borderBottom: 0,
     },
+    name: {
+      wordBreak: "break-all",
+      minWidth: 200,
+    },
   })
 );
 
 interface DataTablePropTypes {
-  season: string;
   tableData: Array<ResourceDetail>;
   resourceId: string;
 }
 
 export function DataTableComponent(props: DataTablePropTypes) {
-  const { season, tableData, resourceId } = props;
+  const { tableData, resourceId } = props;
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -236,15 +239,17 @@ export function DataTableComponent(props: DataTablePropTypes) {
                     <TableCell padding="checkbox" tabIndex={index}>
                       <Checkbox checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
                     </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      padding="none"
-                      className={clsx(classes.noWarp, classes.episode)}
-                    >
-                      {season} {row.episode && `第${row.episode}集`}
-                    </TableCell>
-                    <TableCell align="left" style={{ wordBreak: "break-all" }}>
+                    {row.episode && (
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        padding="none"
+                        className={clsx(classes.noWarp, classes.episode)}
+                      >
+                        {`第${row.episode}集`}
+                      </TableCell>
+                    )}
+                    <TableCell align="left" className={classes.name}>
                       {row.name}
                     </TableCell>
                     {row.size && row.size !== "0" && <TableCell align="left">{row.size}</TableCell>}
