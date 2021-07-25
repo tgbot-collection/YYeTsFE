@@ -16,11 +16,15 @@ import {
 } from "@material-ui/core";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar, ProviderContext } from "notistack";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 import { postMetrics, ResourceDetail } from "API";
-import { formatDate, noop } from "utils";
+import { noop } from "utils";
 import { Ed2kIcon, MagnetIcon } from "Icon";
 import { DownloadBtn } from "./DownloadBtn";
+
+dayjs.extend(relativeTime);
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -251,7 +255,7 @@ export function DataTable(props: DataTablePropTypes) {
                     {row.size && row.size !== "0" && <TableCell align="left">{row.size}</TableCell>}
                     {row.dateline && (
                       <TableCell align="left" className={classes.noWarp}>
-                        {formatDate(row.dateline)}
+                        {dayjs.unix(Number(row.dateline)).locale("zh-cn").fromNow()}
                       </TableCell>
                     )}
 
