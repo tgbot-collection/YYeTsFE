@@ -32,6 +32,7 @@ export function CommentInput(props: CommentInputPropTypes) {
 
   const classes = useStyles();
 
+  const MAX_LENGTH = 2048;
   const [postLoading, setPostLoading] = React.useState<boolean>(false);
   const [captchaLoading, setCaptchaLoading] = React.useState<boolean>(true);
   const [captcha, setCaptcha] = React.useState<string>("");
@@ -132,7 +133,7 @@ export function CommentInput(props: CommentInputPropTypes) {
     <form className={classes.comment} onSubmit={formik.handleSubmit} style={style}>
       <textarea
         name="content"
-        maxLength={400}
+        maxLength={MAX_LENGTH}
         placeholder={placeholder || (username ? `欢迎 ${username}，畅所欲言吧～` : "您还未登陆哦，先去登陆吧～")}
         autoComplete="off"
         value={formik.values.content}
@@ -155,7 +156,10 @@ export function CommentInput(props: CommentInputPropTypes) {
           />
         </div>
         <div className="left">
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            color={formik.values.content.length >= MAX_LENGTH ? "secondary" : "textSecondary"}
+          >
             {formik.values.content.length} 字
           </Typography>
           <Button

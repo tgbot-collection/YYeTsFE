@@ -4,6 +4,7 @@ import { Button, Hidden, Typography } from "@material-ui/core";
 
 import { formatBrowser, formatComment, formatDate } from "utils";
 import { UserGroup, Comment } from "API";
+import { useDomeSize } from "hooks";
 import { useStyles } from "./styled";
 import { CommentInput } from "../CommentInput";
 import { Avatar } from "../Avatar";
@@ -42,6 +43,11 @@ export function CommentCard(props: CommentCardPropTypes) {
     setReplyId = () => {},
   } = props;
 
+  const [rect, ref] = useDomeSize();
+  console.log(rect);
+  const [showMore, setShowMore] = React.useState<boolean>(false);
+  const MAX_HEIGHT = 70;
+
   const { os, browser } = formatBrowser(ua);
 
   const handleClickReply = () => {
@@ -50,6 +56,10 @@ export function CommentCard(props: CommentCardPropTypes) {
 
   const classes = useStyles();
   const admin = group.includes("admin");
+
+  const handleClick = () => {
+    setShowMore((pre) => !pre);
+  };
 
   return (
     <>
@@ -62,17 +72,34 @@ export function CommentCard(props: CommentCardPropTypes) {
           </Typography>
         </div>
 
-        <Typography className="comment">
-          {content.id && (
-            <>
-              <a href={`#${content.id}`} className="at">
-                @{content.name}
-              </a>
-              ，
-            </>
-          )}
-          {content.text}
-        </Typography>
+        <div className="comment" style={{ maxHeight: showMore ? `${rect.height}px` : MAX_HEIGHT }}>
+          <Typography ref={ref} component="div">
+            {content.id && (
+              <>
+                <a href={`#${content.id}`} className="at">
+                  @{content.name}
+                </a>
+                ，
+              </>
+            )}
+            {content.text}
+            {rect.height > MAX_HEIGHT && (
+              <div
+                className={classes.button}
+                style={{ display: showMore ? "inline-block" : "block", position: showMore ? "static" : "absolute" }}
+              >
+                <Button
+                  onClick={handleClick}
+                  color="primary"
+                  style={{ padding: "0 4px", minWidth: "auto", lineHeight: "1.43", fontWeight: "bold" }}
+                  disableRipple
+                >
+                  {showMore ? "收起" : "展开"}
+                </Button>
+              </div>
+            )}
+          </Typography>
+        </div>
 
         <div className={clsx("ua", { [classes.bottomBorder]: borderBottom })}>
           {os !== " " && (
