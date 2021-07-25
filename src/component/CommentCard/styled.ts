@@ -37,13 +37,16 @@ export const useStyles = makeStyles((theme: Theme) =>
         position: "relative",
       },
       "& .comment": {
+        position: "relative",
         gridArea: "comment",
         wordBreak: "break-all",
         fontSize: "0.875rem",
+        overflow: "hidden",
+        transition: theme.transitions.create("max-height", {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
 
-        [theme.breakpoints.up("sm")]: {
-          fontSize: "1rem",
-        },
         "& .at": {
           color: theme.palette.type === "light" ? theme.palette.success.light : theme.palette.success.dark,
         },
@@ -77,6 +80,12 @@ export const useStyles = makeStyles((theme: Theme) =>
     purple: {
       color: theme.palette.getContrastText(purple[500]),
       backgroundColor: purple[500],
+    },
+    button: {
+      position: "absolute",
+      bottom: 0,
+      right: 0,
+      backgroundColor: theme.palette.background.default,
     },
   })
 );

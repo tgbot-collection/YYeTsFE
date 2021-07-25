@@ -100,11 +100,12 @@ export function Info(props: InfoPropTypes) {
   const history = useHistory();
 
   const login = useLoginBack();
-  const [rect, ref] = useDomeSize();
   const { username } = useAuth();
 
   const [likeLoading, setLikeLoading] = React.useState<boolean>(false);
+
   const [showMore, setShowMore] = React.useState<boolean>(false);
+  const [rect, ref] = useDomeSize();
 
   const handleClick = () => {
     setShowMore((pre) => !pre);
@@ -265,7 +266,7 @@ export function Info(props: InfoPropTypes) {
             )}
 
             <Typography variant="caption" color="textSecondary">
-              以上信息根据关键字生成，仅供参考
+              以上信息根据关键字检索，仅供参考
             </Typography>
 
             {/* 工具栏 */}
