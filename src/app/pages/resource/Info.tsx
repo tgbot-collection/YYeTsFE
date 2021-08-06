@@ -215,7 +215,10 @@ export function Info(props: InfoPropTypes) {
             </Typography>
 
             {/* 简介 */}
-            <div className={classes.introduction} style={{ maxHeight: showMore ? `${rect.height}px` : MAX_HEIGHT }}>
+            <div
+              className={classes.introduction}
+              style={{ maxHeight: showMore ? `${rect.height + 21}px` : MAX_HEIGHT }}
+            >
               <Typography variant="body2" ref={ref} style={{ wordBreak: "break-all" }} component="div">
                 <DoubanRateIcon rate={Number(doubanInfo.rating) || 0} style={{ float: "left", marginRight: 8 }} />
                 {doubanInfo.introduction}

@@ -44,7 +44,6 @@ export function CommentCard(props: CommentCardPropTypes) {
   } = props;
 
   const [rect, ref] = useDomeSize();
-  console.log(rect);
   const [showMore, setShowMore] = React.useState<boolean>(false);
   const MAX_HEIGHT = 72;
 
@@ -72,7 +71,7 @@ export function CommentCard(props: CommentCardPropTypes) {
           </Typography>
         </div>
 
-        <div className="comment" style={{ maxHeight: showMore ? `${rect.height}px` : MAX_HEIGHT }}>
+        <div className="comment" style={{ maxHeight: showMore ? `${rect.height + 21}px` : MAX_HEIGHT }}>
           <Typography ref={ref} component="div">
             {content.id && (
               <>
