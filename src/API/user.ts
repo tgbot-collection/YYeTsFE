@@ -11,15 +11,6 @@ export function postUser(params: PostUserParams) {
   return axios.post("/api/user", params);
 }
 
-interface PatchUserParams {
-  resource_id: string;
-}
-
-/* 收藏 */
-export function patchUser(params: PatchUserParams) {
-  return axios.patch("/api/user", params);
-}
-
 interface GetLikeRes {
   LIKE: Array<{ data: { info: ResourceInfo } }>;
 }

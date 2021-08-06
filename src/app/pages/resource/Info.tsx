@@ -13,7 +13,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
 import { useHistory } from "react-router-dom";
 
-import { ResourceInfo, patchUser, postMetrics, DoubanInfo } from "API";
+import { ResourceInfo, patchLike, postMetrics, DoubanInfo } from "API";
 import { useAuth, useDomeSize, useLoginBack } from "hooks";
 import { DoubanRateIcon } from "Icon";
 import { noop } from "utils";
@@ -139,7 +139,7 @@ export function Info(props: InfoPropTypes) {
     }
 
     setLikeLoading(true);
-    patchUser({ resource_id: id })
+    patchLike({ resource_id: id })
       .then((res) => {
         setLikeLoading(false);
         setIsLike((pre) => !pre);
