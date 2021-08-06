@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-import { getLike, patchUser, postMetrics, ResourceInfo } from "API";
+import { getLike, patchLike, postMetrics, ResourceInfo } from "API";
 import { useSnackbar } from "notistack";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { Skeleton } from "@material-ui/lab";
@@ -117,7 +117,7 @@ export function MePage() {
       category = target.parentNode.dataset.category;
     }
 
-    patchUser({ resource_id: id as string })
+    patchLike({ resource_id: id as string })
       .then((res) => {
         enqueueSnackbar(res.data, { variant: "success" });
         setLikeList((pre) => {

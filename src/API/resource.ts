@@ -92,3 +92,12 @@ export function getDoubanByID(id: string) {
     }),
   });
 }
+
+interface PatchUserParams {
+  resource_id: string;
+}
+
+/* 收藏 */
+export function patchLike(params: PatchUserParams) {
+  return axios.patch("/api/like", params);
+}
