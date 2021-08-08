@@ -1,21 +1,56 @@
 import * as React from "react";
-import { Redirect, Route, Switch, useLocation } from "react-router-dom";
+import { Redirect, Route, Switch, useLocation, useHistory } from "react-router-dom";
+import { useSnackbar } from "notistack";
+import { Button } from "@material-ui/core";
 
-import { useAuth, useLoginBack } from "hooks";
+import { useAppDispatch, useAuth, useLoginBack } from "hooks";
 import { SplashScreen } from "layout";
 import { DataBasePage, DiscussPage, HelpPage, HomePage, MePage, ResourcePage, SearchPage } from "./pages";
+import { getUser } from "../API";
+import { setUsername } from "./pages/login/userSlice";
 
 const StatisticPage = React.lazy(() => import("./modules/statistics"));
 
 export function BasePage() {
   const location = useLocation();
+  const history = useHistory();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const { username } = useAuth();
   const login = useLoginBack();
+  const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
   }, [location.pathname]);
+
+  React.useEffect(() => {
+    if (username) {
+      getUser()
+        .then((res) => {
+          dispatch(setUsername({ username: res.data.username, group: res.data.group }));
+        })
+        .catch((error) => {
+          if (error.isAxiosError) {
+            enqueueSnackbar("登陆已失效", {
+              variant: "error",
+              action: (key) => (
+                <Button
+                  onClick={() => {
+                    closeSnackbar(key);
+                    history.push(login);
+                  }}
+                  color="inherit"
+                >
+                  去登录
+                </Button>
+              ),
+            });
+          }
+        });
+    }
+    //  eslint-disable-next-line
+  }, []);
 
   return (
     <React.Suspense fallback={<SplashScreen />}>

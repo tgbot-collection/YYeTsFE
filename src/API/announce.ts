@@ -20,3 +20,7 @@ export interface AnnounceRes {
 export function getAnnounce(params: AnnounceParams) {
   return axios.get<AnnounceRes>("/api/announcement", { params });
 }
+
+export function getNotification(params: AnnounceParams) {
+  return axios.get("/api/notification", { params });
+}
