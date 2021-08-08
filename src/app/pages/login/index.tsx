@@ -67,15 +67,15 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(2),
     },
     captcha: {
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
 
-      '& img': {
+      "& img": {
         width: 80,
         height: 30,
-        margin: '16px 0 0 8px'
-      }
-    }
+        margin: "16px 0 0 8px",
+      },
+    },
   })
 );
 
@@ -99,6 +99,10 @@ export function LoginPage() {
   const [captcha, setCaptcha] = React.useState<string>("");
   const [captchaID, setCaptchaID] = React.useState<string>(randomString());
 
+  const refreshCaptchaID = () => {
+    setCaptchaID(randomString());
+  };
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -109,8 +113,8 @@ export function LoginPage() {
     onSubmit: (values) => {
       setLoading(true);
 
-      postUser({ ...values, captcha_id : captchaID })
-        .then(() => {
+      postUser({ ...values, captcha_id: captchaID })
+        .then((res) => {
           setTimeout(() => {
             setLoading(false);
             history.push(state?.ref || "/search");
@@ -118,17 +122,17 @@ export function LoginPage() {
           gtag("event", "login", { method: "password" });
           postMetrics("user").catch(noop);
 
-          dispatch(setUsername(values.username));
+          dispatch(setUsername({ username: res.data.username, group: res.data.group }));
           localStorage.setItem("username", values.username);
           enqueueSnackbar("登录成功", { variant: "success" });
         })
         .catch((error) => {
           setLoading(false);
           logout();
-          console.log(error.response.data);
+          refreshCaptchaID();
 
           if (error.isAxiosError) {
-            enqueueSnackbar(error.response.data.message, { variant: "error" });
+            enqueueSnackbar(error.response.data.message || error.message, { variant: "error" });
             return;
           }
 
@@ -138,8 +142,12 @@ export function LoginPage() {
   });
 
   React.useEffect(() => {
-    getCaptcha(captchaID).then(res => setCaptcha((res.data)))
-  }, [captchaID])
+    getCaptcha(captchaID)
+      .then((res) => setCaptcha(res.data))
+      .catch((error) => {
+        enqueueSnackbar(`验证码获取错误：${error.message}`, { variant: "error" });
+      });
+  }, [captchaID, enqueueSnackbar]);
 
   return (
     <div className={classes.root}>
@@ -177,7 +185,7 @@ export function LoginPage() {
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
             />
-            <div className={classes.captcha} >
+            <div className={classes.captcha}>
               <TextField
                 fullWidth
                 name="captcha"
@@ -187,11 +195,11 @@ export function LoginPage() {
                 onChange={formik.handleChange}
                 error={formik.touched.captcha && Boolean(formik.errors.captcha)}
                 helperText={formik.touched.captcha && formik.errors.captcha}
-                inputProps={{maxLength: 4}}
-                style={{flex: 1}}
+                inputProps={{ maxLength: 4, autoComplete: "off" }}
+                style={{ flex: 1 }}
               />
               {/* eslint-disable */}
-              <img src={captcha} alt='验证码' onClick={() => {setCaptchaID(randomString())}}/>
+              <img src={captcha} alt="验证码" onClick={() => refreshCaptchaID()} />
             </div>
             <div className={classes.formControl}>
               <Button

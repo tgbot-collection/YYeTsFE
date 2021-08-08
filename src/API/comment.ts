@@ -1,5 +1,6 @@
 import { Canceler } from "axios";
 import axios, { CancelToken } from "./axiosConfig";
+import { UserGroup } from "./user";
 
 // eslint-disable-next-line import/no-mutable-exports
 export let cancelGetCaptcha: Canceler;
@@ -37,7 +38,6 @@ interface GetCommentParams {
   size: number;
   page: number;
 }
-export type UserGroup = "admin" | "user";
 
 export interface Comment {
   id: string;

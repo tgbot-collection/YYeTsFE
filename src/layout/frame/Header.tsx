@@ -68,7 +68,7 @@ export function Header() {
   const classes = useStyles();
 
   const handleLogout = () => {
-    dispatch(setUsername(""));
+    dispatch(setUsername({ username: "", group: ["user"] }));
     loginPopupState.close();
     gtag("event", "logout");
 
