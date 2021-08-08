@@ -4,6 +4,8 @@ import { ResourceInfo } from "./resource";
 export interface PostUserParams {
   username: string;
   password: string;
+  captcha: string;
+  captcha_id: string;
 }
 
 /* 登录 */
