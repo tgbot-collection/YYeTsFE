@@ -40,6 +40,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         position: "relative",
         gridArea: "comment",
         wordBreak: "break-all",
+        whiteSpace: "pre-wrap",
         fontSize: "0.875rem",
         overflow: "hidden",
         transition: theme.transitions.create("max-height", {
