@@ -219,7 +219,12 @@ export function Info(props: InfoPropTypes) {
               className={classes.introduction}
               style={{ maxHeight: showMore ? `${rect.height + 21}px` : MAX_HEIGHT }}
             >
-              <Typography variant="body2" ref={ref} style={{ wordBreak: "break-all" }} component="div">
+              <Typography
+                variant="body2"
+                ref={ref}
+                style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}
+                component="div"
+              >
                 <DoubanRateIcon rate={Number(doubanInfo.rating) || 0} style={{ float: "left", marginRight: 8 }} />
                 {doubanInfo.introduction}
                 {rect.height > MAX_HEIGHT && (
