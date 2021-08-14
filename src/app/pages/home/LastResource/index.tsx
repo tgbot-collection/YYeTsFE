@@ -49,7 +49,12 @@ export function LastResource() {
 
       <List>
         {lastResource.map((item) => (
-          <ListItem key={item.name} dense button onClick={() => history.push(`/resource?id=${item.resource_id}`)}>
+          <ListItem
+            key={item.name}
+            dense
+            button
+            onClick={() => history.push(`/resource?id=${item.resource_id}`, { title: item.res_name })}
+          >
             <ListItemText
               primary={
                 <Typography noWrap>
