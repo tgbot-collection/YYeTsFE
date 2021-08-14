@@ -8,6 +8,7 @@ import { postMetrics } from "API";
 import { useStyles } from "./Styled";
 import { LastComment } from "./LastComment";
 import { Announce } from "./Announce";
+import { LastResource } from "./LastResource";
 
 export function HomePage() {
   setTitle("首页");
@@ -81,6 +82,8 @@ export function HomePage() {
 
       <Container maxWidth="md">
         <Announce />
+        <br />
+        <LastResource />
         <br />
         <LastComment />
       </Container>
