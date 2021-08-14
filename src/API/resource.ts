@@ -101,3 +101,21 @@ interface PatchUserParams {
 export function patchLike(params: PatchUserParams) {
   return axios.patch("/api/like", params);
 }
+
+export type LastResourceInfo = {
+  name: string;
+  timestamp: string;
+  size: string;
+  resource_id: number;
+  res_name: string;
+  date: string;
+};
+
+interface GetLastResourceRes {
+  data: Array<LastResourceInfo>;
+}
+
+/* 获取最新资源 */
+export function getLastResource() {
+  return axios.get<GetLastResourceRes>("/api/resource/latest", { params: { size: 5 } });
+}
