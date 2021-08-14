@@ -21,6 +21,7 @@ import { useSnackbar } from "notistack";
 
 import { logout, toAbsoluteUrl } from "utils";
 import { useAppDispatch, useAuth, useLoginBack } from "hooks";
+import { Notification } from "features";
 import { setUsername } from "app/pages/login/userSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -104,7 +105,7 @@ export function Header() {
 
         {/* Github */}
         <IconButton color="inherit" {...bindTrigger(githubPopupState)}>
-          <GitHub fontSize="small" />
+          <GitHub />
         </IconButton>
         <Menu
           {...bindMenu(githubPopupState)}
@@ -127,6 +128,9 @@ export function Header() {
         {/* 个人信息 */}
         {username ? (
           <>
+            {/* 消息提示 */}
+            <Notification />
+
             <IconButton color="inherit" {...bindTrigger(loginPopupState)}>
               <AccountCircle />
             </IconButton>
