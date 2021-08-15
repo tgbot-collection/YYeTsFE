@@ -2,11 +2,11 @@ import * as React from "react";
 import { List, ListItem, ListItemAvatar, ListItemText, Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
-import { useHistory } from "react-router-dom";
 
 import { getLastComment, LastComment as LastCommentData } from "API";
 import { formatComment, formatDate } from "utils";
 import { Avatar } from "component";
+import { useGoResourcePage } from "hooks";
 import { useStyles } from "./Styled";
 
 export function LastComment() {
@@ -14,7 +14,6 @@ export function LastComment() {
   const [lastComment, setLastComment] = React.useState<Array<LastCommentData>>([]);
 
   const { enqueueSnackbar } = useSnackbar();
-  const history = useHistory();
 
   React.useEffect(() => {
     getLastComment({ size: 5 })
@@ -29,17 +28,7 @@ export function LastComment() {
       });
   }, [enqueueSnackbar]);
 
-  const handleClick = (id: number, title: string) => {
-    if (id === 233) {
-      history.push("/discuss");
-    } else {
-      history.push({
-        pathname: "/resource",
-        search: `?id=${id}`,
-        state: { title },
-      });
-    }
-  };
+  const handleClick = useGoResourcePage();
 
   const classes = useStyles();
 

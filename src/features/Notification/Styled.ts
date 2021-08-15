@@ -2,20 +2,29 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    list: {
+      width: "calc(100vw - 24px)",
+      maxHeight: 316,
+      maxWidth: 350,
+    },
     item: {
       display: "flex",
-      width: "calc(100vw - 24px)",
-      maxWidth: 350,
+      width: "100%",
+      borderBottom: `1px solid ${theme.palette.divider}`,
+    },
+    noBorder: {
+      border: "none",
     },
     comment: {
       flex: 1,
       overflow: "hidden",
     },
     rely: {
+      height: 48,
       borderRadius: 2,
       padding: "0 2px",
       fontSize: "12px",
-      width: 50,
+      width: 54,
       backgroundColor: theme.palette.background.default,
       overflow: "hidden",
       "text-overflow": "ellipsis",
