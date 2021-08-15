@@ -21,7 +21,7 @@ import { useSnackbar } from "notistack";
 
 import { logout, toAbsoluteUrl } from "utils";
 import { useAppDispatch, useAuth, useLoginBack } from "hooks";
-import { Notification } from "features";
+// import { Notification } from "features";
 import { setUsername } from "app/pages/login/userSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -129,7 +129,7 @@ export function Header() {
         {username ? (
           <>
             {/* 消息提示 */}
-            <Notification />
+            {/* <Notification /> */}
 
             <IconButton color="inherit" {...bindTrigger(loginPopupState)}>
               <AccountCircle />
