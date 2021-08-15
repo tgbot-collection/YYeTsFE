@@ -1,10 +1,20 @@
 import * as React from "react";
 import clsx from "clsx";
-import { Button, Hidden, Typography } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Hidden,
+  Typography,
+} from "@material-ui/core";
+import { useSnackbar } from "notistack";
 
 import { formatBrowser, formatComment, formatDate } from "utils";
-import { UserGroup, Comment } from "API";
-import { useDomeSize } from "hooks";
+import { UserGroup, Comment, deleteComment } from "API";
+import { useAppSelector, useDomeSize } from "hooks";
 import { useStyles } from "./styled";
 import { CommentInput } from "../CommentInput";
 import { Avatar } from "../Avatar";
@@ -23,7 +33,7 @@ interface CommentCardPropTypes {
   borderBottom?: boolean;
   /* 处于回复状态的id */
   replyId: string | number;
-  setReplyId: (id: string) => void;
+  setReplyId: React.Dispatch<React.SetStateAction<string | number>>;
 }
 
 export function CommentCard(props: CommentCardPropTypes) {
@@ -42,23 +52,50 @@ export function CommentCard(props: CommentCardPropTypes) {
     replyId,
     setReplyId = () => {},
   } = props;
+  const { group: userGroup } = useAppSelector((state) => state.user);
+
+  const [showMore, setShowMore] = React.useState<boolean>(false);
+  const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
 
   const [rect, ref] = useDomeSize();
-  const [showMore, setShowMore] = React.useState<boolean>(false);
-  const MAX_HEIGHT = 72;
-
-  const { os, browser } = formatBrowser(ua);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClickReply = () => {
-    setReplyId(commentId);
+    setReplyId((pre) => {
+      if (pre === commentId) {
+        return 0;
+      }
+      return commentId;
+    });
   };
-
-  const classes = useStyles();
-  const admin = group.includes("admin");
 
   const handleClick = () => {
     setShowMore((pre) => !pre);
   };
+
+  const handleClickDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleDeleteComment = () => {
+    deleteComment({ comment_id: commentId })
+      .then(() => {
+        handleDialogClose();
+        enqueueSnackbar("删除成功", { variant: "error" });
+      })
+      .catch((error) => {
+        enqueueSnackbar(`删除出错: ${error.response.data.message}`, { variant: "error" });
+      });
+  };
+
+  const classes = useStyles();
+  const admin = group.includes("admin");
+  const MAX_HEIGHT = 72;
+  const { os, browser } = formatBrowser(ua);
 
   return (
     <>
@@ -121,6 +158,34 @@ export function CommentCard(props: CommentCardPropTypes) {
           <Button className={classes.reply} onClick={handleClickReply}>
             回复
           </Button>
+
+          {userGroup.includes("admin") && (
+            <>
+              <Button color="secondary" className={classes.reply} onClick={handleClickDialogOpen}>
+                删除
+              </Button>
+
+              <Dialog open={dialogOpen} onClose={handleDialogClose}>
+                <DialogTitle>确认删除这条评论吗？</DialogTitle>
+
+                <DialogContent>
+                  <DialogContentText>
+                    <Typography>ID: {commentId}</Typography>
+                    <Typography>用户: {username}</Typography>
+                  </DialogContentText>
+                </DialogContent>
+
+                <DialogActions>
+                  <Button onClick={handleDialogClose} color="primary">
+                    取消
+                  </Button>
+                  <Button onClick={handleDeleteComment} color="secondary" autoFocus>
+                    删除
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </>
+          )}
 
           {replyId === commentId && (
             <CommentInput

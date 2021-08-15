@@ -33,6 +33,14 @@ export function postComment(params: PostCommentParams) {
   return axios.post<PostCommentRes>("/api/comment", params);
 }
 
+interface DeleteCommentParams {
+  comment_id: string;
+}
+
+export function deleteComment(params: DeleteCommentParams) {
+  return axios.delete("/api/comment", { data: params });
+}
+
 interface GetCommentParams {
   resource_id: number;
   size: number;
