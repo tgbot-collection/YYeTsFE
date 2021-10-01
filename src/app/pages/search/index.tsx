@@ -61,8 +61,8 @@ export function SearchPage() {
     getSearchKw(search)
       .then((res) => {
         setListLoading(false);
-
-        setList(res.data.data.map((item) => item.data.info));
+        // @ts-ignore
+        setList(res.data.data);
         if (res.data.extra) setExtraList(res.data.extra);
       })
       .catch((error) => {

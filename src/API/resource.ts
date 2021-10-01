@@ -39,6 +39,8 @@ export interface ResourceInfo {
   channel: string;
   channel_cn: string;
   year: Array<number>;
+  type: string;
+  comment_id: string;
 }
 
 export interface GetResourceByIDRes {

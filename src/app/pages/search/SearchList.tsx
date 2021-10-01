@@ -125,6 +125,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
         </ListItemAvatar>
         <div className={classes.warp}>
           <Typography noWrap className={classes.itemInfo}>
+            {list[index].type}
             {list[index].cnname}
             {list[index].enname && (
               <Typography component="span" variant="body2">
