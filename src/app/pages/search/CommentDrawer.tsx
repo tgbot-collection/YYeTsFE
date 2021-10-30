@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardContent,
+  CardHeader,
   createStyles,
   Divider,
   Drawer,
@@ -39,29 +40,6 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       padding: theme.spacing(1.5, 2, 1.5, 1.5),
     },
-    user: {
-      display: "grid",
-      gridTemplateAreas: `
-       'avatar name'
-       'avatar date'
-      `,
-      gridTemplateColumns: "50px 1fr",
-      gridGap: "2px 4px",
-
-      "& .avatar": {
-        gridArea: "avatar",
-        position: "relative",
-        fontSize: "0.875rem",
-        width: "40px",
-        height: "40px",
-      },
-      "& .name": {
-        gridArea: "name",
-      },
-      "& .date": {
-        gridArea: "date",
-      },
-    },
     tool: {
       display: "flex",
       alignItems: "center",
@@ -76,7 +54,7 @@ interface CommentResourcePropTypes {
   onClose: () => void;
 }
 
-export default function CommentResource(props: CommentResourcePropTypes) {
+export default function CommentDrawer(props: CommentResourcePropTypes) {
   const { open, onClose, content } = props;
 
   const { enqueueSnackbar } = useSnackbar();
@@ -100,18 +78,15 @@ export default function CommentResource(props: CommentResourcePropTypes) {
 
         <Divider />
         <Box className={classes.content}>
-          <div className={classes.user}>
-            <Avatar className="avatar">{formatAvatar(content.username)}</Avatar>
-
-            <Typography className="name" noWrap variant="body2">
-              {content.username}
-            </Typography>
-            <Typography className="date" color="textSecondary" variant="body2">
-              {content.date}
-            </Typography>
-          </div>
-
           <Card style={{ margin: "12px 0" }}>
+            <CardHeader
+              avatar={
+                <Avatar style={{ fontSize: "0.875rem", color: "inherit" }}>{formatAvatar(content.username)}</Avatar>
+              }
+              title={content.username}
+              subheader={content.date}
+            />
+
             <CardContent>
               <Typography style={{ wordBreak: "break-all", whiteSpace: "pre-line" }}>
                 {formattedContent.name && `@${formattedContent.name}, `}

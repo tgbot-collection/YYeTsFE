@@ -9,7 +9,7 @@ import clsx from "clsx";
 
 import { CommentResult, ExtraResult, postMetrics, ResourceInfo } from "API";
 import { noop, toAbsoluteUrl, formatComment } from "utils";
-import CommentResource from "./CommentResource";
+import CommentDrawer from "./CommentDrawer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -283,7 +283,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
         </>
       )}
       {commentList.length > 0 && (
-        <CommentResource open={drawerVisible} onClose={handleCloseDrawer} content={drawerContent} />
+        <CommentDrawer open={drawerVisible} onClose={handleCloseDrawer} content={drawerContent} />
       )}
       {list.length === 0 && extraList.length === 0 && (
         <div className={classes.empty} style={{ height }}>
