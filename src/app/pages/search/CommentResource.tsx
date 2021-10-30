@@ -2,17 +2,19 @@ import * as React from "react";
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardContent,
   createStyles,
   Divider,
   Drawer,
+  IconButton,
   Link,
   makeStyles,
   Theme,
   Typography,
 } from "@material-ui/core";
-import { FileCopy as CopyIcon } from "@material-ui/icons";
+import { FileCopy as CopyIcon, Close as CloseIcon } from "@material-ui/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
 
@@ -22,8 +24,16 @@ import { useGoResourcePage } from "hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: { width: "85vw", minWidth: "300px", maxWidth: "500px" },
+    root: {
+      width: "75vw",
+      minWidth: "300px",
+      maxWidth: "500px",
+      paddingBottom: "24px",
+    },
     header: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
       padding: theme.spacing(1.5),
     },
     content: {
@@ -52,9 +62,10 @@ const useStyles = makeStyles((theme: Theme) =>
         gridArea: "date",
       },
     },
-    link: {
-      color: theme.palette.primary.main,
-      textDecoration: "none",
+    tool: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
     },
   })
 );
@@ -80,9 +91,13 @@ export default function CommentResource(props: CommentResourcePropTypes) {
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
       <section className={classes.root}>
-        <Typography className={classes.header} variant="h6">
-          评论详情
-        </Typography>
+        <header className={classes.header}>
+          <Typography variant="h6">评论详情</Typography>
+          <IconButton onClick={onClose} size="small">
+            <CloseIcon />
+          </IconButton>
+        </header>
+
         <Divider />
         <Box className={classes.content}>
           <div className={classes.user}>
@@ -101,26 +116,31 @@ export default function CommentResource(props: CommentResourcePropTypes) {
               <Typography style={{ wordBreak: "break-all", whiteSpace: "pre-line" }}>
                 {formattedContent.name && `@${formattedContent.name}, `}
                 {formattedContent.text}{" "}
-                <CopyToClipboard
-                  text={formattedContent.text}
-                  onCopy={() => {
-                    enqueueSnackbar("评论已复制", {
-                      variant: "success",
-                    });
-                    postMetrics("copyComment").catch(noop);
-                    gtag("event", "copyComment");
-                  }}
-                >
-                  <CopyIcon color="primary" fontSize="small" style={{ marginLeft: 4 }} />
-                </CopyToClipboard>
               </Typography>
             </CardContent>
           </Card>
 
-          <Typography align="right" variant="body2">
-            来自：
-            <Link onClick={() => handleClick(content.resourceID, content.resourceName)}>{content.resourceName}</Link>
-          </Typography>
+          <Box className={classes.tool}>
+            <CopyToClipboard
+              text={formattedContent.text}
+              onCopy={() => {
+                enqueueSnackbar("评论已复制", {
+                  variant: "success",
+                });
+                postMetrics("copyComment").catch(noop);
+                gtag("event", "copyComment");
+              }}
+            >
+              <Button variant="contained" color="primary" size="small" startIcon={<CopyIcon />}>
+                复制评论
+              </Button>
+            </CopyToClipboard>
+
+            <Typography align="right" variant="body2">
+              来自：
+              <Link onClick={() => handleClick(content.resourceID, content.resourceName)}>{content.resourceName}</Link>
+            </Typography>
+          </Box>
         </Box>
       </section>
     </Drawer>
