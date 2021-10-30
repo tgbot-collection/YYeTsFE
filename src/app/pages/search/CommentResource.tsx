@@ -95,7 +95,7 @@ export default function CommentResource(props: CommentResourcePropTypes) {
 
           <Card style={{ margin: "12px 0" }}>
             <CardContent>
-              <Typography style={{ wordBreak: "break-all" }}>
+              <Typography style={{ wordBreak: "break-all", whiteSpace: "pre-line" }}>
                 {formattedContent.name && `@${formattedContent.name}, `}
                 {formattedContent.text}{" "}
                 <CopyToClipboard
