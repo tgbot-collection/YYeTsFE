@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Container, createStyles, Divider, Grid, Link, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Box, Container, createStyles, Divider, Grid, Link, makeStyles, Theme, Typography } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 
 import { toAbsoluteUrl } from "utils";
+import packageInfo from "../../../package.json";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -123,13 +124,19 @@ export function Footer() {
             </Grid>
           </Grid>
 
-          <Typography color="textSecondary" variant="body2">
-            Web Design by&nbsp;
-            <Link href="https://blog.zuiyu1818.cn" color="secondary">
-              Zuiyu
-            </Link>
-            ，Copyright © 2019 - {new Date().getFullYear()} YYeTs
-          </Typography>
+          <Box justifyContent="space-between" display="flex">
+            <Typography color="textSecondary" variant="body2">
+              Web Design by&nbsp;
+              <Link href="https://blog.zuiyu1818.cn" color="secondary">
+                Zuiyu
+              </Link>
+              ，Copyright © 2019 - {new Date().getFullYear()} YYeTs
+            </Typography>
+
+            <Typography color="textSecondary" variant="body2">
+              v{packageInfo.version}
+            </Typography>
+          </Box>
         </footer>
       </Container>
     </div>

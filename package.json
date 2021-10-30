@@ -1,6 +1,6 @@
 {
   "name": "yyetsbot",
-  "version": "0.0.1",
+  "version": "1.4.1",
   "private": true,
   "dependencies": {
     "@ant-design/charts": "^1.1.20",
