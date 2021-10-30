@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Column } from "@ant-design/charts";
-import { ColumnConfig } from "@ant-design/charts/es/column";
+import { Column, ColumnConfig } from "@ant-design/charts";
 
 import { MetricsInfo } from "API";
 import dayjs from "dayjs";

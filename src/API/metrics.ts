@@ -18,7 +18,8 @@ type MetricsType =
   | "share" // 分享
   | "discuss" // 留言板
   | "extra" // 外链
-  | "backOld"; // 返回旧版
+  | "backOld" // 返回旧版
+  | "copyComment"; // 复制评论
 
 export function postMetrics(type: MetricsType) {
   return axios.post("/api/metrics", { type });

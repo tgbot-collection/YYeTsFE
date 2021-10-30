@@ -5,6 +5,7 @@ type GtagEvent =
   | "search" // 搜索
   | "download" // 下载
   | "multiDownload" // 批量下载
+  | "copyComment" // 复制评论
   | "ResilioSync" // ResilioSync
   | "database" // 下载
   | "metrics" // 查看数据统计

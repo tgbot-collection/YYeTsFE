@@ -6,7 +6,16 @@ import { useFormik } from "formik";
 import { useHistory, useLocation } from "react-router-dom";
 import queryString from "query-string";
 
-import { cancelGetTop, ExtraResult, getSearchKw, getTop, GetTopRes, postMetrics, ResourceInfo } from "API";
+import {
+  cancelGetTop,
+  CommentResult,
+  ExtraResult,
+  getSearchKw,
+  getTop,
+  GetTopRes,
+  postMetrics,
+  ResourceInfo,
+} from "API";
 import { noop, setTitle } from "utils";
 import { SectionComponent } from "./Section";
 import { SearchListComponent } from "./SearchList";
@@ -55,15 +64,20 @@ export function SearchPage() {
   const [listLoading, setListLoading] = React.useState<boolean>(true);
   const [list, setList] = React.useState<Array<ResourceInfo>>([]);
   const [extraList, setExtraList] = React.useState<Array<ExtraResult>>([]);
+  const [commentList, setCommentList] = React.useState<Array<CommentResult>>([]);
 
   const searchByKw = (search: string) => {
     setTitle(`${search} - 搜索结果`);
     getSearchKw(search)
       .then((res) => {
         setListLoading(false);
-        // @ts-ignore
-        setList(res.data.data);
-        if (res.data.extra) setExtraList(res.data.extra);
+
+        if (res.data) {
+          const { data, extra, comment } = res.data;
+          setList(data);
+          setExtraList(extra);
+          setCommentList(comment);
+        }
       })
       .catch((error) => {
         enqueueSnackbar(`搜索出错：${error.message}`, { variant: "error" });
@@ -145,7 +159,7 @@ export function SearchPage() {
           {!!Object.keys(top).length && <SectionComponent data={top} />}
         </>
       ) : (
-        <SearchListComponent list={list} extraList={extraList} loading={listLoading} />
+        <SearchListComponent list={list} extraList={extraList} commentList={commentList} loading={listLoading} />
       )}
     </Container>
   );

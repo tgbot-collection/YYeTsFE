@@ -1,14 +1,15 @@
 import * as React from "react";
-import { ExtraResult, postMetrics, ResourceInfo } from "API";
-import { Avatar, createStyles, ListItemAvatar, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Avatar, Box, createStyles, ListItemAvatar, makeStyles, Theme, Typography } from "@material-ui/core";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import { Skeleton } from "@material-ui/lab";
 import { Link } from "react-router-dom";
 import { lighten } from "@material-ui/core/styles";
-import { deepOrange, deepPurple, pink } from "@material-ui/core/colors";
+import { deepOrange, deepPurple, pink, blue } from "@material-ui/core/colors";
 import clsx from "clsx";
 
-import { noop, toAbsoluteUrl } from "utils";
+import { CommentResult, ExtraResult, postMetrics, ResourceInfo } from "API";
+import { noop, toAbsoluteUrl, formatComment } from "utils";
+import CommentResource from "./CommentResource";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -75,19 +76,126 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.getContrastText(pink[500]),
       backgroundColor: pink[500],
     },
+    comment: {
+      color: theme.palette.getContrastText(blue[500]),
+      backgroundColor: blue[500],
+    },
   })
 );
+
+interface ResourceItemPropTypes {
+  index: number;
+  style: React.CSSProperties;
+  list: Array<ResourceInfo>;
+}
+
+const ResourceItem = (props: ResourceItemPropTypes) => {
+  const { index, style, list } = props;
+  const classes = useStyles();
+
+  return (
+    <Link
+      style={style}
+      key={index}
+      className={classes.item}
+      to={{
+        pathname: "/resource",
+        search: `?id=${list[index].id}`,
+        state: { title: list[index].cnname },
+      }}
+    >
+      <ListItemAvatar>
+        <Avatar
+          className={clsx(
+            classes.channel,
+            { [classes.orange]: list[index].channel === "tv" },
+            { [classes.purple]: list[index].channel === "movie" }
+          )}
+        >
+          {list[index].channel_cn}
+        </Avatar>
+      </ListItemAvatar>
+      <div className={classes.warp}>
+        <Typography noWrap className={classes.itemInfo}>
+          {list[index].type}
+          {list[index].cnname}
+          {list[index].enname && (
+            <Typography component="span" variant="body2">
+              &nbsp;{list[index].enname}
+            </Typography>
+          )}
+        </Typography>
+        <Typography variant="caption" noWrap className={classes.itemInfo} color="textSecondary">
+          {list[index].aliasname || "---"}
+        </Typography>
+      </div>
+    </Link>
+  );
+};
+
+interface CommentItemPropTypes {
+  index: number;
+  style: React.CSSProperties;
+  list: Array<CommentResult>;
+  onClick: (comment: CommentResult) => void;
+}
+
+const CommentItem = (props: CommentItemPropTypes) => {
+  const { index, style, list, onClick } = props;
+
+  const classes = useStyles();
+  const content = formatComment(list[index].comment);
+
+  const comment = content.name ? `@${content.name}, ${content.text}` : content.text;
+
+  return (
+    <Box style={style} key={index} className={classes.item} onClick={() => onClick(list[index])}>
+      <ListItemAvatar>
+        <Avatar className={clsx(classes.channel, classes.comment)} color="blue">
+          评论
+        </Avatar>
+      </ListItemAvatar>
+      <div className={classes.warp}>
+        <Typography noWrap className={classes.itemInfo}>
+          {list[index].resourceName}
+
+          <Typography component="span" variant="body2" color="primary">
+            &nbsp;--{list[index].username}
+          </Typography>
+        </Typography>
+        <Typography variant="caption" noWrap className={classes.itemInfo} color="textSecondary">
+          {comment || "---"}
+        </Typography>
+      </div>
+    </Box>
+  );
+};
 
 interface SearchListPropTypes {
   loading: boolean;
   list: Array<ResourceInfo>;
   extraList: Array<ExtraResult>;
+  commentList: Array<CommentResult>;
 }
 
 export function SearchListComponent(props: SearchListPropTypes) {
-  const { list, extraList, loading } = props;
+  const { list, extraList, commentList, loading } = props;
+
+  // 控制侧边抽屉展开
+  const [drawerVisible, setDrawerVisible] = React.useState<boolean>(false);
+  const [drawerContent, setDrawerContent] = React.useState<CommentResult | null>(null);
 
   const classes = useStyles();
+
+  const handleClickComment = (comment: CommentResult) => {
+    setDrawerContent(comment);
+    setDrawerVisible(true);
+  };
+
+  const handleCloseDrawer = () => {
+    setDrawerVisible(false);
+    setDrawerContent(null);
+  };
 
   const handleToExtra = (event: React.SyntheticEvent, href: string) => {
     event.preventDefault();
@@ -101,48 +209,19 @@ export function SearchListComponent(props: SearchListPropTypes) {
   function renderRow(renderProps: ListChildComponentProps) {
     const { index, style } = renderProps;
 
-    return index !== list.length ? (
-      <Link
-        style={style}
-        key={index}
-        className={classes.item}
-        to={{
-          pathname: "/resource",
-          search: `?id=${list[index].id}`,
-          state: { title: list[index].cnname },
-        }}
-      >
-        <ListItemAvatar>
-          <Avatar
-            className={clsx(
-              classes.channel,
-              { [classes.orange]: list[index].channel === "tv" },
-              { [classes.purple]: list[index].channel === "movie" }
-            )}
-          >
-            {list[index].channel_cn}
-          </Avatar>
-        </ListItemAvatar>
-        <div className={classes.warp}>
-          <Typography noWrap className={classes.itemInfo}>
-            {list[index].type}
-            {list[index].cnname}
-            {list[index].enname && (
-              <Typography component="span" variant="body2">
-                &nbsp;{list[index].enname}
-              </Typography>
-            )}
-          </Typography>
-          <Typography variant="caption" noWrap className={classes.itemInfo} color="textSecondary">
-            {list[index].aliasname || "---"}
-          </Typography>
-        </div>
-      </Link>
-    ) : (
-      <Typography style={style} key={index} className={classes.end} color="secondary">
-        我是有底线哒 o(≧口≦)o
-      </Typography>
-    );
+    if (index === list.length + commentList.length) {
+      return (
+        <Typography style={style} key={index} className={classes.end} color="secondary">
+          我是有底线哒 o(≧口≦)o
+        </Typography>
+      );
+    }
+
+    if (index < list.length) {
+      return <ResourceItem index={index} style={style} list={list} />;
+    }
+
+    return <CommentItem index={index - list.length} style={style} list={commentList} onClick={handleClickComment} />;
   }
 
   /* 去除搜索和搜索结果高度 */
@@ -164,8 +243,10 @@ export function SearchListComponent(props: SearchListPropTypes) {
     <div className={classes.root}>
       {list.length > 0 && (
         <>
-          <Typography style={{ height: 46, lineHeight: "46px" }}>共 {list.length} 条搜索结果</Typography>
-          <FixedSizeList height={height} width="100%" itemSize={46} itemCount={list.length + 1}>
+          <Typography style={{ height: 46, lineHeight: "46px" }}>
+            共 {list.length} 条资源, {commentList.length} 条相关评论
+          </Typography>
+          <FixedSizeList height={height} width="100%" itemSize={46} itemCount={list.length + commentList.length + 1}>
             {renderRow}
           </FixedSizeList>
         </>
@@ -200,6 +281,9 @@ export function SearchListComponent(props: SearchListPropTypes) {
             我是有底线哒 o(≧口≦)o
           </Typography>
         </>
+      )}
+      {commentList.length > 0 && (
+        <CommentResource open={drawerVisible} onClose={handleCloseDrawer} content={drawerContent} />
       )}
       {list.length === 0 && extraList.length === 0 && (
         <div className={classes.empty} style={{ height }}>

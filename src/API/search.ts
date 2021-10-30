@@ -37,10 +37,22 @@ export interface ExtraResult {
   class: string;
 }
 
+export interface CommentResult {
+  username: string;
+  date: string;
+  comment: string;
+  commentID: "string";
+  resourceID: number;
+  resourceName: string;
+  origin: string;
+}
+
 interface GetSearchKwRes {
-  data: Array<{ data: { info: ResourceInfo } }>;
+  data: Array<ResourceInfo>;
   /* 外站结果 */
   extra: Array<ExtraResult>;
+  /* 评论区 */
+  comment: Array<CommentResult>;
 }
 
 /* 搜索剧集 */
