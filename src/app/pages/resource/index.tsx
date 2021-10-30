@@ -110,6 +110,8 @@ export function ResourcePage() {
   }, [history, id, location.state?.title]);
 
   React.useEffect(() => {
+    if (id === "233") return noop;
+
     getResourceByID(id as string)
       .then((resourceRes) => {
         const {
