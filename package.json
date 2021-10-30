@@ -82,7 +82,8 @@
       "import/no-default-export": "off",
       "react/jsx-props-no-spreading": "off",
       "react/require-default-props": "off",
-      "no-use-before-define": "off"
+      "no-use-before-define": "off",
+      "jsx-a11y/anchor-is-valid": "off"
     }
   },
   "prettier": {

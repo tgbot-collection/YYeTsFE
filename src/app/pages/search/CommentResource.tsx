@@ -7,6 +7,7 @@ import {
   createStyles,
   Divider,
   Drawer,
+  Link,
   makeStyles,
   Theme,
   Typography,
@@ -14,10 +15,10 @@ import {
 import { FileCopy as CopyIcon } from "@material-ui/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
-import { Link } from "react-router-dom";
 
 import { CommentResult, postMetrics } from "API";
 import { formatAvatar, formatComment, noop } from "utils";
+import { useGoResourcePage } from "hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -68,6 +69,8 @@ export default function CommentResource(props: CommentResourcePropTypes) {
   const { open, onClose, content } = props;
 
   const { enqueueSnackbar } = useSnackbar();
+
+  const handleClick = useGoResourcePage();
   const classes = useStyles();
 
   if (!content) return null;
@@ -116,16 +119,7 @@ export default function CommentResource(props: CommentResourcePropTypes) {
 
           <Typography align="right" variant="body2">
             来自：
-            <Link
-              to={{
-                pathname: "/resource",
-                search: `?id=${content.resourceID}`,
-                state: { title: content.resourceName },
-              }}
-              className={classes.link}
-            >
-              {content.resourceName}
-            </Link>
+            <Link onClick={() => handleClick(content.resourceID, content.resourceName)}>{content.resourceName}</Link>
           </Typography>
         </Box>
       </section>
