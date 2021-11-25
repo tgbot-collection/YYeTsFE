@@ -241,7 +241,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
 
   return (
     <div className={classes.root}>
-      {list.length > 0 && (
+      {list.length + commentList.length > 0 && (
         <>
           <Typography style={{ height: 46, lineHeight: "46px" }}>
             共 {list.length} 条资源, {commentList.length} 条相关评论
@@ -285,7 +285,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
       {commentList.length > 0 && (
         <CommentDrawer open={drawerVisible} onClose={handleCloseDrawer} content={drawerContent} />
       )}
-      {list.length === 0 && extraList.length === 0 && (
+      {list.length === 0 && extraList.length === 0 && commentList.length === 0 && (
         <div className={classes.empty} style={{ height }}>
           <img src={toAbsoluteUrl("/svg/emptyAddress.svg")} alt="empty" />
           <Typography>暂无结果</Typography>
