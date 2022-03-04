@@ -97,7 +97,7 @@ export function DataBasePage() {
           )}
           <Button
             variant="outlined"
-            href="/data/yyets_mongo.gz"
+            href="/dump/yyets_mongo.gz"
             onClick={() => {
               gtag("event", "database", { type: "mongoDB" });
             }}
@@ -131,7 +131,7 @@ export function DataBasePage() {
           )}
           <Button
             variant="outlined"
-            href="/data/yyets_mysql.zip"
+            href="/dump/yyets_mysql.zip"
             onClick={() => {
               gtag("event", "database", { type: "MySQL" });
             }}
@@ -165,7 +165,7 @@ export function DataBasePage() {
           )}
           <Button
             variant="outlined"
-            href="/data/yyets_sqlite.zip"
+            href="/dump/yyets_sqlite.zip"
             onClick={() => {
               gtag("event", "database", { type: "SQLite" });
             }}
