@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Button, Typography } from "@material-ui/core";
+import {  Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
+import Pagination from '@material-ui/lab/Pagination';
 
 import { Comment, getComment } from "API";
 import { CommentCard } from "../CommentCard";
@@ -24,37 +25,30 @@ export function CommentList(props: CommentListPropTypes) {
   const PAGE_SIZE = 20;
   const [page, setPage] = React.useState<number>(1);
   const [count, setCount] = React.useState<number>(0);
-  const [hasMore, setHasMore] = React.useState<boolean>(false);
   const [listLoading, setListLoading] = React.useState<boolean>(true);
-  const [loadingMore, setLoadingMore] = React.useState<boolean>(false);
   const [commentList, setCommentList] = React.useState<Array<Comment>>([]);
 
   const [replyId, setReplyId] = React.useState<number | string>(id);
-
-  const handleLoadMore = () => {
-    if (hasMore) setPage((pre) => pre + 1);
+  const pageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setListLoading(true);
+    setCommentList([]);
+    setPage(value);
   };
 
   React.useEffect(() => {
-    if (page === 1) setListLoading(true);
-    else setLoadingMore(true);
 
     getComment({ resource_id: id, page, size: PAGE_SIZE })
       .then((res) => {
         if (res) {
           setCommentList((pre) => (page === 1 ? res.data.data : pre.concat(res.data.data)));
           setCount(res.data.count);
-          setHasMore(page * PAGE_SIZE < res.data.count);
         }
-
         setListLoading(false);
-        setLoadingMore(false);
       })
       .catch((error) => {
         enqueueSnackbar(`获取评论列表出错: ${error.message}`, { variant: "error" });
 
         setListLoading(false);
-        setLoadingMore(false);
       });
   }, [page, id, enqueueSnackbar]);
 
@@ -104,13 +98,13 @@ export function CommentList(props: CommentListPropTypes) {
               />
             ))}
           </div>
-          {hasMore && (
+
             <div className={classes.hasMore}>
-              <Button onClick={handleLoadMore} disabled={loadingMore} variant="outlined">
-                {listLoading ? "努力加载中..." : "加载更多"}
-              </Button>
+              <Pagination count={Math.ceil(count / PAGE_SIZE)}  page ={page} onChange={pageChange}
+                          showFirstButton showLastButton  color="primary" shape="rounded"
+              />
+
             </div>
-          )}
         </>
       )}
     </section>
