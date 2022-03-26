@@ -1,6 +1,6 @@
 /// <reference types="react-scripts" />
 type GtagEvent =
-  | "login" // 登陆
+  | "login" // 登录
   | "logout" // 登出
   | "search" // 搜索
   | "download" // 下载

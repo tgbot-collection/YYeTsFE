@@ -57,7 +57,7 @@ export function CommentInput(props: CommentInputPropTypes) {
     validationSchema,
     onSubmit: (values, { resetForm }) => {
       if (!username) {
-        enqueueSnackbar("请先登陆后评论", {
+        enqueueSnackbar("请先登录后评论", {
           variant: "warning",
           action: (key) => (
             <Button
@@ -136,7 +136,7 @@ export function CommentInput(props: CommentInputPropTypes) {
       <textarea
         name="content"
         maxLength={MAX_LENGTH}
-        placeholder={placeholder || (username ? `欢迎 ${username}，畅所欲言吧～` : "您还未登陆哦，先去登陆吧～")}
+        placeholder={placeholder || (username ? `欢迎 ${username}，畅所欲言吧～` : "您还未登录哦，先去登录吧～")}
         autoComplete="off"
         value={formik.values.content}
         onChange={formik.handleChange}

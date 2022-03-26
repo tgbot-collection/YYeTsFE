@@ -8,7 +8,7 @@ type MetricsType =
   | "database" // 数据库
   | "resource" // 资源页
   | "help" // 帮助页
-  | "user" // 注册｜登陆
+  | "user" // 注册｜登录
   | "favorite" // 收藏
   | "unFavorite" // 取消收藏
   | "comment" // 发布评论

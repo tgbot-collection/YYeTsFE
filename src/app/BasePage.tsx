@@ -32,7 +32,7 @@ export function BasePage() {
         })
         .catch((error) => {
           if (error.isAxiosError) {
-            enqueueSnackbar("登陆已失效", {
+            enqueueSnackbar("登录已失效", {
               variant: "error",
               action: (key) => (
                 <Button
