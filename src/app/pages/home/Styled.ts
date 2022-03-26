@@ -39,6 +39,11 @@ export const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.only("xs")]: {
         fontSize: 28,
       },
+      backgroundImage: "linear-gradient(#0057b7 50%, 50%, #ffd700 100%)",
+      WebkitBackgroundClip: "text",
+      MozBackgroundClip: "text",
+      backgroundClip: "text",
+      color: "transparent"
     },
     button: {
       marginTop: theme.spacing(4),
