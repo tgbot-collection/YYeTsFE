@@ -32,7 +32,7 @@ export function Announce() {
 
       <div style={{ padding: "0 16px" }}>
         {announce.length > 0 ? (
-          announce.map((item) => <Typography key={item.content}>{item.content}</Typography>)
+          announce.map((item) => <Typography key={item.content}>{item.date}&nbsp;&nbsp;{item.content}</Typography>)
         ) : (
           <Typography>{loading ? <Skeleton height={24} /> : "暂无公告"}</Typography>
         )}
