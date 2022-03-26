@@ -160,11 +160,20 @@ export function HelpPage() {
           注册需要提供什么
         </Typography>
         <Typography>
-          呃，其实随便写个用户名密码就可以了，没有限制的哦。我使用了 pbkdf2_sha256 安全保存你的密码。
+          任何人都可以注册，随便写个用户名密码就可以了，没有限制的哦。我使用了 pbkdf2_sha256 安全保存你的密码。
         </Typography>
         <Typography>我知道这个功能太简陋了，比如说无法找回密码，很多很多。凑合用吧 😂</Typography>
         <Typography>哦对了，你的用户信息不会被包含在上述数据库之中。</Typography>
       </div>
+
+        <div className={classes.item}>
+            <Typography variant="h6" component="h3" gutterBottom>
+                注册用户有何好处
+            </Typography>
+            <Typography>注册用户可以发表评论，但是请注意文明用语。该网站是我的私人空间，不当言论可能会导致封号。</Typography>
+            <Typography>目前已经暂时停止注册</Typography>
+            <Typography>日后可能会考虑转向为只有注册用户才能看到资源的模式。</Typography>
+        </div>
     </Container>
   );
 }
