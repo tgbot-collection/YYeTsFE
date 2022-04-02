@@ -3,6 +3,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
 
+const md5 = require('md5');
+
 dayjs.extend(relativeTime);
 
 export const formatBrowser = (browser: string) => {
@@ -14,6 +16,10 @@ export const formatBrowser = (browser: string) => {
 };
 
 export const formatAvatar = (name: string) => {
+  if (name.indexOf("@") > -1) {
+    const hash = md5(name);
+    return `https://www.gravatar.com/avatar/${hash}`;
+  }
   if (/^[\u4E00-\u9FFF]{2}/.test(name)) {
     return name.substr(0, 2);
   }
