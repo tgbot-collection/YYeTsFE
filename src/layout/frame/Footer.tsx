@@ -134,6 +134,13 @@ export function Footer() {
             </Typography>
 
             <Typography color="textSecondary" variant="body2">
+              Images proudly served by
+              <Link href="https://webp.se/" color="secondary" target="_blank" rel="noreferrer">
+                &nbsp;WebP Cloud Services
+              </Link>
+            </Typography>
+
+            <Typography color="textSecondary" variant="body2">
               v{packageInfo.version}
             </Typography>
           </Box>
