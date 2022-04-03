@@ -18,7 +18,7 @@ export function Avatar(props: AvatarPropTypes) {
 
   return (
     <div className={clsx(classes.wrap, className)}>
-      <MuiAvatar className={clsx(classes.avatar, { [classes.purple]: admin })}>{formatAvatar(username)}</MuiAvatar>
+      <MuiAvatar className={clsx(classes.avatar, { [classes.purple]: admin })} src={formatAvatar(username)} >{formatAvatar(username)}</MuiAvatar>
       {admin && (
         <SvgIcon className={classes.circle} viewBox="0 0 1024 1024" titleAccess="管理员">
           ad
