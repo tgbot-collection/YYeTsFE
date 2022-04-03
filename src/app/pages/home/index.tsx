@@ -22,7 +22,7 @@ export function HomePage() {
   return (
     <>
       <Container maxWidth="md" className={classes.content}>
-        <img src={toAbsoluteUrl("/logo.png")} alt="logo" className={classes.logo} />
+        <img src={toAbsoluteUrl("/svg/logo.svg")} alt="logo" className={classes.logo} />
         <div>
           <Typography className={classes.title} variant="h3" component="h1" color="inherit" gutterBottom>
             人人影视分享站

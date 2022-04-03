@@ -57,7 +57,7 @@ export function Footer() {
           <Grid container>
             <Grid item xs={12} sm={3}>
               <div className={classes.logo}>
-                <img src={toAbsoluteUrl("/logo.png")} alt="logo" />
+                <img src={toAbsoluteUrl("/svg/logo.svg")} alt="logo" />
                 <Link color="inherit" variant="body1" component={RouterLink} to="/">
                   人人影视分享
                 </Link>
