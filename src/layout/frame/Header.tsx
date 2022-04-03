@@ -81,7 +81,7 @@ export function Header() {
     <AppBar position="static">
       <Toolbar>
         <Link to="/home" className={classes.href}>
-          <img src={toAbsoluteUrl("/logo.png")} className={classes.logo} alt="logo" />
+          <img src={toAbsoluteUrl("/svg/logo.svg")} className={classes.logo} alt="logo" />
         </Link>
 
         <Typography variant="h6" className={classes.title}>
