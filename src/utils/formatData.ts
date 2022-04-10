@@ -15,7 +15,10 @@ export const formatBrowser = (browser: string) => {
   };
 };
 
-export const formatAvatar = (name: string) => {
+export const formatAvatar = (name: string, disabled: boolean = false) => {
+  if (disabled) {
+    return ""
+  }
   if (name.indexOf("@") > -1) {
     const hash = md5(name);
     return `https://www.gravatar.com/avatar/${hash}`;
