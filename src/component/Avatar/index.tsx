@@ -2,8 +2,8 @@ import * as React from "react";
 import clsx from "clsx";
 import { Avatar as MuiAvatar, SvgIcon } from "@material-ui/core";
 
-import { formatAvatar } from "utils";
-import { useStyles } from "./styled";
+import {formatAvatar, getGravatar} from "utils";
+import {useStyles} from "./styled";
 
 interface AvatarPropTypes {
   username: string;
@@ -18,7 +18,7 @@ export function Avatar(props: AvatarPropTypes) {
 
   return (
     <div className={clsx(classes.wrap, className)}>
-      <MuiAvatar className={clsx(classes.avatar, { [classes.purple]: admin })} src={formatAvatar(username, true)}>{formatAvatar(username)}</MuiAvatar>
+      <MuiAvatar className={clsx(classes.avatar, { [classes.purple]: admin })} src={getGravatar(username)}>{formatAvatar(username)}</MuiAvatar>
       {admin && (
         <SvgIcon className={classes.circle} viewBox="0 0 1024 1024" titleAccess="管理员">
           ad
