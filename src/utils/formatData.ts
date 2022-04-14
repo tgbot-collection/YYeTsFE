@@ -15,18 +15,19 @@ export const formatBrowser = (browser: string) => {
   };
 };
 
-export const formatAvatar = (name: string, disabled: boolean = false) => {
-  if (disabled) {
-    return ""
-  }
-  if (name.indexOf("@") > -1) {
-    const hash = md5(name);
-    return `https://www.gravatar.com/avatar/${hash}`;
-  }
+export const formatAvatar = (name: string) => {
   if (/^[\u4E00-\u9FFF]{2}/.test(name)) {
     return name.substr(0, 2);
   }
   return name.substr(0, 3);
+};
+
+export const getGravatar = (name: string) => {
+  if (name.indexOf("@") !== -1) {
+    const hash = md5(name);
+    return `https://gravatar.webp.se/avatar/${hash}`;
+  }
+  return "";
 };
 
 export const formatComment = (comment: string) => {
