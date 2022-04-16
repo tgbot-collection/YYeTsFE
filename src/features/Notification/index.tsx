@@ -74,6 +74,9 @@ export function Notification() {
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         classes={{ list: classes.list }}
       >
+        {total === 0 && (
+          <Typography align="center" color="textSecondary" >╮(╯-╰)╭ 暂无消息</Typography>
+        )}
         {unreadList.map((item, index) => (
           <MenuItem
             onClick={() => handleClickComment(item)}
