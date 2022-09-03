@@ -1,0 +1,31 @@
+name: build frontend
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: install nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: build FE
+        run: |
+          npm install -g yarn
+          yarn
+          yarn build
+          zip -r $(git rev-parse --short HEAD).zip build/
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: $(git rev-parse --short HEAD).zip
