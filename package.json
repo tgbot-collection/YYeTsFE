@@ -9,7 +9,7 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@reduxjs/toolkit": "^1.8.5",
     "@sentry/cli": "^1.66.0",
-    "@sentry/react": "^6.10.0",
+    "@sentry/react": "^7.12.1",
     "@sentry/tracing": "^6.10.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
