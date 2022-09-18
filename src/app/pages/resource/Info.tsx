@@ -291,7 +291,7 @@ export function Info(props: InfoPropTypes) {
               </Button>
 
               <CopyToClipboard
-                text={url}
+                text={`我发现了一个好资源「${resourceInfo.cnname}」${url} 快来看看吧`}
                 onCopy={() => {
                   enqueueSnackbar("页面地址复制成功，快去分享给小伙伴吧", { variant: "success" });
                   gtag("event", "share", { resource_id: id, form: "resource" });
