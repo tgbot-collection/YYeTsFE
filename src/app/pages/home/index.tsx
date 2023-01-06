@@ -62,21 +62,38 @@ export function HomePage() {
         <div className={classes.sponsor}>
           <Typography style={{ marginRight: "16px" }}>觉得不错，支持一下: </Typography>
 
-          <Link href="https://afdian.net/@BennyThink" style={{ transform: "translate3d(0, 3px,0)" }}>
-            <img src={toAbsoluteUrl("/sponsor/afdian.png")} alt="afdian" className="img" />
+          <Link href="https://afdian.net/@BennyThink" style={{transform: "translate3d(0, 3px,0)"}}>
+            <img src={toAbsoluteUrl("/sponsor/afdian.png")} style={{
+              transform: "scale(0.9)",
+              borderRadius: "50%",
+            }} alt="afdian" className="img"/>
           </Link>
           <Link href="https://www.buymeacoffee.com/bennythink">
             <img
-              src={toAbsoluteUrl("/sponsor/coffee.jpg")}
-              style={{
-                marginLeft: "24px",
-                transform: "scale(0.9)",
-                borderRadius: "50%",
-              }}
-              alt="coffee"
-              className="img"
+                src={toAbsoluteUrl("/sponsor/coffee.jpg")}
+                style={{
+                  marginLeft: "24px",
+                  transform: "scale(0.9)",
+                  borderRadius: "50%",
+                }}
+                alt="coffee"
+                className="img"
             />
           </Link>
+
+          <Link href="https://buy.stripe.com/dR67vU4p13Ox73a6oq">
+            <img
+                src={toAbsoluteUrl("/sponsor/stripe.png")}
+                style={{
+                  marginLeft: "24px",
+                  transform: "scale(0.9)",
+                  borderRadius: "50%",
+                }}
+                alt="stripe"
+                className="img"
+            />
+          </Link>
+
         </div>
       </div>
 
