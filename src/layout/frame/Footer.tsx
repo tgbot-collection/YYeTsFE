@@ -71,7 +71,7 @@ export function Footer() {
               <ul>
                 <li>
                   <Link href="https://t.me/BennyThink" color="inherit" variant="body1">
-                    Benny 小可爱
+                    Benny
                   </Link>
                 </li>
                 <li>
