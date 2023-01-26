@@ -30,17 +30,13 @@ export function HomePage() {
           <Typography variant="h5" component="p" color="textSecondary" gutterBottom>
             本站数据库
             <Link component={RouterLink} to="/database" color="secondary">
-              永久开源免费
+              永久免费
             </Link>
-            ，请不要做无意义的爬虫。
-          </Typography>
-          <Typography variant="h5" component="p" color="textSecondary">
-            如有疑问可以先查看
+            ， 如有疑问可以查看
             <Link component={RouterLink} to="/help">
               帮助页
             </Link>
           </Typography>
-
           <Button className={classes.button} variant="outlined" color="primary" component={RouterLink} to="/search">
             开始使用
           </Button>
@@ -60,40 +56,44 @@ export function HomePage() {
         </div>
 
         <div className={classes.sponsor}>
-          <Typography style={{ marginRight: "16px" }}>觉得不错，支持一下: </Typography>
+          <Typography style={{ marginRight: "16px" }}>觉得不错，支持一下 </Typography>
 
-          <Link href="https://afdian.net/@BennyThink" style={{transform: "translate3d(0, 3px,0)"}}>
-            <img src={toAbsoluteUrl("/sponsor/afdian.png")} style={{
-              transform: "scale(0.9)",
-              borderRadius: "50%",
-            }} alt="afdian" className="img"/>
+          <Link href="https://afdian.net/@BennyThink" style={{ transform: "translate3d(0, 3px,0)" }}>
+            <img
+              src={toAbsoluteUrl("/sponsor/afdian.png")}
+              style={{
+                transform: "scale(0.9)",
+                borderRadius: "50%",
+              }}
+              alt="afdian"
+              className="img"
+            />
           </Link>
           <Link href="https://www.buymeacoffee.com/bennythink">
             <img
-                src={toAbsoluteUrl("/sponsor/coffee.jpg")}
-                style={{
-                  marginLeft: "24px",
-                  transform: "scale(0.9)",
-                  borderRadius: "50%",
-                }}
-                alt="coffee"
-                className="img"
+              src={toAbsoluteUrl("/sponsor/coffee.jpg")}
+              style={{
+                marginLeft: "24px",
+                transform: "scale(0.9)",
+                borderRadius: "50%",
+              }}
+              alt="coffee"
+              className="img"
             />
           </Link>
 
           <Link href="https://buy.stripe.com/dR67vU4p13Ox73a6oq">
             <img
-                src={toAbsoluteUrl("/sponsor/stripe.png")}
-                style={{
-                  marginLeft: "24px",
-                  transform: "scale(0.9)",
-                  borderRadius: "50%",
-                }}
-                alt="stripe"
-                className="img"
+              src={toAbsoluteUrl("/sponsor/stripe.png")}
+              style={{
+                marginLeft: "24px",
+                transform: "scale(0.9)",
+                borderRadius: "50%",
+              }}
+              alt="stripe"
+              className="img"
             />
           </Link>
-
         </div>
       </div>
 
