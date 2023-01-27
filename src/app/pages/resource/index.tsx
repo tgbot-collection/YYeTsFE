@@ -1,5 +1,7 @@
 import * as React from "react";
-import { useLocation, useHistory, Link as RouterLinker } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
+import { Adsense } from "@ctrl/react-adsense";
+
 import {
   Backdrop,
   Button,
@@ -157,7 +159,6 @@ export function ResourcePage() {
             <BackOldIcon className="icon" />
           </IconButton>
         </Tooltip>
-
         <Modal
           className={classes.modal}
           open={open}
@@ -178,17 +179,11 @@ export function ResourcePage() {
                 </Typography>
                 啦
               </Typography>
-              <Typography gutterBottom>
-                若您对新版还有什么不满意欢迎到
-                <Typography component={RouterLinker} to="/discuss" color="inherit">
-                  留言板
-                </Typography>
-                反馈哦
-              </Typography>
+              <Typography gutterBottom>若您对新版还有什么不满意欢迎到GitHub反馈哦</Typography>
               <br />
               <div className={classes.modal}>
                 <ButtonGroup variant="contained" disableElevation>
-                  <Button color="secondary" component={RouterLinker} to="/discuss">
+                  <Button color="secondary" href="https://github.com/tgbot-collection/YYeTsFE/issues">
                     反馈意见
                   </Button>
                   <Button color="primary" href={`/resource.html${location.search}`} onClick={handleBack}>
@@ -199,7 +194,6 @@ export function ResourcePage() {
             </div>
           </Fade>
         </Modal>
-
         <Info
           loading={loading}
           resourceInfo={resourceInfo}
@@ -212,10 +206,22 @@ export function ResourcePage() {
 
         <Divider className={classes.hr} />
 
+        {process.env.REACT_APP_ADSENSE ? (
+          <>
+            <Adsense
+              className="adsbygoogle"
+              client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
+              slot="3141225542"
+              style={{ display: "block" }}
+              format="auto"
+              responsive="true"
+            />
+            <Divider className={classes.hr} />
+          </>
+        ) : null}
+
         <Address loading={loading} resourceAddress={resourceAddress} resourceId={id as string} />
-
         <Divider className={classes.hr} />
-
         <CommentComponent loading={loading} id={Number(id)} title="评论" />
       </Container>
     </>
