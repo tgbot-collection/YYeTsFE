@@ -1,10 +1,11 @@
 import * as React from "react";
 import * as yup from "yup";
-import { Button, Container, createStyles, makeStyles, TextField, Theme } from "@material-ui/core";
+import { Button, Container, createStyles, Divider, makeStyles, TextField, Theme } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
 import { useHistory, useLocation } from "react-router-dom";
 import queryString from "query-string";
+import { Adsense } from "@ctrl/react-adsense";
 
 import {
   cancelGetTop,
@@ -29,6 +30,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       paddingTop: theme.spacing(4),
+    },
+    hr: {
+      margin: theme.spacing(4, 0),
+      [theme.breakpoints.up("sm")]: {
+        margin: theme.spacing(6, 0),
+      },
     },
     searchBar: {
       display: "flex",
@@ -156,6 +163,22 @@ export function SearchPage() {
       {mode === "top" ? (
         <>
           <RankComponent data={top.ALL} loading={rankLoading} />
+
+          {process.env.REACT_APP_ADSENSE ? (
+            <>
+              <Divider className={classes.hr} />
+              <Adsense
+                className="adsbygoogle"
+                client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
+                slot="5356325344"
+                style={{ display: "block" }}
+                format="auto"
+                responsive="true"
+              />
+              <Divider />
+            </>
+          ) : null}
+
           {!!Object.keys(top).length && <SectionComponent data={top} />}
         </>
       ) : (

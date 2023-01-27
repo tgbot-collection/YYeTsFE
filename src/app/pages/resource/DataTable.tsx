@@ -208,7 +208,7 @@ export function DataTable(props: DataTablePropTypes) {
   }, [tableData]);
 
   const isSelected = (name: number) => selected.indexOf(name) !== -1;
-  const emptyRows = tableData.length < 5 ? 5 - tableData.length : 0;
+  const emptyRows = tableData?.length < 5 ? 5 - tableData?.length : 0;
 
   const classes = useStyles();
 

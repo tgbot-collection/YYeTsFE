@@ -2,6 +2,12 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    hr: {
+      margin: theme.spacing(4, 0),
+      [theme.breakpoints.up("sm")]: {
+        margin: theme.spacing(6, 0),
+      },
+    },
     commentList: {
       marginTop: theme.spacing(4),
 

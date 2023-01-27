@@ -25,7 +25,9 @@ React App
     REACT_APP_SENTRY_DSN=xxx
     # 是否生成 sourcemap
     GENERATE_SOURCEMAP=true
-    ```
+    # adsense
+    REACT_APP_ADSENSE=xxx
+```
 
 1. build 项目
 

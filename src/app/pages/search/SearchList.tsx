@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { lighten } from "@material-ui/core/styles";
 import { deepOrange, deepPurple, pink, blue } from "@material-ui/core/colors";
 import clsx from "clsx";
+import { Adsense } from "@ctrl/react-adsense";
 
 import { CommentResult, ExtraResult, postMetrics, ResourceInfo } from "API";
 import { noop, toAbsoluteUrl, formatComment } from "utils";
@@ -219,6 +220,20 @@ export function SearchListComponent(props: SearchListPropTypes) {
 
     if (index < list.length) {
       return <ResourceItem index={index} style={style} list={list} />;
+    }
+    if (index === list.length && process.env.REACT_APP_ADSENSE) {
+      return (
+        <div style={style} className={classes.item}>
+          <Adsense
+            className="adsbygoogle"
+            client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
+            slot="3648476098"
+            style={{ display: "block" }}
+            format="fluid"
+            layoutKey="-gw-3+1f-3d+2z"
+          />
+        </div>
+      );
     }
 
     return <CommentItem index={index - list.length} style={style} list={commentList} onClick={handleClickComment} />;

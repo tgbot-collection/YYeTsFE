@@ -1,8 +1,9 @@
 import * as React from "react";
-import {  Typography } from "@material-ui/core";
+import { Divider, Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
-import Pagination from '@material-ui/lab/Pagination';
+import Pagination from "@material-ui/lab/Pagination";
+import { Adsense } from "@ctrl/react-adsense";
 
 import { Comment, getComment } from "API";
 import { CommentCard } from "../CommentCard";
@@ -36,7 +37,6 @@ export function CommentList(props: CommentListPropTypes) {
   };
 
   React.useEffect(() => {
-
     getComment({ resource_id: id, page, size: PAGE_SIZE })
       .then((res) => {
         if (res) {
@@ -99,12 +99,33 @@ export function CommentList(props: CommentListPropTypes) {
             ))}
           </div>
 
-            <div className={classes.hasMore}>
-              <Pagination count={Math.ceil(count / PAGE_SIZE)}  page ={page} onChange={pageChange}
-                          showFirstButton showLastButton  color="primary" shape="rounded"
+          {process.env.REACT_APP_ADSENSE ? (
+            <>
+              <Divider className={classes.hr} />
+
+              <Adsense
+                className="adsbygoogle"
+                client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
+                slot="7052550390"
+                style={{ display: "block" }}
+                format="autorelaxed"
               />
 
-            </div>
+              <Divider className={classes.hr} />
+            </>
+          ) : null}
+
+          <div className={classes.hasMore}>
+            <Pagination
+              count={Math.ceil(count / PAGE_SIZE)}
+              page={page}
+              onChange={pageChange}
+              showFirstButton
+              showLastButton
+              color="primary"
+              shape="rounded"
+            />
+          </div>
         </>
       )}
     </section>
