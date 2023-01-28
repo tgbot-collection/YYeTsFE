@@ -21,7 +21,7 @@ import { useSnackbar } from "notistack";
 
 import { logout, toAbsoluteUrl } from "utils";
 import { useAppDispatch, useAuth, useLoginBack } from "hooks";
-import { Notification } from "features";
+import { Notification, Adblock } from "features";
 import { setUsername } from "app/pages/login/userSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -79,6 +79,7 @@ export function Header() {
 
   return (
     <AppBar position="static">
+      <Adblock />
       <Toolbar>
         <Link to="/home" className={classes.href}>
           <img src={toAbsoluteUrl("/svg/logo.svg")} className={classes.logo} alt="logo" />
