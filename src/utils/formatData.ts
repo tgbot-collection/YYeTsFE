@@ -2,10 +2,15 @@ import * as Bowser from "bowser";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
-const md5 = require('md5');
+const md5 = require("md5");
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
 dayjs.extend(relativeTime);
+dayjs.tz.setDefault("Asia/Shanghai");
 
 export const formatBrowser = (browser: string) => {
   const result = Bowser.parse(browser);
@@ -40,14 +45,15 @@ export const formatComment = (comment: string) => {
 };
 
 export const formatDate = (rowDate: string) => {
-  const date = dayjs(rowDate).locale("zh-cn");
+  // time date in db is always CST, so we need to read it by default timezone using dayjs.tz
+  const date = dayjs.tz(rowDate).locale("zh-cn");
   const now = dayjs();
 
   if (!date.isValid()) return "时间格式错误";
 
   if (date.isAfter(now.startOf("day"))) return date.fromNow();
 
-  if (date.isAfter(now.startOf("year"))) return date.format("M-D HH:mm");
+  if (date.isAfter(now.startOf("year"))) return date.format("YYYY-MM-DD HH:mm:ss");
 
-  return date.format("YYYY-MM-DD HH:mm");
+  return date.format("YYYY-MM-DD HH:mm:ss");
 };
