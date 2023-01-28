@@ -70,13 +70,13 @@ export function Footer() {
               </Typography>
               <ul>
                 <li>
-                  <Link href="https://t.me/BennyThink" color="inherit" variant="body1">
+                  <Link href="https://dmesg.app/" color="inherit" variant="body1">
                     Benny
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://dmesg.app/" color="inherit" variant="body1">
-                    Blog
+                  <Link href="https://blog.zuiyu1818.cn/" color="inherit" variant="body1">
+                    Zuiyu
                   </Link>
                 </li>
               </ul>
@@ -113,6 +113,11 @@ export function Footer() {
                 <li>
                   <Link color="inherit" variant="body1" component={RouterLink} to="/help">
                     帮助页
+                  </Link>
+                </li>
+                <li>
+                  <Link href="https://github.com/tgbot-collection/YYeTsBot" color="inherit" variant="body1">
+                    开源地址
                   </Link>
                 </li>
                 <li>
