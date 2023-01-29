@@ -7,7 +7,7 @@ import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 
-import { cancelGetCaptcha, getCaptcha, postComment, postMetrics } from "API";
+import { cancelGetCaptcha, getCaptcha, getComment, postComment, postMetrics } from "API";
 import { noop, randomString } from "utils";
 import { useAuth, useLoginBack } from "hooks";
 import { useStyles } from "./styled";
@@ -25,10 +25,11 @@ interface CommentInputPropTypes {
   placeholder?: string;
   replyUser?: string;
   // todo: 增加评论成功后的回调
+  setCommentList?: any;
 }
 
 export function CommentInput(props: CommentInputPropTypes) {
-  const { resourceId, style, placeholder, commentId, replyUser, parentId } = props;
+  const { resourceId, style, placeholder, commentId, replyUser, parentId, setCommentList } = props;
 
   const classes = useStyles();
 
@@ -47,6 +48,14 @@ export function CommentInput(props: CommentInputPropTypes) {
   const refreshCaptcha = () => {
     if (captchaLoading) return;
     setCaptchaID(randomString());
+  };
+
+  const reloadComment = () => {
+    getComment({ resource_id: resourceId, page: 1, size: 20 }).then((res) => {
+      if (res) {
+        setCommentList(res.data.data);
+      }
+    });
   };
 
   const formik = useFormik({
@@ -91,7 +100,7 @@ export function CommentInput(props: CommentInputPropTypes) {
 
           if (res) {
             resetForm();
-
+            reloadComment();
             refreshCaptcha();
             enqueueSnackbar(res.data.message, { variant: "success" });
           }

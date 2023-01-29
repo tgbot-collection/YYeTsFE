@@ -14,10 +14,12 @@ import { formatComment } from "../../utils";
 interface CommentListPropTypes {
   id: number;
   loading: boolean;
+  commentList: Array<Comment>;
+  setCommentList: any;
 }
 
 export function CommentList(props: CommentListPropTypes) {
-  const { id, loading } = props;
+  const { id, loading, commentList, setCommentList } = props;
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -27,7 +29,7 @@ export function CommentList(props: CommentListPropTypes) {
   const [page, setPage] = React.useState<number>(1);
   const [count, setCount] = React.useState<number>(0);
   const [listLoading, setListLoading] = React.useState<boolean>(true);
-  const [commentList, setCommentList] = React.useState<Array<Comment>>([]);
+  // const [commentList, commentList] = React.useState<Array<Comment>>([]);
 
   const [replyId, setReplyId] = React.useState<number | string>(id);
   const pageChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -40,6 +42,7 @@ export function CommentList(props: CommentListPropTypes) {
     getComment({ resource_id: id, page, size: PAGE_SIZE })
       .then((res) => {
         if (res) {
+          // @ts-ignore
           setCommentList((pre) => (page === 1 ? res.data.data : pre.concat(res.data.data)));
           setCount(res.data.count);
         }
@@ -50,7 +53,7 @@ export function CommentList(props: CommentListPropTypes) {
 
         setListLoading(false);
       });
-  }, [page, id, enqueueSnackbar]);
+  }, [page, id, enqueueSnackbar, setCommentList]);
 
   if (loading)
     return (
