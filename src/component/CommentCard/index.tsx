@@ -34,6 +34,7 @@ interface CommentCardPropTypes {
   /* 处于回复状态的id */
   replyId: string | number;
   setReplyId: React.Dispatch<React.SetStateAction<string | number>>;
+  setCommentList?: React.Dispatch<React.SetStateAction<Array<Comment>>>;
 }
 
 export function CommentCard(props: CommentCardPropTypes) {
@@ -51,6 +52,7 @@ export function CommentCard(props: CommentCardPropTypes) {
     borderBottom = true,
     replyId,
     setReplyId = () => {},
+    setCommentList,
   } = props;
   const { group: userGroup } = useAppSelector((state) => state.user);
 
@@ -195,6 +197,7 @@ export function CommentCard(props: CommentCardPropTypes) {
               commentId={commentId}
               parentId={parentId}
               replyUser={username}
+              setCommentList={setCommentList}
             />
           )}
 
