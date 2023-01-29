@@ -159,7 +159,7 @@ export function CommentCard(props: CommentCardPropTypes) {
             回复
           </Button>
 
-          {userGroup.includes("admin") && (
+          {userGroup?.includes("admin") && (
             <>
               <Button color="secondary" className={classes.reply} onClick={handleClickDialogOpen}>
                 删除
