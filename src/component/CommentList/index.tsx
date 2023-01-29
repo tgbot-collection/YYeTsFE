@@ -98,6 +98,7 @@ export function CommentList(props: CommentListPropTypes) {
                 parentId={comment.id}
                 replyId={replyId}
                 setReplyId={setReplyId}
+                setCommentList={setCommentList}
               />
             ))}
           </div>
