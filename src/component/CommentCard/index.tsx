@@ -243,7 +243,7 @@ export function CommentCard(props: CommentCardPropTypes) {
               />
             ))}
 
-          {childrenCount && childrenComment.length < childrenCount && (
+          {!!childrenCount && childrenComment.length < childrenCount && (
             <div className={classes.hasMore}>
               <Button variant="outlined" onClick={handleChildClick}>
                 {childLoading ? "努力加载中..." : "加载更多"}
