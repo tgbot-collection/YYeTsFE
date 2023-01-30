@@ -23,6 +23,7 @@ export function CommentComponent(props: CommentPropTypes) {
 
       <CommentInput resourceId={id} setCommentList={setCommentList} />
       <br />
+      <div id="scroll" />
       <CommentList id={id} loading={loading} commentList={commentList} setCommentList={setCommentList} />
     </div>
   );
