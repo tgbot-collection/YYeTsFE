@@ -2,6 +2,7 @@ import * as React from "react";
 import { Redirect, Route, Switch, useLocation, useHistory } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { Button } from "@material-ui/core";
+import pangu from "pangu";
 
 import { useAppDispatch, useAuth, useLoginBack } from "hooks";
 import { SplashScreen } from "layout";
@@ -21,6 +22,7 @@ export function BasePage() {
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
+    pangu.spacingElementById("root");
     document.documentElement.scrollTop = 0;
   }, [location.pathname]);
 
