@@ -86,7 +86,8 @@
       "react/jsx-props-no-spreading": "off",
       "react/require-default-props": "off",
       "no-use-before-define": "off",
-      "jsx-a11y/anchor-is-valid": "off"
+      "jsx-a11y/anchor-is-valid": "off",
+      "@typescript-eslint/no-unused-vars": "off"
     }
   },
   "prettier": {
