@@ -36,6 +36,7 @@ export function CommentList(props: CommentListPropTypes) {
     setListLoading(true);
     setCommentList([]);
     setPage(value);
+    document.getElementById("scroll")?.scrollIntoView({ behavior: "smooth" });
   };
 
   React.useEffect(() => {
