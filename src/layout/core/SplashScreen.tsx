@@ -23,7 +23,7 @@ export function SplashScreenProvider(props: { children: React.ReactNode }) {
     if (splashScreen && !visible) {
       timeout = setTimeout(() => {
         splashScreen.classList.add("hidden");
-      }, 3000);
+      }, 1000);
     }
 
     return () => {
