@@ -95,6 +95,7 @@ export function CommentList(props: CommentListPropTypes) {
                 content={formatComment(comment.content)}
                 group={comment.group}
                 childrenComment={comment.children}
+                childrenCount={comment.childrenCount}
                 parentId={comment.id}
                 replyId={replyId}
                 setReplyId={setReplyId}

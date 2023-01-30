@@ -92,3 +92,13 @@ interface LastCommentRes {
 export function getLastComment(params: LastCommentParams) {
   return axios.get<LastCommentRes>("/api/comment/newest", { params });
 }
+
+interface GetChildCommentParams {
+  parent_id: string | undefined;
+  size: number;
+  page: number;
+}
+
+export function getChildComment(params: GetChildCommentParams) {
+  return axios.get("/api/comment/child", { params });
+}

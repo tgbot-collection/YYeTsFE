@@ -13,7 +13,7 @@ import {
 import { useSnackbar } from "notistack";
 
 import { formatBrowser, formatComment, formatDate } from "utils";
-import { UserGroup, Comment, deleteComment } from "API";
+import { UserGroup, Comment, deleteComment, getChildComment } from "API";
 import { useAppSelector, useDomeSize } from "hooks";
 import { useStyles } from "./styled";
 import { CommentInput } from "../CommentInput";
@@ -30,6 +30,7 @@ interface CommentCardPropTypes {
   content: { text: string; id?: string; name?: string };
   group: Array<UserGroup>;
   childrenComment?: Array<Comment>;
+  childrenCount?: number;
   borderBottom?: boolean;
   /* 处于回复状态的id */
   replyId: string | number;
@@ -49,6 +50,7 @@ export function CommentCard(props: CommentCardPropTypes) {
     parentId,
     resourceId,
     childrenComment = [],
+    childrenCount,
     borderBottom = true,
     replyId,
     setReplyId = () => {},
@@ -58,9 +60,28 @@ export function CommentCard(props: CommentCardPropTypes) {
 
   const [showMore, setShowMore] = React.useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
-
+  const [childLoading, setChildLoading] = React.useState<boolean>(false);
   const [rect, ref] = useDomeSize();
   const { enqueueSnackbar } = useSnackbar();
+  const childPageSize = 3;
+  const [childPage, setChildPage] = React.useState(2);
+
+  const handleChildClick = () => {
+    setChildLoading(true);
+
+    getChildComment({ parent_id: parentId, size: childPageSize, page: childPage })
+      .then((res) => {
+        // we can push to it thus trigger rerender
+        childrenComment.push(...res.data.data);
+        setChildPage((pre) => pre + 1);
+      })
+      .catch((error) => {
+        enqueueSnackbar(`加载楼中楼失败: ${error.response.data}`, { variant: "error" });
+      })
+      .finally(() => {
+        setChildLoading(false);
+      });
+  };
 
   const handleClickReply = () => {
     setReplyId((pre) => {
@@ -124,7 +145,10 @@ export function CommentCard(props: CommentCardPropTypes) {
             {rect.height > MAX_HEIGHT && (
               <div
                 className={classes.button}
-                style={{ display: showMore ? "inline-block" : "block", position: showMore ? "static" : "absolute" }}
+                style={{
+                  display: showMore ? "inline-block" : "block",
+                  position: showMore ? "static" : "absolute",
+                }}
               >
                 <Button
                   onClick={handleClick}
@@ -218,6 +242,14 @@ export function CommentCard(props: CommentCardPropTypes) {
                 setReplyId={setReplyId}
               />
             ))}
+
+          {childrenCount && childrenComment.length < childrenCount && (
+            <div className={classes.hasMore}>
+              <Button variant="outlined" onClick={handleChildClick}>
+                {childLoading ? "努力加载中..." : "加载更多"}
+              </Button>{" "}
+            </div>
+          )}
 
           {floor && (
             <Typography className="floor" variant="body2" component="span" color="textSecondary">
