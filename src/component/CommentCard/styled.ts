@@ -3,6 +3,10 @@ import { purple } from "@material-ui/core/colors";
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    hasMore: {
+      display: "flex",
+      justifyContent: "center",
+    },
     commentItem: {
       margin: theme.spacing(2, 0),
       display: "grid",
