@@ -109,7 +109,10 @@ export function CommentInput(props: CommentInputPropTypes) {
           setPostLoading(false);
 
           if (error.isAxiosError) {
-            enqueueSnackbar(`评论出错: ${error.response.data.message}`, { variant: "error" });
+            enqueueSnackbar(`评论出错: ${error.response.data.message}`, { variant: "warning" });
+            setTimeout(() => {
+              window.location.href = "/me";
+            }, 3000);
             return;
           }
           enqueueSnackbar(`评论出错: ${error.message}`, { variant: "error" });

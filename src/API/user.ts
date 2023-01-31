@@ -8,6 +8,19 @@ export interface PostUserParams {
   captcha_id: string;
 }
 
+export interface PatchUserParams {
+  email: string;
+}
+export interface VerifyEmailParams {
+  code: string;
+}
+
+interface PatchInfo {
+  status_code: number;
+  status: boolean;
+  message: string;
+}
+
 export type UserGroup = "admin" | "user";
 
 interface UserInfo {
@@ -37,4 +50,12 @@ interface GetLikeRes {
 /* 个人收藏 */
 export function getLike() {
   return axios.get<GetLikeRes>("/api/like");
+}
+
+export function patchUser(params: PatchUserParams) {
+  return axios.patch<PatchInfo>("/api/user", params);
+}
+
+export function verifyEmail(params: VerifyEmailParams) {
+  return axios.post("/api/user/email", params);
 }

@@ -160,7 +160,7 @@ export function LoginPage() {
             <Typography gutterBottom variant="h4">
               登录
             </Typography>
-            <Typography>未注册用户将会自动注册</Typography>
+            <Typography>未注册用户将会自动注册，需要验证邮箱才可以发表评论。</Typography>
           </div>
 
           <form onSubmit={formik.handleSubmit}>
