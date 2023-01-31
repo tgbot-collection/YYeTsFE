@@ -11,7 +11,10 @@ import { getUser } from "../API";
 import { setUsername } from "./pages/login/userSlice";
 
 const StatisticPage = React.lazy(() => import("./modules/statistics"));
-
+interface EmailInfoState {
+  verified: boolean;
+  address: string;
+}
 export function BasePage() {
   const location = useLocation();
   const history = useHistory();
@@ -20,7 +23,7 @@ export function BasePage() {
   const { username } = useAuth();
   const login = useLoginBack();
   const dispatch = useAppDispatch();
-
+  const [emailInfo, setEmailInfo] = React.useState({} as EmailInfoState);
   React.useEffect(() => {
     pangu.spacingElementById("root");
     document.documentElement.scrollTop = 0;
@@ -30,6 +33,7 @@ export function BasePage() {
     if (username) {
       getUser()
         .then((res) => {
+          setEmailInfo(res.data.email);
           dispatch(setUsername({ username: res.data.username, group: res.data.group }));
         })
         .catch((error) => {
@@ -62,7 +66,7 @@ export function BasePage() {
         <Route exact path="/resource" component={ResourcePage} />
         <Route exact path="/discuss" component={DiscussPage} />
         <Route exact path="/me">
-          {username ? <MePage /> : <Redirect to={login} />}
+          {username ? <MePage verified={emailInfo?.verified} address={emailInfo?.address} /> : <Redirect to={login} />}
         </Route>
         <Route exact path="/database" component={DataBasePage} />
         <Route exact path="/help" component={HelpPage} />
