@@ -66,7 +66,7 @@ export function BasePage() {
         <Route exact path="/resource" component={ResourcePage} />
         <Route exact path="/discuss" component={DiscussPage} />
         <Route exact path="/me">
-          {username ? <MePage verified={emailInfo.verified} address={emailInfo.address} /> : <Redirect to={login} />}
+          {username ? <MePage verified={emailInfo?.verified} address={emailInfo?.address} /> : <Redirect to={login} />}
         </Route>
         <Route exact path="/database" component={DataBasePage} />
         <Route exact path="/help" component={HelpPage} />

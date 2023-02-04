@@ -131,7 +131,7 @@ export function MePage(props: any) {
       verifyEmail({ code: input })
         .then((r) => {
           enqueueSnackbar(r.data.message, { variant: "success" });
-          setHelperText({ typography: `你的邮箱${address}已验证成功。`, type: "", help: "" });
+          setHelperText({ typography: `你的邮箱已验证成功。`, type: "", help: "" });
           setDisplay(false);
         })
         .catch((e) => {
@@ -246,6 +246,33 @@ export function MePage(props: any) {
         <div className={classes.empty}>
           <img src={toAbsoluteUrl("/svg/emptyAddress.svg")} alt="empty" />
           <Typography>暂无结果</Typography>
+        </div>
+
+        <Divider className={classes.hr} />
+        <div className={classes.emailWidth}>
+          <Typography>{helperText.typography}</Typography>
+
+          {display && (
+            <>
+              <TextField
+                id="email"
+                error={inputError}
+                label={helperText.type}
+                helperText={helperText.help}
+                fullWidth
+                value={input}
+                onChange={handleInputChange}
+              />
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={handleVerifyButton}
+                disabled={inputError || input.length === 0}
+              >
+                验证
+              </Button>
+            </>
+          )}
         </div>
       </Container>
     );
