@@ -9754,6 +9754,11 @@ open@^7.0.2, open@^7.3.1:
     is-docker "^2.0.0"
     is-wsl "^2.1.1"
 
+opencollective-postinstall@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz#7a0fff978f6dbfa4d006238fbac98ed4198c3259"
+  integrity sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
+
 opn@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/opn/-/opn-5.5.0.tgz#fc7164fab56d235904c51c3b27da6758ca3b9bfc"
@@ -12743,6 +12748,13 @@ stylis@4.0.13:
   version "4.0.13"
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.0.13.tgz#f5db332e376d13cc84ecfe5dace9a2a51d954c91"
   integrity sha512-xGPXiFVl4YED9Jh7Euv2V220mriG9u4B2TA6Ybjc1catrstKD2PpIdU3U0RKpkVBC2EhmL/F0sPCr9vrFTNRag==
+
+super-tiny-icons@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/super-tiny-icons/-/super-tiny-icons-0.4.0.tgz#ec925cad4d788d98e50fd4229c3f2bf51abeba27"
+  integrity sha512-PEHlUQsSdEtQNeP4pNOBCDU9cJe6bsrMmG3yV62icvMDgjCC+srl9AfJ5RGwfKbyvGNbYRUtcmkka+k7yhZxOA==
+  dependencies:
+    opencollective-postinstall "^2.0.2"
 
 supports-color@^2.0.0:
   version "2.0.0"

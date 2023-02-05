@@ -18,6 +18,7 @@ import { useAppSelector, useDomeSize } from "hooks";
 import { useStyles } from "./styled";
 import { CommentInput } from "../CommentInput";
 import { Avatar } from "../Avatar";
+import * as tiny from "./tinyIcon";
 
 interface CommentCardPropTypes {
   resourceId: number;
@@ -36,6 +37,31 @@ interface CommentCardPropTypes {
   replyId: string | number;
   setReplyId: React.Dispatch<React.SetStateAction<string | number>>;
   setCommentList?: React.Dispatch<React.SetStateAction<Array<Comment>>>;
+}
+
+function getIcon(name: string) {
+  const browsers = [
+    { name: "chrome", src: tiny.chrome },
+    { name: "firefox", src: tiny.firefox },
+    { name: "safari", src: tiny.safari },
+    { name: "edge", src: tiny.edge },
+    { name: "opera", src: tiny.opera },
+    { name: "chromium", src: tiny.chromium },
+    { name: "android", src: tiny.android },
+    { name: "ios", src: tiny.apple },
+    { name: "ipad", src: tiny.apple },
+    { name: "iphone", src: tiny.apple },
+    { name: "windows", src: tiny.windows },
+    { name: "ubuntu", src: tiny.ubuntu },
+    { name: "debian", src: tiny.debian },
+    { name: "linux", src: tiny.linux },
+    { name: "macos", src: tiny.macos },
+    { name: "trident", src: tiny.ie },
+  ];
+
+  const browser = browsers.find((b) => name.toLowerCase().includes(b.name));
+  const props = { src: browser ? browser.src : tiny.unknown };
+  return <img {...props} alt={name} height="10em" />;
 }
 
 export function CommentCard(props: CommentCardPropTypes) {
@@ -166,13 +192,14 @@ export function CommentCard(props: CommentCardPropTypes) {
         <div className={clsx("ua", { [classes.bottomBorder]: borderBottom })}>
           {os !== " " && (
             <Typography variant="caption" component="span" color="textSecondary" className={classes.browser}>
-              {os}
+              {getIcon(os)} {os}
             </Typography>
           )}
+
           <Hidden smDown>
             {browser !== " " && (
               <Typography variant="caption" component="span" color="textSecondary" className={classes.browser}>
-                {browser}
+                {getIcon(browser)} {browser}
               </Typography>
             )}
           </Hidden>
