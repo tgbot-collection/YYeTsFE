@@ -53,7 +53,7 @@ export const formatDate = (rowDate: string) => {
 
   if (date.isAfter(now.startOf("day"))) return date.fromNow();
 
-  if (date.isAfter(now.startOf("year"))) return date.format("YYYY-MM-DD HH:mm:ss");
+  if (date.isAfter(now.startOf("year"))) return date.format("YYYY-MM-DD HH:mm");
 
-  return date.format("YYYY-MM-DD HH:mm:ss");
+  return date.format("YYYY-MM-DD HH:mm");
 };

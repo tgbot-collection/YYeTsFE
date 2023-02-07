@@ -12,13 +12,19 @@ import debian from "super-tiny-icons/images/svg/debian.svg";
 import linux from "super-tiny-icons/images/svg/linux.svg";
 import macos from "super-tiny-icons/images/svg/macos.svg";
 import windows from "super-tiny-icons/images/svg/windows.svg";
-import ie from "../../svg/ie.svg";
-import unknown from "../../svg/unknown.svg";
+import wechat from "super-tiny-icons/images/svg/wechat.svg";
+import qq from "super-tiny-icons/images/svg/qq.svg";
+
+import ie from "../../Icon/svg/ie.svg";
+import unknown from "../../Icon/svg/unknown.svg";
+import xiaomi from "../../Icon/svg/xiaomi.svg";
 
 export {
   chrome,
   firefox,
+  xiaomi,
   safari,
+  qq,
   edge,
   opera,
   chromium,
@@ -29,6 +35,7 @@ export {
   linux,
   macos,
   windows,
+  wechat,
   ie,
   unknown,
 };
