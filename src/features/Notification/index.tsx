@@ -50,7 +50,7 @@ export function Notification() {
   const handleClickComment = (notice: NoticeItem) => {
     patchNotifications({ comment_id: notice.id, verb: "read" }).catch(noop);
     noticePopupState.close();
-    toResourcePage(notice.resource_id);
+    toResourcePage(notice.resource_id, notice.id, "");
   };
 
   const handleLoadMore = () => {
@@ -75,7 +75,9 @@ export function Notification() {
         classes={{ list: classes.list }}
       >
         {total === 0 && (
-          <Typography align="center" color="textSecondary" >╮(╯-╰)╭ 暂无消息</Typography>
+          <Typography align="center" color="textSecondary">
+            ╮(╯-╰)╭ 暂无消息
+          </Typography>
         )}
         {unreadList.map((item, index) => (
           <MenuItem

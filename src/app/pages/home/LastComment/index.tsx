@@ -67,7 +67,7 @@ export function LastComment() {
             <ListItem
               alignItems="flex-start"
               key={item.id}
-              onClick={() => handleClick(item.resource_id, item.cnname)}
+              onClick={() => handleClick(item.resource_id, item.id, item.cnname)}
               button
             >
               <ListItemAvatar>

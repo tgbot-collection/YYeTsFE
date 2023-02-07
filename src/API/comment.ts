@@ -45,6 +45,7 @@ interface GetCommentParams {
   resource_id: number;
   size: number;
   page: number;
+  comment_id?: string;
 }
 
 export interface Comment {
