@@ -57,6 +57,11 @@ function getIcon(name: string) {
     { name: "linux", src: tiny.linux },
     { name: "macos", src: tiny.macos },
     { name: "trident", src: tiny.ie },
+    { name: "wechat", src: tiny.wechat },
+    { name: "weixin", src: tiny.wechat },
+    { name: "micromessenger", src: tiny.wechat },
+    { name: "QQBrowser", src: tiny.qq },
+    { name: "miui", src: tiny.xiaomi },
   ];
 
   const browser = browsers.find((b) => name.toLowerCase().includes(b.name));
