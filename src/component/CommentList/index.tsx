@@ -40,7 +40,14 @@ export function CommentList(props: CommentListPropTypes) {
   };
 
   React.useEffect(() => {
-    getComment({ resource_id: id, page, size: PAGE_SIZE })
+    const requestParams = {
+      resource_id: id,
+      page,
+      size: PAGE_SIZE,
+      comment_id: window.location.href.split("#")[1] || undefined,
+    };
+
+    getComment(requestParams)
       .then((res) => {
         if (res) {
           // @ts-ignore

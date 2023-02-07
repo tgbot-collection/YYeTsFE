@@ -13,6 +13,7 @@ interface CommentPropTypes {
 export function CommentComponent(props: CommentPropTypes) {
   const { id, loading, title = "" } = props;
   const [commentList, setCommentList] = React.useState<Array<Comment>>([]);
+
   return (
     <div>
       {title && (

@@ -1,11 +1,12 @@
 import { useHistory } from "react-router-dom";
+import { waitForElement } from "../utils";
 
 export function useGoResourcePage() {
   const history = useHistory();
 
-  return (id: number, title?: string) => {
+  return (id: number, uid: string, title?: string) => {
     if (id === 233) {
-      history.push("/discuss");
+      history.push(`/discuss#${uid}`);
     } else {
       history.push({
         pathname: "/resource",
@@ -13,5 +14,9 @@ export function useGoResourcePage() {
         state: { title: title || "资源页" },
       });
     }
+    // jump to element
+    waitForElement(uid).then((elm) => {
+      document.getElementById(uid)?.scrollIntoView({ behavior: "smooth" });
+    });
   };
 }
