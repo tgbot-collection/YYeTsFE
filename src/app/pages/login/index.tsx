@@ -1,7 +1,17 @@
 import * as React from "react";
 import * as yup from "yup";
-import { Button, createStyles, makeStyles, TextField, Theme, Typography } from "@material-ui/core";
-import { Cached as CachedIcon, Send as SendIcon } from "@material-ui/icons";
+import {
+  Button,
+  createStyles,
+  makeStyles,
+  TextField,
+  Theme,
+  Typography,
+  Link,
+  Tooltip,
+  Divider,
+} from "@material-ui/core";
+import { Cached as CachedIcon, Send as SendIcon, GitHub } from "@material-ui/icons";
 import { useHistory, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import { useSnackbar } from "notistack";
@@ -103,6 +113,11 @@ export function LoginPage() {
     setCaptchaID(randomString());
   };
 
+  const setLogin = (username: string, group: any) => {
+    dispatch(setUsername({ username, group }));
+    localStorage.setItem("username", username);
+  };
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -121,9 +136,7 @@ export function LoginPage() {
           }, 1000);
           gtag("event", "login", { method: "password" });
           postMetrics("user").catch(noop);
-
-          dispatch(setUsername({ username: res.data.username, group: res.data.group }));
-          localStorage.setItem("username", values.username);
+          setLogin(res.data.username, res.data.group);
           enqueueSnackbar("登录成功", { variant: "success" });
         })
         .catch((error) => {
@@ -148,6 +161,24 @@ export function LoginPage() {
         enqueueSnackbar(`验证码获取错误：${error.message}`, { variant: "error" });
       });
   }, [captchaID, enqueueSnackbar]);
+
+  React.useEffect(() => {
+    const url = new URL(window.location.href);
+    const status = url.searchParams.get("status");
+    const message = url.searchParams.get("message");
+    const username = url.searchParams.get("username") || "";
+
+    if (status === "success") {
+      enqueueSnackbar(message, { variant: "success" });
+      setLogin(username, ["user"]);
+      // 2秒钟之后跳转到首页
+      setTimeout(() => {
+        history.push("/");
+      }, 2000);
+    } else if (status === "fail") {
+      enqueueSnackbar(message, { variant: "error" });
+    }
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -214,6 +245,13 @@ export function LoginPage() {
               </Button>
             </div>
           </form>
+          <Divider />
+          <Typography>使用第三方登录，无需验证邮箱</Typography>
+          <Tooltip title="使用GitHub登录，你的GitHub用户名会是你的登录名">
+            <Link href="/auth/github">
+              <GitHub></GitHub>
+            </Link>
+          </Tooltip>
         </div>
       </div>
     </div>

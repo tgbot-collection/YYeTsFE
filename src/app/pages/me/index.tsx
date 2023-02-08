@@ -92,7 +92,7 @@ export function MePage(props: any) {
   const initialState = {
     type: "邮箱",
     help: "仅支持Gmail, QQ, 163和outlook",
-    typography: "您还未添加邮箱，请验证邮箱以获得评论功能",
+    typography: "您还未添加邮箱，请验证邮箱以获得更好的体验。",
   };
   const [helperText, setHelperText] = React.useState(initialState);
   const mobile = useMediaQuery("(max-width: 600px)");
