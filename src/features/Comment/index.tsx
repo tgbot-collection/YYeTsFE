@@ -2,6 +2,7 @@ import * as React from "react";
 import { Typography } from "@material-ui/core";
 
 import { CommentInput, CommentList } from "component";
+import { Comment } from "../../API";
 
 interface CommentPropTypes {
   id: number;
@@ -11,6 +12,7 @@ interface CommentPropTypes {
 
 export function CommentComponent(props: CommentPropTypes) {
   const { id, loading, title = "" } = props;
+  const [commentList, setCommentList] = React.useState<Array<Comment>>([]);
 
   return (
     <div>
@@ -20,9 +22,10 @@ export function CommentComponent(props: CommentPropTypes) {
         </Typography>
       )}
 
-      <CommentInput resourceId={id} />
+      <CommentInput resourceId={id} setCommentList={setCommentList} />
       <br />
-      <CommentList id={id} loading={loading} />
+      <div id="scroll" />
+      <CommentList id={id} loading={loading} commentList={commentList} setCommentList={setCommentList} />
     </div>
   );
 }

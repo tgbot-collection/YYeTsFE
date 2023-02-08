@@ -119,5 +119,5 @@ interface GetLastResourceRes {
 
 /* 获取最新资源 */
 export function getLastResource() {
-  return axios.get<GetLastResourceRes>("/api/resource/latest", { params: { size: 5 } });
+  return axios.get<GetLastResourceRes>("/api/resource/latest", { params: { size: 3 } });
 }

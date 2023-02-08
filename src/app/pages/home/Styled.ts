@@ -9,10 +9,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.primary.main,
       textAlign: "center",
       paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(8),
+      paddingBottom: theme.spacing(2),
       [theme.breakpoints.up("md")]: {
         paddingTop: theme.spacing(16),
-        paddingBottom: theme.spacing(8),
+        paddingBottom: theme.spacing(0),
         flexDirection: "row",
         alignItems: "flex-start",
         textAlign: "left",
@@ -43,10 +43,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       WebkitBackgroundClip: "text",
       MozBackgroundClip: "text",
       backgroundClip: "text",
-      color: "transparent"
+      color: "transparent",
     },
     button: {
-      marginTop: theme.spacing(4),
+      marginTop: theme.spacing(2),
     },
     social: {
       padding: theme.spacing(2, 0),

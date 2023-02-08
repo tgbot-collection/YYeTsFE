@@ -20,7 +20,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
 
 import { CommentResult, postMetrics } from "API";
-import { formatAvatar, formatComment, noop, getGravatar} from "utils";
+import { formatAvatar, formatComment, noop, getGravatar } from "utils";
 import { useGoResourcePage } from "hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
+    },
+    forceCursor: {
+      cursor: "pointer",
     },
   })
 );
@@ -81,7 +84,9 @@ export default function CommentDrawer(props: CommentResourcePropTypes) {
           <Card style={{ margin: "12px 0" }}>
             <CardHeader
               avatar={
-                <Avatar style={{ fontSize: "0.875rem", color: "inherit" }} src={getGravatar(content.username)}>{formatAvatar(content.username)}</Avatar>
+                <Avatar style={{ fontSize: "0.875rem", color: "inherit" }} src={getGravatar(content.username)}>
+                  {formatAvatar(content.username)}
+                </Avatar>
               }
               title={content.username}
               subheader={content.date}
@@ -113,7 +118,12 @@ export default function CommentDrawer(props: CommentResourcePropTypes) {
 
             <Typography align="right" variant="body2">
               来自：
-              <Link onClick={() => handleClick(content.resourceID, content.resourceName)}>{content.resourceName}</Link>
+              <Link
+                className={classes.forceCursor}
+                onClick={() => handleClick(content.resourceID, content.commentID, content.resourceName)}
+              >
+                {content.resourceName}
+              </Link>
             </Typography>
           </Box>
         </Box>

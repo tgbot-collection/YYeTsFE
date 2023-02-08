@@ -1,8 +1,9 @@
 import * as React from "react";
-import {  Typography } from "@material-ui/core";
+import { Divider, Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
-import Pagination from '@material-ui/lab/Pagination';
+import Pagination from "@material-ui/lab/Pagination";
+import { Adsense } from "@ctrl/react-adsense";
 
 import { Comment, getComment } from "API";
 import { CommentCard } from "../CommentCard";
@@ -13,10 +14,12 @@ import { formatComment } from "../../utils";
 interface CommentListPropTypes {
   id: number;
   loading: boolean;
+  commentList: Array<Comment>;
+  setCommentList: any;
 }
 
 export function CommentList(props: CommentListPropTypes) {
-  const { id, loading } = props;
+  const { id, loading, commentList, setCommentList } = props;
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -26,20 +29,28 @@ export function CommentList(props: CommentListPropTypes) {
   const [page, setPage] = React.useState<number>(1);
   const [count, setCount] = React.useState<number>(0);
   const [listLoading, setListLoading] = React.useState<boolean>(true);
-  const [commentList, setCommentList] = React.useState<Array<Comment>>([]);
+  // const [commentList, commentList] = React.useState<Array<Comment>>([]);
 
   const [replyId, setReplyId] = React.useState<number | string>(id);
   const pageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setListLoading(true);
     setCommentList([]);
     setPage(value);
+    document.getElementById("scroll")?.scrollIntoView({ behavior: "smooth" });
   };
 
   React.useEffect(() => {
+    const requestParams = {
+      resource_id: id,
+      page,
+      size: PAGE_SIZE,
+      comment_id: window.location.href.split("#")[1] || undefined,
+    };
 
-    getComment({ resource_id: id, page, size: PAGE_SIZE })
+    getComment(requestParams)
       .then((res) => {
         if (res) {
+          // @ts-ignore
           setCommentList((pre) => (page === 1 ? res.data.data : pre.concat(res.data.data)));
           setCount(res.data.count);
         }
@@ -50,7 +61,7 @@ export function CommentList(props: CommentListPropTypes) {
 
         setListLoading(false);
       });
-  }, [page, id, enqueueSnackbar]);
+  }, [page, id, enqueueSnackbar, setCommentList]);
 
   if (loading)
     return (
@@ -92,19 +103,42 @@ export function CommentList(props: CommentListPropTypes) {
                 content={formatComment(comment.content)}
                 group={comment.group}
                 childrenComment={comment.children}
+                childrenCount={comment.childrenCount}
                 parentId={comment.id}
                 replyId={replyId}
                 setReplyId={setReplyId}
+                setCommentList={setCommentList}
               />
             ))}
           </div>
 
-            <div className={classes.hasMore}>
-              <Pagination count={Math.ceil(count / PAGE_SIZE)}  page ={page} onChange={pageChange}
-                          showFirstButton showLastButton  color="primary" shape="rounded"
+          {process.env.REACT_APP_ADSENSE ? (
+            <>
+              <Divider className={classes.hr} />
+
+              <Adsense
+                className="adsbygoogle"
+                client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
+                slot="7052550390"
+                style={{ display: "block" }}
+                format="autorelaxed"
               />
 
-            </div>
+              <Divider className={classes.hr} />
+            </>
+          ) : null}
+
+          <div className={classes.hasMore}>
+            <Pagination
+              count={Math.ceil(count / PAGE_SIZE)}
+              page={page}
+              onChange={pageChange}
+              showFirstButton
+              showLastButton
+              color="primary"
+              shape="rounded"
+            />
+          </div>
         </>
       )}
     </section>

@@ -45,19 +45,19 @@ export function HelpPage() {
           </MuiLink>{" "}
           哦。
         </Typography>
-        <Typography> 另外值得一提的是，有些网盘支持离线资源，可以把磁力、ed2k贴进去。</Typography>
+        <Typography> 另外值得一提的是，有些网盘支持离线资源，可以把磁力、ed2k 贴进去。</Typography>
       </div>
 
       <div className={classes.item}>
         <Typography variant="h6" component="h3" gutterBottom>
           如何使用 Resilio Sync
         </Typography>
+        <Typography>推荐使用 Resilio Sync 来进行资源下载，直接点击链接就可以。</Typography>
+        <Typography>如果你无法访问链接，也可以在客户端直接使用点击链接之后复制的 Key。</Typography>
         <Typography>
-          推荐使用 Resilio Sync 来进行资源下载，直接点击链接就可以。
-          <Typography>如果你无法访问链接，也可以在客户端直接使用点击链接之后复制的 Key。</Typography>
           具体方法请移步
           <MuiLink href="https://zhuanlan.zhihu.com/p/280756218">
-            它一度被墙，如今又悄然复活，为你轰开一个隐秘新世界
+            《它一度被墙，如今又悄然复活，为你轰开一个隐秘新世界》
           </MuiLink>
           。
         </Typography>
@@ -68,13 +68,6 @@ export function HelpPage() {
           是否会关站
         </Typography>
         <Typography>不会，我的主观意愿不会。即使被关站也不要怕，本项目的代码、数据库都是开源的。</Typography>
-      </div>
-
-      <div className={classes.item}>
-        <Typography variant="h6" component="h3" gutterBottom>
-          网站能承受住多大流量
-        </Typography>
-        <Typography>我的测试，至少500请求/second。服务器流量多着呢，谁怕谁啊。</Typography>
       </div>
 
       <div className={classes.item}>
@@ -98,8 +91,9 @@ export function HelpPage() {
         <Typography>
           谢谢你哦！可以通过点<MuiLink href="https://github.com/tgbot-collection/YYeTsBot">🌟</MuiLink>
           ，宣传，使用等方式来支持。当然你也可以通过{" "}
-          <MuiLink href="https://afdian.net/@BennyThink">Buy Me a Coffee</MuiLink> 或
-          <MuiLink href="https://www.buymeacoffee.com/bennythink">爱发电</MuiLink>来支持我！
+          <MuiLink href="https://afdian.net/@BennyThink">Buy Me a Coffee</MuiLink> 、
+          <MuiLink href="https://www.buymeacoffee.com/bennythink">爱发电</MuiLink>或{" "}
+          <MuiLink href="https://buy.stripe.com/dR67vU4p13Ox73a6oq">Stripe</MuiLink> 来支持我！
         </Typography>
       </div>
 
@@ -107,7 +101,9 @@ export function HelpPage() {
         <Typography variant="h6" component="h3" gutterBottom>
           其他的使用方式
         </Typography>
-        <Typography>还有一个Telegram Bot，数据和这个网站是同步的。</Typography>
+        <Typography>
+          还有一个<MuiLink href="https://t.me/yyets_bot"> Telegram Bot </MuiLink>，数据和这个网站是同步的。
+        </Typography>
       </div>
 
       <div className={classes.item}>
@@ -129,7 +125,7 @@ export function HelpPage() {
           网站打不开，无法搜索
         </Typography>
         <Typography>
-          呃这个应该不太可能啊。可能你网络连接到 cloudflare 不太稳？换个网络，再刷新试试看呢？还不行去 GitHub
+          呃这个应该不太可能啊。可能你网络连接到 Cloudflare 不太稳？换个网络，再刷新试试看呢？还不行去 GitHub
           报错给我吧。
         </Typography>
       </div>
@@ -138,21 +134,19 @@ export function HelpPage() {
         <Typography variant="h6" component="h3" gutterBottom>
           本站会收集哪些信息
         </Typography>
-        <Typography>主要有如下4种信息：</Typography>
+        <Typography>主要有如下几种信息：</Typography>
         <Typography>
-          1.
-          你的IP地址会被记录在Nginx的日志中。在面临攻击、爬虫等恶意行为时，我会找到这个IP然后加到防火墙中。我不会公开或与第三方分享访问日志；
+          1. 你的IP地址会被记录在 Nginx
+          的日志中。在面临攻击、爬虫等恶意行为时，我会找到这个IP然后加到防火墙中。我不会公开或与第三方分享访问日志；
         </Typography>
         <Typography>2. 我使用了 Google Analytics，请参考 Google Analytics 的隐私政策；</Typography>
-        <Typography>3. 我使用了 Cloudflare，请参考 Cloudflare 的隐私政策。</Typography>
-        <Typography>4. 我记录了metrics信息，用于优化日后访问量，此信息不包含个人信息，无法用于追踪你。</Typography>
+        <Typography>3. 我使用了 Google Adsense，请参考 Google Adsense 的隐私政策；</Typography>
+        <Typography>4. 我使用了 Cloudflare，请参考 Cloudflare 的隐私政策；</Typography>
+        <Typography>5. 我记录了 metrics 信息，用于优化日后访问量，此信息不包含个人信息，无法用于追踪你；</Typography>
         <Typography>
-          5. 如果你选择注册，我会保存你的用户名、加密后的密码、注册时间、UA等信息。此类信息不会被公开或与第三方分享。
+          6. 如果你选择注册，我会保存你的用户名、加密后的密码、注册时间、UA 等信息。此类信息不会被公开或与第三方分享；
         </Typography>
-        <Typography>
-          6.
-          如果你选择收藏某些资源，那么日后可能用于统计排行榜，这项信息不会包含你的个人信息。毕竟，大家都喜欢，那才是最棒的嘛！
-        </Typography>
+        <Typography>7. 如果你选择收藏某些资源，那么日后可能用于统计排行榜，这项信息不会包含你的个人信息。</Typography>
       </div>
 
       <div className={classes.item}>
@@ -166,14 +160,15 @@ export function HelpPage() {
         <Typography>哦对了，你的用户信息不会被包含在上述数据库之中。</Typography>
       </div>
 
-        <div className={classes.item}>
-            <Typography variant="h6" component="h3" gutterBottom>
-                注册用户有何好处
-            </Typography>
-            <Typography>注册用户可以发表评论，但是请注意文明用语。该网站是我的私人空间，不当言论可能会导致封号。</Typography>
-            <Typography>目前已经暂时停止注册</Typography>
-            <Typography>日后可能会考虑转向为只有注册用户才能看到资源的模式。</Typography>
-        </div>
+      <div className={classes.item}>
+        <Typography variant="h6" component="h3" gutterBottom>
+          注册用户有何好处
+        </Typography>
+        <Typography>
+          注册用户可以发表评论，但是请注意文明用语。该网站是我的私人空间，不当言论可能会导致封号。
+        </Typography>
+        <Typography>日后可能会考虑转向为只有注册用户才能看到资源的模式。</Typography>
+      </div>
     </Container>
   );
 }

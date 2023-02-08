@@ -16,7 +16,7 @@ export function LastComment() {
   const { enqueueSnackbar } = useSnackbar();
 
   React.useEffect(() => {
-    getLastComment({ size: 5 })
+    getLastComment({ size: 7 })
       .then((res) => {
         setLoading(false);
         if (res.data) {
@@ -67,7 +67,7 @@ export function LastComment() {
             <ListItem
               alignItems="flex-start"
               key={item.id}
-              onClick={() => handleClick(item.resource_id, item.cnname)}
+              onClick={() => handleClick(item.resource_id, item.id, item.cnname)}
               button
             >
               <ListItemAvatar>

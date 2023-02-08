@@ -13,11 +13,12 @@ import {
 import { useSnackbar } from "notistack";
 
 import { formatBrowser, formatComment, formatDate } from "utils";
-import { UserGroup, Comment, deleteComment } from "API";
+import { UserGroup, Comment, deleteComment, getChildComment } from "API";
 import { useAppSelector, useDomeSize } from "hooks";
 import { useStyles } from "./styled";
 import { CommentInput } from "../CommentInput";
 import { Avatar } from "../Avatar";
+import * as tiny from "./tinyIcon";
 
 interface CommentCardPropTypes {
   resourceId: number;
@@ -30,10 +31,42 @@ interface CommentCardPropTypes {
   content: { text: string; id?: string; name?: string };
   group: Array<UserGroup>;
   childrenComment?: Array<Comment>;
+  childrenCount?: number;
   borderBottom?: boolean;
   /* 处于回复状态的id */
   replyId: string | number;
   setReplyId: React.Dispatch<React.SetStateAction<string | number>>;
+  setCommentList?: React.Dispatch<React.SetStateAction<Array<Comment>>>;
+}
+
+function getIcon(name: string) {
+  const browsers = [
+    { name: "chrome", src: tiny.chrome },
+    { name: "firefox", src: tiny.firefox },
+    { name: "safari", src: tiny.safari },
+    { name: "edge", src: tiny.edge },
+    { name: "opera", src: tiny.opera },
+    { name: "chromium", src: tiny.chromium },
+    { name: "android", src: tiny.android },
+    { name: "ios", src: tiny.apple },
+    { name: "ipad", src: tiny.apple },
+    { name: "iphone", src: tiny.apple },
+    { name: "windows", src: tiny.windows },
+    { name: "ubuntu", src: tiny.ubuntu },
+    { name: "debian", src: tiny.debian },
+    { name: "linux", src: tiny.linux },
+    { name: "macos", src: tiny.macos },
+    { name: "trident", src: tiny.ie },
+    { name: "wechat", src: tiny.wechat },
+    { name: "weixin", src: tiny.wechat },
+    { name: "micromessenger", src: tiny.wechat },
+    { name: "QQBrowser", src: tiny.qq },
+    { name: "miui", src: tiny.xiaomi },
+  ];
+
+  const browser = browsers.find((b) => name.toLowerCase().includes(b.name));
+  const props = { src: browser ? browser.src : tiny.unknown };
+  return <img {...props} alt={name} height="10em" />;
 }
 
 export function CommentCard(props: CommentCardPropTypes) {
@@ -48,17 +81,38 @@ export function CommentCard(props: CommentCardPropTypes) {
     parentId,
     resourceId,
     childrenComment = [],
+    childrenCount,
     borderBottom = true,
     replyId,
     setReplyId = () => {},
+    setCommentList,
   } = props;
   const { group: userGroup } = useAppSelector((state) => state.user);
 
   const [showMore, setShowMore] = React.useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
-
+  const [childLoading, setChildLoading] = React.useState<boolean>(false);
   const [rect, ref] = useDomeSize();
   const { enqueueSnackbar } = useSnackbar();
+  const childPageSize = 3;
+  const [childPage, setChildPage] = React.useState(2);
+
+  const handleChildClick = () => {
+    setChildLoading(true);
+
+    getChildComment({ parent_id: parentId, size: childPageSize, page: childPage })
+      .then((res) => {
+        // we can push to it thus trigger rerender
+        childrenComment.push(...res.data.data);
+        setChildPage((pre) => pre + 1);
+      })
+      .catch((error) => {
+        enqueueSnackbar(`加载楼中楼失败: ${error.response.data}`, { variant: "error" });
+      })
+      .finally(() => {
+        setChildLoading(false);
+      });
+  };
 
   const handleClickReply = () => {
     setReplyId((pre) => {
@@ -122,7 +176,10 @@ export function CommentCard(props: CommentCardPropTypes) {
             {rect.height > MAX_HEIGHT && (
               <div
                 className={classes.button}
-                style={{ display: showMore ? "inline-block" : "block", position: showMore ? "static" : "absolute" }}
+                style={{
+                  display: showMore ? "inline-block" : "block",
+                  position: showMore ? "static" : "absolute",
+                }}
               >
                 <Button
                   onClick={handleClick}
@@ -140,13 +197,14 @@ export function CommentCard(props: CommentCardPropTypes) {
         <div className={clsx("ua", { [classes.bottomBorder]: borderBottom })}>
           {os !== " " && (
             <Typography variant="caption" component="span" color="textSecondary" className={classes.browser}>
-              {os}
+              {getIcon(os)} {os}
             </Typography>
           )}
+
           <Hidden smDown>
             {browser !== " " && (
               <Typography variant="caption" component="span" color="textSecondary" className={classes.browser}>
-                {browser}
+                {getIcon(browser)} {browser}
               </Typography>
             )}
           </Hidden>
@@ -159,7 +217,7 @@ export function CommentCard(props: CommentCardPropTypes) {
             回复
           </Button>
 
-          {userGroup.includes("admin") && (
+          {userGroup?.includes("admin") && (
             <>
               <Button color="secondary" className={classes.reply} onClick={handleClickDialogOpen}>
                 删除
@@ -195,6 +253,7 @@ export function CommentCard(props: CommentCardPropTypes) {
               commentId={commentId}
               parentId={parentId}
               replyUser={username}
+              setCommentList={setCommentList}
             />
           )}
 
@@ -215,6 +274,14 @@ export function CommentCard(props: CommentCardPropTypes) {
                 setReplyId={setReplyId}
               />
             ))}
+
+          {!!childrenCount && childrenComment.length < childrenCount && (
+            <div className={classes.hasMore}>
+              <Button variant="outlined" onClick={handleChildClick}>
+                {childLoading ? "努力加载中..." : "加载更多"}
+              </Button>{" "}
+            </div>
+          )}
 
           {floor && (
             <Typography className="floor" variant="body2" component="span" color="textSecondary">
