@@ -10,8 +10,11 @@ import {
   Link,
   Tooltip,
   Divider,
+  SvgIcon,
 } from "@material-ui/core";
-import { Cached as CachedIcon, Send as SendIcon, GitHub } from "@material-ui/icons";
+import { Cached as CachedIcon, Send as SendIcon, GitHub as GitHubIcon } from "@material-ui/icons";
+import { ReactComponent as GoogleTinyIcon } from "super-tiny-icons/images/svg/google.svg";
+
 import { useHistory, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import { useSnackbar } from "notistack";
@@ -113,10 +116,13 @@ export function LoginPage() {
     setCaptchaID(randomString());
   };
 
-  const setLogin = (username: string, group: any) => {
-    dispatch(setUsername({ username, group }));
-    localStorage.setItem("username", username);
-  };
+  const setLogin = React.useCallback(
+    (username: string, group: any) => {
+      dispatch(setUsername({ username, group }));
+      localStorage.setItem("username", username);
+    },
+    [dispatch]
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -178,7 +184,7 @@ export function LoginPage() {
     } else if (status === "fail") {
       enqueueSnackbar(message, { variant: "error" });
     }
-  }, []);
+  }, [enqueueSnackbar, history, setLogin]);
 
   return (
     <div className={classes.root}>
@@ -193,7 +199,6 @@ export function LoginPage() {
             </Typography>
             <Typography>未注册用户将会自动注册，需要验证邮箱才可以发表评论。</Typography>
           </div>
-
           <form onSubmit={formik.handleSubmit}>
             <TextField
               fullWidth
@@ -249,7 +254,15 @@ export function LoginPage() {
           <Typography>使用第三方登录，无需验证邮箱</Typography>
           <Tooltip title="使用GitHub登录，你的GitHub用户名会是你的登录名">
             <Link href="/auth/github">
-              <GitHub></GitHub>
+              <GitHubIcon />
+            </Link>
+          </Tooltip>
+          &nbsp;
+          <Tooltip title="使用Google登录，你的Gmail会是你的登录名">
+            <Link href="/auth/google">
+              <SvgIcon>
+                <GoogleTinyIcon />
+              </SvgIcon>
             </Link>
           </Tooltip>
         </div>
