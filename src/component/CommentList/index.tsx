@@ -33,9 +33,12 @@ export function CommentList(props: CommentListPropTypes) {
 
   const [replyId, setReplyId] = React.useState<number | string>(id);
   const pageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setListLoading(true);
-    setCommentList([]);
-    setPage(value);
+    // if current page equals new page, just scroll to top
+    if (page !== value) {
+      setListLoading(true);
+      setCommentList([]);
+      setPage(value);
+    }
     document.getElementById("scroll")?.scrollIntoView({ behavior: "smooth" });
   };
 
