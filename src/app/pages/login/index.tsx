@@ -18,7 +18,9 @@ import {
   GitHub as GitHubIcon,
   Twitter as TwitterIcon,
 } from "@material-ui/icons";
+
 import { ReactComponent as GoogleTinyIcon } from "super-tiny-icons/images/svg/google.svg";
+import { ReactComponent as MSTinyIcon } from "super-tiny-icons/images/svg/microsoft.svg";
 
 import { useHistory, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
@@ -274,6 +276,14 @@ export function LoginPage() {
           <Tooltip title="使用Twitter登录，你的Twitter用户名会是你的登录名">
             <Link href="/auth/twitter">
               <TwitterIcon />
+            </Link>
+          </Tooltip>{" "}
+          &nbsp;
+          <Tooltip title="使用Microsoft登录，你的邮箱会是你的登录名">
+            <Link href="/auth/microsoft">
+              <SvgIcon>
+                <MSTinyIcon />
+              </SvgIcon>
             </Link>
           </Tooltip>
         </div>
