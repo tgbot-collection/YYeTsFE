@@ -60,7 +60,7 @@ function getIcon(name: string) {
     { name: "wechat", src: tiny.wechat },
     { name: "weixin", src: tiny.wechat },
     { name: "micromessenger", src: tiny.wechat },
-    { name: "QQBrowser", src: tiny.qq },
+    { name: "QQ", src: tiny.qq },
     { name: "miui", src: tiny.xiaomi },
   ];
 
@@ -195,11 +195,13 @@ export function CommentCard(props: CommentCardPropTypes) {
         </div>
 
         <div className={clsx("ua", { [classes.bottomBorder]: borderBottom })}>
-          {os !== " " && (
-            <Typography variant="caption" component="span" color="textSecondary" className={classes.browser}>
-              {getIcon(os)} {os}
-            </Typography>
-          )}
+          <Hidden smDown>
+            {os !== " " && (
+              <Typography variant="caption" component="span" color="textSecondary" className={classes.browser}>
+                {getIcon(os)} {os}
+              </Typography>
+            )}
+          </Hidden>
 
           <Hidden smDown>
             {browser !== " " && (
