@@ -12,7 +12,12 @@ import {
   Divider,
   SvgIcon,
 } from "@material-ui/core";
-import { Cached as CachedIcon, Send as SendIcon, GitHub as GitHubIcon } from "@material-ui/icons";
+import {
+  Cached as CachedIcon,
+  Send as SendIcon,
+  GitHub as GitHubIcon,
+  Twitter as TwitterIcon,
+} from "@material-ui/icons";
 import { ReactComponent as GoogleTinyIcon } from "super-tiny-icons/images/svg/google.svg";
 
 import { useHistory, useLocation } from "react-router-dom";
@@ -263,6 +268,12 @@ export function LoginPage() {
               <SvgIcon>
                 <GoogleTinyIcon />
               </SvgIcon>
+            </Link>
+          </Tooltip>
+          &nbsp;
+          <Tooltip title="使用Twitter登录，你的Twitter用户名会是你的登录名">
+            <Link href="/auth/twitter">
+              <TwitterIcon />
             </Link>
           </Tooltip>
         </div>
