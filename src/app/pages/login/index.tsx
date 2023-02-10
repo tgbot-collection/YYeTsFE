@@ -17,6 +17,7 @@ import {
   Send as SendIcon,
   GitHub as GitHubIcon,
   Twitter as TwitterIcon,
+  Facebook as FacebookIcon,
 } from "@material-ui/icons";
 
 import { ReactComponent as GoogleTinyIcon } from "super-tiny-icons/images/svg/google.svg";
@@ -284,6 +285,12 @@ export function LoginPage() {
               <SvgIcon>
                 <MSTinyIcon />
               </SvgIcon>
+            </Link>
+          </Tooltip>
+          &nbsp;
+          <Tooltip title="使用Facebook登录，你的Facebook绑定的邮箱会是你的登录名">
+            <Link href="/auth/facebook">
+              <FacebookIcon />
             </Link>
           </Tooltip>
         </div>
