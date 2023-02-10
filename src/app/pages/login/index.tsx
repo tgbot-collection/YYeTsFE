@@ -288,7 +288,7 @@ export function LoginPage() {
             </Link>
           </Tooltip>
           &nbsp;
-          <Tooltip title="使用Facebook登录，你的Facebook绑定的邮箱会是你的登录名">
+          <Tooltip title="使用Facebook登录，你的姓名和数字ID会是你的登录名">
             <Link href="/auth/facebook">
               <FacebookIcon />
             </Link>
