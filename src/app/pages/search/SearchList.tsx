@@ -221,20 +221,6 @@ export function SearchListComponent(props: SearchListPropTypes) {
     if (index < list.length) {
       return <ResourceItem index={index} style={style} list={list} />;
     }
-    if (index === list.length && process.env.REACT_APP_ADSENSE) {
-      return (
-        <div style={style} className={classes.item}>
-          <Adsense
-            className="adsbygoogle"
-            client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
-            slot="3648476098"
-            style={{ display: "block" }}
-            format="fluid"
-            layoutKey="-gw-3+1f-3d+2z"
-          />
-        </div>
-      );
-    }
 
     return <CommentItem index={index - list.length} style={style} list={commentList} onClick={handleClickComment} />;
   }
@@ -264,6 +250,16 @@ export function SearchListComponent(props: SearchListPropTypes) {
           <FixedSizeList height={height} width="100%" itemSize={46} itemCount={list.length + commentList.length + 1}>
             {renderRow}
           </FixedSizeList>
+          {process.env.REACT_APP_ADSENSE && (
+            <Adsense
+              className="adsbygoogle"
+              client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
+              slot="1315337086"
+              style={{ display: "block" }}
+              format="auto"
+              responsive="true"
+            />
+          )}
         </>
       )}
       {extraList.length > 0 && (
