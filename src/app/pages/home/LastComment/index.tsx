@@ -71,7 +71,7 @@ export function LastComment() {
               button
             >
               <ListItemAvatar>
-                <Avatar admin={item.group.includes("admin")} username={item.username} />
+                <Avatar group={item.group} username={item.username} />
               </ListItemAvatar>
               <ListItemText
                 primary={

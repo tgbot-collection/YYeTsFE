@@ -18,9 +18,5 @@ export const useStyles = makeStyles((theme: Theme) =>
       height: 16,
       width: 16,
     },
-    purple: {
-      color: theme.palette.getContrastText(purple[500]),
-      backgroundColor: purple[500],
-    },
   })
 );

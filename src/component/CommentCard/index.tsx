@@ -147,14 +147,13 @@ export function CommentCard(props: CommentCardPropTypes) {
   };
 
   const classes = useStyles();
-  const admin = group.includes("admin");
   const MAX_HEIGHT = 72;
   const { os, browser } = formatBrowser(ua);
 
   return (
     <>
       <div className={classes.commentItem} id={commentId}>
-        <Avatar className="avatar" admin={admin} username={username} />
+        <Avatar className="avatar" group={group} username={username} />
 
         <div className="name">
           <Typography component="span" variant="h6" color="textPrimary">
