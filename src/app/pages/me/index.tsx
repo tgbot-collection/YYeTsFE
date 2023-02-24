@@ -336,36 +336,36 @@ export function MePage(props: any) {
                 </Grid>
               ))}
             </Grid>
-
-            <Divider className={classes.hr} />
-            <div className={classes.emailWidth}>
-              <Typography>{helperText.typography}</Typography>
-
-              {display && (
-                <>
-                  <TextField
-                    id="email"
-                    error={inputError}
-                    label={helperText.type}
-                    helperText={helperText.help}
-                    fullWidth
-                    value={input}
-                    onChange={handleInputChange}
-                  />
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={handleVerifyButton}
-                    disabled={inputError || input.length === 0}
-                  >
-                    验证
-                  </Button>
-                </>
-              )}
-            </div>
           </section>
         );
       })}
+
+      <Divider className={classes.hr} />
+      <div className={classes.emailWidth}>
+        <Typography>{helperText.typography}</Typography>
+
+        {display && (
+          <>
+            <TextField
+              id="email"
+              error={inputError}
+              label={helperText.type}
+              helperText={helperText.help}
+              fullWidth
+              value={input}
+              onChange={handleInputChange}
+            />
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleVerifyButton}
+              disabled={inputError || input.length === 0}
+            >
+              验证
+            </Button>
+          </>
+        )}
+      </div>
     </Container>
   );
 }
