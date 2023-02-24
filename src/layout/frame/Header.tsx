@@ -7,6 +7,7 @@ import {
   Menu,
   MenuItem,
   Theme,
+  Avatar,
   IconButton,
   Toolbar,
   Typography,
@@ -14,7 +15,7 @@ import {
   Divider,
   Tooltip,
 } from "@material-ui/core";
-import { AccountCircle, GitHub, Search, QuestionAnswer } from "@material-ui/icons";
+import { AccountCircle, GitHub, Search, QuestionAnswer, DiscFullRounded } from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
 import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/hooks";
 import { useSnackbar } from "notistack";
@@ -58,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export function Header() {
   const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
-  const { username } = useAuth();
+  const { username, avatar } = useAuth();
   const dispatch = useAppDispatch();
 
   const login = useLoginBack();
@@ -69,7 +70,7 @@ export function Header() {
   const classes = useStyles();
 
   const handleLogout = () => {
-    dispatch(setUsername({ username: "", group: ["user"] }));
+    dispatch(setUsername({ username: "", avatar: "", group: ["user"] }));
     loginPopupState.close();
     gtag("event", "logout");
 
@@ -144,6 +145,10 @@ export function Header() {
               <MenuItem className={classes.nowrap} disabled dense>
                 {username}
               </MenuItem>
+              <MenuItem className={classes.nowrap} disabled dense>
+                <Avatar src={avatar} />
+              </MenuItem>
+
               <MenuItem onClick={loginPopupState.close} component={Link} to="/me">
                 个人中心
               </MenuItem>

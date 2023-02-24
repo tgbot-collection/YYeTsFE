@@ -31,7 +31,7 @@ export function BasePage() {
       getUser()
         .then((res) => {
           setUserInfo(res.data);
-          dispatch(setUsername({ username: res.data.username, group: res.data.group }));
+          dispatch(setUsername({ username: res.data.username, group: res.data.group, avatar: res.data.avatar }));
         })
         .catch((error) => {
           if (error.isAxiosError) {

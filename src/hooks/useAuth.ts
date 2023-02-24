@@ -2,7 +2,7 @@ import * as React from "react";
 import { useAppSelector } from "./useRedux";
 
 export const useAuth = () => {
-  const { username } = useAppSelector((state) => state.user);
+  const { username, avatar } = useAppSelector((state) => state.user);
 
-  return React.useMemo(() => ({ username }), [username]);
+  return React.useMemo(() => ({ username, avatar }), [username, avatar]);
 };

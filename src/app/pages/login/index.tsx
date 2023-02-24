@@ -125,8 +125,8 @@ export function LoginPage() {
   };
 
   const setLogin = React.useCallback(
-    (username: string, group: any) => {
-      dispatch(setUsername({ username, group }));
+    (username: string, group: any, avatar) => {
+      dispatch(setUsername({ username, group, avatar }));
       localStorage.setItem("username", username);
     },
     [dispatch]
@@ -150,7 +150,7 @@ export function LoginPage() {
           }, 1000);
           gtag("event", "login", { method: "password" });
           postMetrics("user").catch(noop);
-          setLogin(res.data.username, res.data.group);
+          setLogin(res.data.username, res.data.group, res.data.avatar);
           enqueueSnackbar("登录成功", { variant: "success" });
         })
         .catch((error) => {
@@ -184,7 +184,7 @@ export function LoginPage() {
 
     if (status === "success") {
       enqueueSnackbar(message, { variant: "success" });
-      setLogin(username, ["user"]);
+      setLogin(username, ["user"], "");
       // 2秒钟之后跳转到首页
       setTimeout(() => {
         history.push("/");
