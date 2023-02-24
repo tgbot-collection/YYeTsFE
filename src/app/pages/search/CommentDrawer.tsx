@@ -84,7 +84,10 @@ export default function CommentDrawer(props: CommentResourcePropTypes) {
           <Card style={{ margin: "12px 0" }}>
             <CardHeader
               avatar={
-                <Avatar style={{ fontSize: "0.875rem", color: "inherit" }} src={getGravatar(content.username)}>
+                <Avatar
+                  style={{ fontSize: "0.875rem", color: "inherit" }}
+                  src={getGravatar(content.username, content.avatar)}
+                >
                   {formatAvatar(content.username)}
                 </Avatar>
               }

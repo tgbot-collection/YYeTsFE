@@ -23,7 +23,7 @@ interface PatchInfo {
 
 export type UserGroup = "admin" | "user";
 
-interface UserInfo {
+export interface UserInfo {
   username: string;
   /* 注册时间 */
   date: string;
@@ -33,6 +33,7 @@ interface UserInfo {
     verified: boolean;
     address: string;
   };
+  avatar: string;
 }
 /* 登录 */
 export function postUser(params: PostUserParams) {
@@ -58,4 +59,12 @@ export function patchUser(params: PatchUserParams) {
 
 export function verifyEmail(params: VerifyEmailParams) {
   return axios.post("/api/user/email", params);
+}
+
+export function getAvatar() {
+  return axios.get("/api/user/avatar");
+}
+
+export function uploadAvatar(data: FormData) {
+  return axios.post("/api/user/avatar", data);
 }

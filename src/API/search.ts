@@ -45,6 +45,7 @@ export interface CommentResult {
   resourceID: number;
   resourceName: string;
   origin: string;
+  avatar: string;
 }
 
 interface GetSearchKwRes {

@@ -111,6 +111,7 @@ export function CommentList(props: CommentListPropTypes) {
                 replyId={replyId}
                 setReplyId={setReplyId}
                 setCommentList={setCommentList}
+                avatar={comment.avatar}
               />
             ))}
           </div>

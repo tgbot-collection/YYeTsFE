@@ -7,21 +7,24 @@ import {
   CardActions,
   CardContent,
   Container,
+  Avatar,
   createStyles,
   Divider,
   TextField,
   Grid,
   makeStyles,
+  Modal,
   Theme,
   Typography,
   useMediaQuery,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
-import { getLike, patchLike, postMetrics, ResourceInfo, patchUser, verifyEmail } from "API";
+import { getLike, patchLike, postMetrics, ResourceInfo, patchUser, verifyEmail, uploadAvatar } from "API";
 import { useSnackbar } from "notistack";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { Skeleton } from "@material-ui/lab";
+import { AvatarUploader } from "./avatarUploader";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -78,11 +81,10 @@ let validationSchema = yup.object({
 });
 
 export function MePage(props: any) {
-  const { verified, address } = props;
+  const { verified, address, avatar } = props;
   setTitle("个人中心");
   const { enqueueSnackbar } = useSnackbar();
   const [display, setDisplay] = React.useState<boolean>(false);
-
   const [likeList, setLikeList] = React.useState<{ [key: string]: Array<ResourceInfo> }>({});
   const [likeLength, setLikeLength] = React.useState<number>(0);
 
@@ -97,7 +99,6 @@ export function MePage(props: any) {
   const [helperText, setHelperText] = React.useState(initialState);
   const mobile = useMediaQuery("(max-width: 600px)");
   const classes = useStyles();
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
     if (helperText.type === "邮箱") {
@@ -366,6 +367,8 @@ export function MePage(props: any) {
           </>
         )}
       </div>
+      <Divider className={classes.hr} />
+      <AvatarUploader avatar={avatar} />
     </Container>
   );
 }

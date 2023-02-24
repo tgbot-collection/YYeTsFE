@@ -25,6 +25,7 @@ interface CommentCardPropTypes {
   commentId: string;
   parentId?: string;
   username: string;
+  avatar: string;
   date: string;
   ua: string;
   floor?: number;
@@ -72,6 +73,7 @@ function getIcon(name: string) {
 export function CommentCard(props: CommentCardPropTypes) {
   const {
     username,
+    avatar,
     ua,
     date,
     floor,
@@ -87,6 +89,7 @@ export function CommentCard(props: CommentCardPropTypes) {
     setReplyId = () => {},
     setCommentList,
   } = props;
+
   const { group: userGroup } = useAppSelector((state) => state.user);
 
   const [showMore, setShowMore] = React.useState<boolean>(false);
@@ -153,7 +156,7 @@ export function CommentCard(props: CommentCardPropTypes) {
   return (
     <>
       <div className={classes.commentItem} id={commentId}>
-        <Avatar className="avatar" group={group} username={username} />
+        <Avatar className="avatar" group={group} username={username} avatar={avatar} />
 
         <div className="name">
           <Typography component="span" variant="h6" color="textPrimary">
@@ -266,6 +269,7 @@ export function CommentCard(props: CommentCardPropTypes) {
                 commentId={item.id}
                 parentId={commentId}
                 username={item.username}
+                avatar={item.avatar}
                 date={item.date}
                 ua={item.browser}
                 content={formatComment(item.content)}
