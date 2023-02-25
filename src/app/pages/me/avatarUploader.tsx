@@ -1,5 +1,5 @@
 import Cropper from "react-easy-crop";
-import { PhotoCamera, Save } from "@material-ui/icons";
+import { PhotoCamera, Save, CropRotate } from "@material-ui/icons";
 import { getCroppedImg } from "utils";
 import { Button, makeStyles, Modal, Theme, Typography, createStyles, Avatar } from "@material-ui/core";
 import { useSnackbar } from "notistack";
@@ -50,6 +50,7 @@ export function AvatarUploader(props: any) {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const [cropped, setCropped] = React.useState(new Blob());
+  const [rotation, setRotation] = React.useState(0);
   const onCropComplete = (croppedAreaPercentage: any, croppedAreaPixels: any) => {
     setCroppedArea(croppedAreaPixels);
     const canvasElement = getCroppedImg(selectedFile, croppedAreaPixels);
@@ -138,6 +139,8 @@ export function AvatarUploader(props: any) {
             <Cropper
               image={selectedFile}
               crop={crop}
+              rotation={rotation}
+              onRotationChange={setRotation}
               zoom={zoom}
               aspect={1}
               cropShape="round"
@@ -149,11 +152,20 @@ export function AvatarUploader(props: any) {
           <Button
             className={classes.uploadButton}
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={() => uploadCropImage()}
             startIcon={<Save />}
           >
             确定
+          </Button>
+          <Button
+            className={classes.uploadButton}
+            variant="contained"
+            color="secondary"
+            onClick={() => setRotation(rotation + 90)}
+            startIcon={<CropRotate />}
+          >
+            旋转
           </Button>
         </div>
       </Modal>
