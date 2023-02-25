@@ -3,6 +3,7 @@ import { PhotoCamera, Save } from "@material-ui/icons";
 import { getCroppedImg } from "utils";
 import { Button, makeStyles, Modal, Theme, Typography, createStyles, Avatar } from "@material-ui/core";
 import { useSnackbar } from "notistack";
+import Compressor from "compressorjs";
 
 import * as React from "react";
 import { uploadAvatar } from "../../../API";
@@ -64,17 +65,13 @@ export function AvatarUploader(props: any) {
     setOldAvatar(avatar);
   }, [avatar]);
 
-  function uploadCropImage() {
+  function doUpload(result: Blob) {
     const formData = new FormData();
-    if (cropped.size > 1024 * 1024 * 10) {
-      enqueueSnackbar("图片大小不能超过10M", { variant: "error" });
-      return;
-    }
     const reader = new FileReader();
-    formData.append("image", cropped);
+    formData.append("image", result);
     uploadAvatar(formData)
       .then((r) => {
-        reader.readAsDataURL(cropped);
+        reader.readAsDataURL(result);
         reader.onload = () => {
           setSelectedFile(reader.result as string);
           setOldAvatar(reader.result as string);
@@ -89,8 +86,32 @@ export function AvatarUploader(props: any) {
       });
   }
 
+  function uploadCropImage() {
+    /* eslint-disable no-new */
+    new Compressor(cropped, {
+      width: 400,
+      height: 400,
+      quality: 0.6,
+      success(result) {
+        doUpload(result);
+      },
+      error(err) {
+        enqueueSnackbar(err.message, { variant: "error" });
+      },
+    });
+  }
+
   function openCropWindow(event: any) {
     const file = event.target.files[0];
+
+    if (file.size > 1024 * 1024 * 10) {
+      enqueueSnackbar("图片大小不能超过10M", { variant: "error" });
+      return;
+    }
+    if (file.type === "image/gif") {
+      doUpload(file);
+      return;
+    }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
