@@ -10,13 +10,15 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     avatar: {
       fontSize: "0.875rem",
+      height: theme.spacing(10),
+      width: theme.spacing(10),
     },
     circle: {
       position: "absolute",
-      bottom: -2,
-      right: -2,
-      height: 16,
-      width: 16,
+      bottom: 0,
+      right: 0,
+      height: 20,
+      width: 20,
     },
   })
 );

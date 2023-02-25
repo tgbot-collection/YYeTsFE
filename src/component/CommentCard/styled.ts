@@ -21,8 +21,8 @@ export const useStyles = makeStyles((theme: Theme) =>
       "& .avatar": {
         gridArea: "avatar",
         position: "relative",
-        width: "40px",
-        height: "40px",
+        width: "80px",
+        height: "80px",
 
         "& .circle": {
           position: "absolute",
@@ -33,14 +33,20 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
       },
       "& .name": {
+        paddingLeft: theme.spacing(5),
+
         gridArea: "name",
       },
       "& .ua": {
+        paddingLeft: theme.spacing(5),
+
         gridArea: "ua",
         paddingBottom: theme.spacing(1),
         position: "relative",
       },
       "& .comment": {
+        paddingLeft: theme.spacing(5),
+
         position: "relative",
         gridArea: "comment",
         wordBreak: "break-all",
