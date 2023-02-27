@@ -275,6 +275,8 @@ export function MePage(props: any) {
             </>
           )}
         </div>
+        <Divider className={classes.hr} />
+        <AvatarUploader avatar={avatar} />
       </Container>
     );
 
