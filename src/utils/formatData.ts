@@ -27,12 +27,9 @@ export const formatAvatar = (name: string) => {
   return name.substr(0, 3);
 };
 
-export const getGravatar = (name: string, avatar: string) => {
-  if (avatar) return avatar;
-  if (name.indexOf("@") !== -1) {
-    const hash = md5(name);
-    return `https://gravatar.webp.se/avatar/${hash}`;
-  }
+export const getGravatar = (name: string, hasAvatar: boolean) => {
+  if (hasAvatar) return `/api/user/avatar/${name}`;
+  if (name && name.includes("@")) return `https://gravatar.webp.se/avatar/${md5(name)}`;
   return "";
 };
 

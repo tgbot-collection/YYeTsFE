@@ -33,7 +33,7 @@ export interface UserInfo {
     verified: boolean;
     address: string;
   };
-  avatar: string;
+  hasAvatar: boolean;
 }
 /* 登录 */
 export function postUser(params: PostUserParams) {
@@ -59,10 +59,6 @@ export function patchUser(params: PatchUserParams) {
 
 export function verifyEmail(params: VerifyEmailParams) {
   return axios.post("/api/user/email", params);
-}
-
-export function getAvatar() {
-  return axios.get("/api/user/avatar");
 }
 
 export function uploadAvatar(data: FormData) {

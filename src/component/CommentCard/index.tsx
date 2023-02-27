@@ -25,7 +25,7 @@ interface CommentCardPropTypes {
   commentId: string;
   parentId?: string;
   username: string;
-  avatar: string;
+  hasAvatar: boolean;
   date: string;
   ua: string;
   floor?: number;
@@ -73,7 +73,7 @@ function getIcon(name: string) {
 export function CommentCard(props: CommentCardPropTypes) {
   const {
     username,
-    avatar,
+    hasAvatar,
     ua,
     date,
     floor,
@@ -156,7 +156,7 @@ export function CommentCard(props: CommentCardPropTypes) {
   return (
     <>
       <div className={classes.commentItem} id={commentId}>
-        <Avatar className="avatar" group={group} username={username} avatar={avatar} />
+        <Avatar className="avatar" group={group} username={username} hasAvatar={hasAvatar} />
 
         <div className="name">
           <Typography component="span" variant="h6" color="textPrimary">
@@ -269,7 +269,7 @@ export function CommentCard(props: CommentCardPropTypes) {
                 commentId={item.id}
                 parentId={commentId}
                 username={item.username}
-                avatar={item.avatar}
+                hasAvatar={item.hasAvatar}
                 date={item.date}
                 ua={item.browser}
                 content={formatComment(item.content)}

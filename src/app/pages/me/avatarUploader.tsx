@@ -1,6 +1,6 @@
 import Cropper from "react-easy-crop";
 import { PhotoCamera, Save, CropRotate } from "@material-ui/icons";
-import { getCroppedImg } from "utils";
+import { getCroppedImg, getGravatar } from "utils";
 import { Button, makeStyles, Modal, Theme, Typography, createStyles, Avatar } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 import Compressor from "compressorjs";
@@ -39,8 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export function AvatarUploader(props: any) {
   const { enqueueSnackbar } = useSnackbar();
-  const { avatar } = props;
-
+  const { hasAvatar, username } = props;
   const classes = useStyles();
   const [oldAvatar, setOldAvatar] = React.useState("");
   const [selectedFile, setSelectedFile] = React.useState("");
@@ -63,8 +62,8 @@ export function AvatarUploader(props: any) {
     setModalOpen(false);
   };
   React.useEffect(() => {
-    setOldAvatar(avatar);
-  }, [avatar]);
+    setOldAvatar(getGravatar(username, hasAvatar));
+  }, [hasAvatar, username]);
 
   function doUpload(result: Blob) {
     const formData = new FormData();

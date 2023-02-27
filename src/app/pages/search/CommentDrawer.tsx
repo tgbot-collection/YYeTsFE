@@ -86,7 +86,7 @@ export default function CommentDrawer(props: CommentResourcePropTypes) {
               avatar={
                 <Avatar
                   style={{ fontSize: "0.875rem", color: "inherit" }}
-                  src={getGravatar(content.username, content.avatar)}
+                  src={getGravatar(content.username, content.hasAvatar)}
                 >
                   {formatAvatar(content.username)}
                 </Avatar>

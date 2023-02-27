@@ -9,11 +9,11 @@ interface AvatarPropTypes {
   username: string;
   group: Array<string>;
   className?: string;
-  avatar: string;
+  hasAvatar: boolean;
 }
 
 export function Avatar(props: AvatarPropTypes) {
-  const { group, username, className, avatar } = props;
+  const { group, username, className, hasAvatar } = props;
   const classes = useStyles();
 
   function getVerifiedBadge() {
@@ -41,7 +41,7 @@ export function Avatar(props: AvatarPropTypes) {
 
   return (
     <div className={clsx(classes.wrap, className)}>
-      <MuiAvatar className={clsx(classes.avatar)} src={getGravatar(username, avatar)}>
+      <MuiAvatar className={clsx(classes.avatar)} src={getGravatar(username, hasAvatar)}>
         {formatAvatar(username)}
       </MuiAvatar>
       {getVerifiedBadge()}

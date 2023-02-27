@@ -64,7 +64,12 @@ export function BasePage() {
         <Route exact path="/discuss" component={DiscussPage} />
         <Route exact path="/me">
           {username ? (
-            <MePage verified={userInfo.email?.verified} address={userInfo.email?.address} avatar={userInfo.avatar} />
+            <MePage
+              verified={userInfo.email?.verified}
+              address={userInfo.email?.address}
+              hasAvatar={userInfo.hasAvatar}
+              username={userInfo.username}
+            />
           ) : (
             <Redirect to={login} />
           )}

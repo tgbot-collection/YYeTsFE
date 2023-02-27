@@ -81,7 +81,7 @@ let validationSchema = yup.object({
 });
 
 export function MePage(props: any) {
-  const { verified, address, avatar } = props;
+  const { verified, address, hasAvatar, username } = props;
   setTitle("个人中心");
   const { enqueueSnackbar } = useSnackbar();
   const [display, setDisplay] = React.useState<boolean>(false);
@@ -276,7 +276,7 @@ export function MePage(props: any) {
           )}
         </div>
         <Divider className={classes.hr} />
-        <AvatarUploader avatar={avatar} />
+        <AvatarUploader hasAvatar={hasAvatar} username={username} />
       </Container>
     );
 
@@ -370,7 +370,7 @@ export function MePage(props: any) {
         )}
       </div>
       <Divider className={classes.hr} />
-      <AvatarUploader avatar={avatar} />
+      <AvatarUploader hasAvatar={hasAvatar} username={username} />
     </Container>
   );
 }
