@@ -28,7 +28,7 @@ export const formatAvatar = (name: string) => {
 };
 
 export const getGravatar = (name: string, hasAvatar: boolean) => {
-  if (hasAvatar) return `/api/user/avatar/${name}`;
+  if (hasAvatar) return `https://yyets.webp.se/api/user/avatar/${name}`;
   if (name && name.includes("@")) return `https://gravatar.webp.se/avatar/${md5(name)}`;
   return "";
 };
