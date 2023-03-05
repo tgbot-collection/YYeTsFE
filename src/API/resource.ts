@@ -41,6 +41,7 @@ export interface ResourceInfo {
   year: Array<number>;
   type: string;
   comment_id: string;
+  source?: string;
 }
 
 export interface GetResourceByIDRes {

@@ -19,6 +19,7 @@ import {
 } from "@material-ui/core";
 import queryString from "query-string";
 import { useSnackbar } from "notistack";
+import { Link } from "@material-ui/icons/";
 
 import {
   getResourceByID,
@@ -56,6 +57,19 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "absolute",
       top: 0,
       right: 16,
+
+      "&::before": {
+        position: "absolute",
+        content: " ",
+        width: 100,
+        height: 100,
+        backgroundColor: theme.palette.background.paper,
+      },
+    },
+    origin: {
+      position: "absolute",
+      top: 0,
+      right: 64,
 
       "&::before": {
         position: "absolute",
@@ -159,6 +173,18 @@ export function ResourcePage() {
             <BackOldIcon className="icon" />
           </IconButton>
         </Tooltip>
+        {resourceInfo.source && (
+          <Tooltip title="查看原站">
+            <IconButton
+              className={classes.origin}
+              onClick={() => {
+                window.location.href = resourceInfo.source || "";
+              }}
+            >
+              <Link />
+            </IconButton>
+          </Tooltip>
+        )}
         <Modal
           className={classes.modal}
           open={open}
@@ -203,9 +229,7 @@ export function ResourcePage() {
           id={id as string}
           doubanInfo={doubanInfo}
         />
-
         <Divider className={classes.hr} />
-
         {process.env.REACT_APP_ADSENSE ? (
           <>
             <Adsense
@@ -219,7 +243,6 @@ export function ResourcePage() {
             <Divider className={classes.hr} />
           </>
         ) : null}
-
         <Address loading={loading} resourceAddress={resourceAddress} resourceId={id as string} />
         <Divider className={classes.hr} />
         <CommentComponent loading={loading} id={Number(id)} title="评论" />
