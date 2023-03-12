@@ -169,6 +169,15 @@ export function HelpPage() {
         </Typography>
         <Typography>日后可能会考虑转向为只有注册用户才能看到资源的模式。</Typography>
       </div>
+
+      <div className={classes.item}>
+        <Typography variant="h6" component="h3" gutterBottom>
+          搜索下拉框的有什么选择
+        </Typography>
+        <Typography>
+          目前提供两种搜索选项：默认和豆瓣。默认模式会搜索人人影视数据库和评论，豆瓣模式会搜索豆瓣的电影信息，包括演员，导演，编剧，介绍等信息。
+        </Typography>
+      </div>
     </Container>
   );
 }
