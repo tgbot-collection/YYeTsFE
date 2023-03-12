@@ -42,6 +42,7 @@ export interface ResourceInfo {
   type: string;
   comment_id: string;
   source?: string;
+  introduction?: string;
 }
 
 export interface GetResourceByIDRes {

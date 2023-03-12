@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Avatar, Box, createStyles, ListItemAvatar, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Avatar, Box, createStyles, ListItemAvatar, makeStyles, Theme, Typography, Tooltip } from "@material-ui/core";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import { Skeleton } from "@material-ui/lab";
 import { Link } from "react-router-dom";
@@ -93,6 +93,8 @@ interface ResourceItemPropTypes {
 const ResourceItem = (props: ResourceItemPropTypes) => {
   const { index, style, list } = props;
   const classes = useStyles();
+  // TODO
+  // @ts-ignore
 
   return (
     <Link
@@ -116,20 +118,22 @@ const ResourceItem = (props: ResourceItemPropTypes) => {
           {list[index].channel_cn}
         </Avatar>
       </ListItemAvatar>
-      <div className={classes.warp}>
-        <Typography noWrap className={classes.itemInfo}>
-          {list[index].type}
-          {list[index].cnname}
-          {list[index].enname && (
-            <Typography component="span" variant="body2">
-              &nbsp;{list[index].enname}
-            </Typography>
-          )}
-        </Typography>
-        <Typography variant="caption" noWrap className={classes.itemInfo} color="textSecondary">
-          {list[index].aliasname || "---"}
-        </Typography>
-      </div>
+      <Tooltip title={list[index].introduction || ""}>
+        <div className={classes.warp}>
+          <Typography noWrap className={classes.itemInfo}>
+            {list[index].type}
+            {list[index].cnname}
+            {list[index].enname && (
+              <Typography component="span" variant="body2">
+                &nbsp;{list[index].enname}
+              </Typography>
+            )}
+          </Typography>
+          <Typography variant="caption" noWrap className={classes.itemInfo} color="textSecondary">
+            {list[index].aliasname || "---"}
+          </Typography>
+        </div>
+      </Tooltip>
     </Link>
   );
 };

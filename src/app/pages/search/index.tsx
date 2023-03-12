@@ -1,6 +1,17 @@
 import * as React from "react";
 import * as yup from "yup";
-import { Button, Container, createStyles, Divider, makeStyles, TextField, Theme } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  createStyles,
+  Divider,
+  Select,
+  makeStyles,
+  MenuItem,
+  TextField,
+  Theme,
+  InputAdornment,
+} from "@material-ui/core";
 import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
 import { useHistory, useLocation } from "react-router-dom";
@@ -60,7 +71,6 @@ export function SearchPage() {
   const history = useHistory();
 
   const parsedQuery = queryString.parse(useLocation().search);
-
   /* 显示模式，热门还是搜索列表 */
   const [mode, setMode] = React.useState<"top" | "list">("top");
   const ref = React.useRef<HTMLInputElement>(null!);
@@ -72,10 +82,11 @@ export function SearchPage() {
   const [list, setList] = React.useState<Array<ResourceInfo>>([]);
   const [extraList, setExtraList] = React.useState<Array<ExtraResult>>([]);
   const [commentList, setCommentList] = React.useState<Array<CommentResult>>([]);
+  const [select, setSelect] = React.useState<string>("default");
 
-  const searchByKw = (search: string) => {
+  const searchByKw = (search: string, type: string = "default") => {
     setTitle(`${search} - 搜索结果`);
-    getSearchKw(search)
+    getSearchKw(search, type)
       .then((res) => {
         setListLoading(false);
 
@@ -101,23 +112,20 @@ export function SearchPage() {
     onSubmit: (values) => {
       ref.current.blur();
 
-      history.replace({ pathname: "/search", search: `?keyword=${values.search}` });
+      history.replace({ pathname: "/search", search: `?keyword=${values.search}&type=${select}` });
       gtag("event", "search", { search_term: values.search });
+      setMode("list");
+      setListLoading(true);
 
-      setTimeout(() => {
-        setMode("list");
-        setListLoading(true);
-      }, 100);
-
-      searchByKw(values.search);
+      searchByKw(values.search, select);
     },
   });
 
   React.useEffect(() => {
+    setSelect((parsedQuery.type as string) || "default");
     if (parsedQuery.keyword) {
       setMode("list");
-
-      searchByKw(parsedQuery.keyword as string);
+      searchByKw(parsedQuery.keyword as string, parsedQuery.type as string);
     } else {
       setTitle("搜索资源");
       getTop()
@@ -139,13 +147,12 @@ export function SearchPage() {
   }, [enqueueSnackbar]);
 
   const classes = useStyles();
-
   return (
     <Container className={classes.container} maxWidth="lg">
       <form className={classes.searchBar} onSubmit={formik.handleSubmit}>
         <TextField
           name="search"
-          placeholder="搜索片名"
+          placeholder="搜索关键字"
           className={classes.searchInput}
           autoFocus={!parsedQuery.keyword}
           value={formik.values.search}
@@ -153,7 +160,24 @@ export function SearchPage() {
           error={formik.touched.search && Boolean(formik.errors.search)}
           helperText={formik.touched.search && formik.errors.search}
           autoComplete="off"
-          inputProps={{ ref }}
+          InputProps={{
+            ref,
+            startAdornment: (
+              <InputAdornment position="start">
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={select}
+                  onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
+                    setSelect(e.target.value as string);
+                  }}
+                >
+                  <MenuItem value="default">默认</MenuItem>
+                  <MenuItem value="douban">豆瓣</MenuItem>
+                </Select>
+              </InputAdornment>
+            ),
+          }}
         />
         <Button variant="contained" color="primary" size="small" className={classes.searchButton} type="submit">
           搜索
