@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Adsense } from "@ctrl/react-adsense";
 
 import {
@@ -22,17 +22,17 @@ import { useSnackbar } from "notistack";
 import { Link } from "@material-ui/icons/";
 
 import {
-  getResourceByID,
-  ResourceInfo,
   AddressInfo,
+  cancelGetDoubanByID,
   cancelGetResourceByID,
-  postMetrics,
   DoubanInfo,
   getDoubanByID,
-  cancelGetDoubanByID,
+  getResourceByID,
+  postMetrics,
+  ResourceInfo,
 } from "API";
 import { BackOldIcon } from "Icon";
-import { noop, setTitle } from "utils";
+import { noop, setTitle, ShowAdsense } from "utils";
 import { CommentComponent } from "features";
 import { Info } from "./Info";
 import { Address } from "./Address";
@@ -95,6 +95,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export function ResourcePage() {
+  const showAdsense = ShowAdsense();
   const location = useLocation<{ title: string }>();
   const { id } = queryString.parse(location.search);
 
@@ -230,7 +231,7 @@ export function ResourcePage() {
           doubanInfo={doubanInfo}
         />
         <Divider className={classes.hr} />
-        {process.env.REACT_APP_ADSENSE ? (
+        {process.env.REACT_APP_ADSENSE && showAdsense ? (
           <>
             <Adsense
               className="adsbygoogle"

@@ -123,3 +123,7 @@ interface GetLastResourceRes {
 export function getLastResource() {
   return axios.get<GetLastResourceRes>("/api/resource/latest", { params: { size: 3 } });
 }
+
+export function getAdsense() {
+  return axios.get("/api/adsense");
+}

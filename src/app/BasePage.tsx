@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Redirect, Route, Switch, useLocation, useHistory } from "react-router-dom";
+import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { Button } from "@material-ui/core";
 import pangu from "pangu";
@@ -7,10 +7,17 @@ import pangu from "pangu";
 import { useAppDispatch, useAuth, useLoginBack } from "hooks";
 import { SplashScreen } from "layout";
 import { DataBasePage, DiscussPage, HelpPage, HomePage, MePage, ResourcePage, SearchPage } from "./pages";
-import { getUser, UserInfo } from "../API";
+import { getAdsense, getUser, UserInfo } from "../API";
 import { setUsername } from "./pages/login/userSlice";
 
 const StatisticPage = React.lazy(() => import("./modules/statistics"));
+
+function setData(data: any) {
+  return {
+    type: "SET_DATA",
+    payload: data,
+  };
+}
 
 export function BasePage() {
   const location = useLocation();
@@ -21,6 +28,13 @@ export function BasePage() {
   const login = useLoginBack();
   const dispatch = useAppDispatch();
   const [userInfo, setUserInfo] = React.useState({} as UserInfo);
+
+  React.useEffect(() => {
+    getAdsense().then((res) => {
+      dispatch(setData(res.data.data));
+    });
+  }, [dispatch]);
+
   React.useEffect(() => {
     pangu.spacingElementById("root");
     document.documentElement.scrollTop = 0;

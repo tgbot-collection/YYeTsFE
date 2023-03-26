@@ -9,7 +9,7 @@ import clsx from "clsx";
 import { Adsense } from "@ctrl/react-adsense";
 
 import { CommentResult, ExtraResult, postMetrics, ResourceInfo } from "API";
-import { noop, toAbsoluteUrl, formatComment } from "utils";
+import { noop, toAbsoluteUrl, formatComment, ShowAdsense } from "utils";
 import CommentDrawer from "./CommentDrawer";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -184,6 +184,7 @@ interface SearchListPropTypes {
 }
 
 export function SearchListComponent(props: SearchListPropTypes) {
+  const showAdsense = ShowAdsense();
   const { list, extraList, commentList, loading } = props;
 
   // 控制侧边抽屉展开
@@ -254,7 +255,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
           <FixedSizeList height={height} width="100%" itemSize={46} itemCount={list.length + commentList.length + 1}>
             {renderRow}
           </FixedSizeList>
-          {process.env.REACT_APP_ADSENSE && (
+          {process.env.REACT_APP_ADSENSE && showAdsense && (
             <Adsense
               className="adsbygoogle"
               client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}

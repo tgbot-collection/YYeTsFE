@@ -9,7 +9,7 @@ import { Comment, getComment } from "API";
 import { CommentCard } from "../CommentCard";
 
 import { useStyles } from "./styled";
-import { formatComment } from "../../utils";
+import { formatComment, ShowAdsense } from "../../utils";
 
 interface CommentListPropTypes {
   id: number;
@@ -19,6 +19,7 @@ interface CommentListPropTypes {
 }
 
 export function CommentList(props: CommentListPropTypes) {
+  const showAdsense = ShowAdsense();
   const { id, loading, commentList, setCommentList } = props;
 
   const { enqueueSnackbar } = useSnackbar();
@@ -116,7 +117,7 @@ export function CommentList(props: CommentListPropTypes) {
             ))}
           </div>
 
-          {process.env.REACT_APP_ADSENSE ? (
+          {process.env.REACT_APP_ADSENSE && showAdsense ? (
             <>
               <Divider className={classes.hr} />
 
