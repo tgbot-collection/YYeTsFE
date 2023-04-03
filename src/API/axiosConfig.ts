@@ -2,6 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   timeout: 5000,
+  baseURL: process.env.REACT_APP_TAURI,
 });
 
 instance.interceptors.response.use(

@@ -24,3 +24,5 @@ yarn-error.log*
 
 .idea
 /.env
+/src-tauri/icons/*
+/src-tauri/.gitignore

@@ -200,7 +200,9 @@ export function Info(props: InfoPropTypes) {
           {/* 海报 */}
           <Link href={doubanInfo.doubanLink} target="_blank">
             <div
-              style={{ backgroundImage: `url(/api/douban?resource_id=${id}&type=image)` }}
+              style={{
+                backgroundImage: `url(${process.env.REACT_APP_TAURI || ""}/api/douban?resource_id=${id}&type=image)`,
+              }}
               className={classes.post}
             />
           </Link>

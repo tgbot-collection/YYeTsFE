@@ -1,0 +1,69 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+  "build": {
+    "beforeBuildCommand": "yarn build",
+    "beforeDevCommand": "yarn start",
+    "devPath": "http://localhost:3000",
+    "distDir": "../build"
+  },
+  "package": {
+    "productName": "yyetsbot",
+    "version": "0.1.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false
+    },
+    "bundle": {
+      "active": true,
+      "category": "DeveloperTool",
+      "copyright": "",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
+      "icon": [
+        "../public/logo.png",
+        "../public/logo192.png",
+        "../public/logo512.png",
+        "../public/logo.icns",
+        "../public/logo.ico"
+      ],
+      "identifier": "app.dmesg.yyets",
+      "longDescription": "",
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null
+      },
+      "resources": [],
+      "shortDescription": "",
+      "targets": "all",
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": "",
+        "wix": {
+          "language": "zh-CN"
+        }
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "updater": {
+      "active": false
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "height": 600,
+        "resizable": true,
+        "title": "人人影视分享站",
+        "width": 800
+      }
+    ]
+  }
+}
