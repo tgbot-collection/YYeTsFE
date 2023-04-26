@@ -62,7 +62,7 @@ export function AvatarUploader(props: any) {
     setModalOpen(false);
   };
   React.useEffect(() => {
-    setOldAvatar(getGravatar(username, hasAvatar));
+    setOldAvatar(getGravatar(username, hasAvatar, ""));
   }, [hasAvatar, username]);
 
   function doUpload(result: Blob) {

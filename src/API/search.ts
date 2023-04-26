@@ -46,6 +46,7 @@ export interface CommentResult {
   resourceName: string;
   origin: string;
   hasAvatar: boolean;
+  hash: string;
 }
 
 interface GetSearchKwRes {

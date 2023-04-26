@@ -50,6 +50,7 @@ interface GetCommentParams {
 
 export interface Comment {
   hasAvatar: boolean;
+  hash: string;
   id: string;
   resource_id: number;
   date: string;
@@ -85,6 +86,7 @@ export interface LastComment {
   group: Array<UserGroup>;
   cnname: string;
   hasAvatar: boolean;
+  hash: string;
 }
 
 interface LastCommentRes {

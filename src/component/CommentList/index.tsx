@@ -113,6 +113,7 @@ export function CommentList(props: CommentListPropTypes) {
                 setReplyId={setReplyId}
                 setCommentList={setCommentList}
                 hasAvatar={comment.hasAvatar}
+                hash={comment.hash}
               />
             ))}
           </div>

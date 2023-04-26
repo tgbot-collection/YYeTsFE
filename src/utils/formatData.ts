@@ -27,9 +27,17 @@ export const formatAvatar = (name: string) => {
   return name.substr(0, 3);
 };
 
-export const getGravatar = (name: string, hasAvatar: boolean) => {
-  if (hasAvatar) return `https://yyets.webp.se/api/user/avatar/${name}`;
-  if (name && name.includes("@")) return `https://gravatar.webp.se/avatar/${md5(name)}`;
+export const getGravatar = (name: string, hasAvatar: boolean, hash: string) => {
+  const hashQuery = hash ? `?hash=${hash}` : "";
+  const prefix = process.env.NODE_ENV !== "development" ? "https://gravatar.webp.se" : "";
+
+  if (hasAvatar) {
+    return `${prefix}/api/user/avatar/${name}${hashQuery}`;
+  }
+
+  if (name && name.includes("@")) {
+    return `${prefix}/avatar/${md5(name)}`;
+  }
   return "";
 };
 
