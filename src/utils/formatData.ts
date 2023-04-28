@@ -29,14 +29,15 @@ export const formatAvatar = (name: string) => {
 
 export const getGravatar = (name: string, hasAvatar: boolean, hash: string) => {
   const hashQuery = hash ? `?hash=${hash}` : "";
-  const prefix = process.env.NODE_ENV !== "development" ? "https://gravatar.webp.se" : "";
+  const gravatarPrefix = process.env.NODE_ENV !== "development" ? "https://gravatar.webp.se" : "";
+  const webpPrefix = process.env.NODE_ENV !== "development" ? "https://yyets.webp.se" : "";
 
   if (hasAvatar) {
-    return `${prefix}/api/user/avatar/${name}${hashQuery}`;
+    return `${webpPrefix}/api/user/avatar/${name}${hashQuery}`;
   }
 
   if (name && name.includes("@")) {
-    return `${prefix}/avatar/${md5(name)}`;
+    return `${gravatarPrefix}/avatar/${md5(name)}`;
   }
   return "";
 };
