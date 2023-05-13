@@ -3,7 +3,6 @@ import { Divider, Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
 import Pagination from "@material-ui/lab/Pagination";
-import { Adsense } from "@ctrl/react-adsense";
 
 import { Comment, getComment } from "API";
 import { CommentCard } from "../CommentCard";
@@ -122,13 +121,7 @@ export function CommentList(props: CommentListPropTypes) {
             <>
               <Divider className={classes.hr} />
 
-              <Adsense
-                className="adsbygoogle"
-                client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
-                slot="7052550390"
-                style={{ display: "block" }}
-                format="autorelaxed"
-              />
+              <Typography> 广告位招租</Typography>
 
               <Divider className={classes.hr} />
             </>

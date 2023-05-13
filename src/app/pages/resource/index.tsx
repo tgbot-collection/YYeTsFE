@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Adsense } from "@ctrl/react-adsense";
 
 import {
   Backdrop,
@@ -16,10 +15,10 @@ import {
   Theme,
   Tooltip,
   Typography,
+  Link,
 } from "@material-ui/core";
 import queryString from "query-string";
 import { useSnackbar } from "notistack";
-import { Link } from "@material-ui/icons/";
 
 import {
   AddressInfo,
@@ -233,14 +232,9 @@ export function ResourcePage() {
         <Divider className={classes.hr} />
         {process.env.REACT_APP_ADSENSE && showAdsense ? (
           <>
-            <Adsense
-              className="adsbygoogle"
-              client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
-              slot="3141225542"
-              style={{ display: "block" }}
-              format="auto"
-              responsive="true"
-            />
+            <Link href="https://maomaovpn.com/index.php#/register?code=XHn52jB3" target="_blank">
+              <img alt="maomao" src="https://dmesg.app/assets/maomao.png" />
+            </Link>
             <Divider className={classes.hr} />
           </>
         ) : null}

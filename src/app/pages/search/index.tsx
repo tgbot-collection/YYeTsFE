@@ -11,12 +11,12 @@ import {
   TextField,
   Theme,
   InputAdornment,
+  Typography,
 } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
 import { useHistory, useLocation } from "react-router-dom";
 import queryString from "query-string";
-import { Adsense } from "@ctrl/react-adsense";
 
 import {
   cancelGetTop,
@@ -191,15 +191,8 @@ export function SearchPage() {
           {process.env.REACT_APP_ADSENSE ? (
             <>
               <Divider className={classes.hr} />
-              <Adsense
-                className="adsbygoogle"
-                client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
-                slot="5356325344"
-                style={{ display: "block" }}
-                format="auto"
-                responsive="true"
-              />
-              <Divider />
+              <Typography>广告位招租</Typography>
+              <Divider className={classes.hr} />
             </>
           ) : null}
 
