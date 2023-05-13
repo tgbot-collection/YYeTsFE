@@ -4,6 +4,7 @@ import { Container, createStyles, makeStyles, Theme, Typography } from "@materia
 
 import { postMetrics } from "API";
 import { CommentComponent } from "features";
+import { Adsense } from "@ctrl/react-adsense";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,6 +32,16 @@ export function DiscussPage() {
         留下你想说的和建议吧
       </Typography>
 
+      {process.env.REACT_APP_ADSENSE && (
+        <Adsense
+          className="adsbygoogle"
+          client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
+          slot="9564593623"
+          style={{ display: "block" }}
+          format="auto"
+          responsive="true"
+        />
+      )}
       <CommentComponent id={233} loading={false} />
     </Container>
   );

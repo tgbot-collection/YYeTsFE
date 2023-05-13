@@ -5,6 +5,7 @@ import { Button, Container, createStyles, Grid, makeStyles, Theme, Typography } 
 import { getDatabase, GetDatabaseRes, postMetrics } from "API";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
+import { Adsense } from "@ctrl/react-adsense";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -175,6 +176,16 @@ export function DataBasePage() {
           </Button>
         </Grid>
       </Grid>
+      {process.env.REACT_APP_ADSENSE && (
+        <Adsense
+          className="adsbygoogle"
+          client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
+          slot="7349531811"
+          style={{ display: "block" }}
+          format="auto"
+          responsive="true"
+        />
+      )}
     </Container>
   );
 }

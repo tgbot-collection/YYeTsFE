@@ -11,13 +11,13 @@ import {
   TextField,
   Theme,
   InputAdornment,
+  Typography,
 } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
 import { useHistory, useLocation } from "react-router-dom";
 import queryString from "query-string";
 import { Adsense } from "@ctrl/react-adsense";
-
 import {
   cancelGetTop,
   CommentResult,
@@ -188,20 +188,16 @@ export function SearchPage() {
         <>
           <RankComponent data={top.ALL} loading={rankLoading} />
 
-          {process.env.REACT_APP_ADSENSE ? (
-            <>
-              <Divider className={classes.hr} />
-              <Adsense
-                className="adsbygoogle"
-                client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
-                slot="5356325344"
-                style={{ display: "block" }}
-                format="auto"
-                responsive="true"
-              />
-              <Divider />
-            </>
-          ) : null}
+          {process.env.REACT_APP_ADSENSE && (
+            <Adsense
+              className="adsbygoogle"
+              client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
+              slot="2041326824"
+              style={{ display: "block" }}
+              format="auto"
+              responsive="true"
+            />
+          )}
 
           {!!Object.keys(top).length && <SectionComponent data={top} />}
         </>

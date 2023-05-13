@@ -1,12 +1,21 @@
 import * as React from "react";
-import { Avatar, Box, createStyles, ListItemAvatar, makeStyles, Theme, Typography, Tooltip } from "@material-ui/core";
+import {
+  Avatar,
+  Box,
+  createStyles,
+  ListItemAvatar,
+  makeStyles,
+  Theme,
+  Typography,
+  Tooltip,
+  Link as MuiLink,
+} from "@material-ui/core";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import { Skeleton } from "@material-ui/lab";
 import { Link } from "react-router-dom";
 import { lighten } from "@material-ui/core/styles";
 import { deepOrange, deepPurple, pink, blue } from "@material-ui/core/colors";
 import clsx from "clsx";
-import { Adsense } from "@ctrl/react-adsense";
 
 import { CommentResult, ExtraResult, postMetrics, ResourceInfo } from "API";
 import { noop, toAbsoluteUrl, formatComment, ShowAdsense } from "utils";
@@ -255,16 +264,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
           <FixedSizeList height={height} width="100%" itemSize={46} itemCount={list.length + commentList.length + 1}>
             {renderRow}
           </FixedSizeList>
-          {process.env.REACT_APP_ADSENSE && showAdsense && (
-            <Adsense
-              className="adsbygoogle"
-              client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
-              slot="1315337086"
-              style={{ display: "block" }}
-              format="auto"
-              responsive="true"
-            />
-          )}
+          {process.env.REACT_APP_ADSENSE && showAdsense && <Typography>广告位招租</Typography>}
         </>
       )}
       {extraList.length > 0 && (

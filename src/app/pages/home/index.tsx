@@ -2,6 +2,7 @@ import * as React from "react";
 import GitHubButton from "react-github-btn";
 import { Button, Container, Link, Typography } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
+import { Adsense } from "@ctrl/react-adsense";
 
 import { noop, setTitle, toAbsoluteUrl } from "utils";
 import { postMetrics } from "API";
@@ -100,6 +101,16 @@ export function HomePage() {
         <Announce />
         <br />
         <LastComment />
+        {process.env.REACT_APP_ADSENSE && (
+          <Adsense
+            className="adsbygoogle"
+            client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
+            slot="3458388260"
+            style={{ display: "block" }}
+            format="auto"
+            responsive="true"
+          />
+        )}
       </Container>
     </>
   );

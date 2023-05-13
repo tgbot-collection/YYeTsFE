@@ -16,7 +16,7 @@ export function LastComment() {
   const { enqueueSnackbar } = useSnackbar();
 
   React.useEffect(() => {
-    getLastComment({ size: 7 })
+    getLastComment({ size: 5 })
       .then((res) => {
         setLoading(false);
         if (res.data) {
