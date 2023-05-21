@@ -233,7 +233,7 @@ export function ResourcePage() {
         {process.env.REACT_APP_ADSENSE && showAdsense ? (
           <>
             <Link href="https://maomaovpn.com/index.php#/register?code=XHn52jB3" target="_blank">
-              <img alt="maomao" src="https://dmesg.app/assets/maomao.png" />
+              <img alt="maomao" src="https://dmesg.app/assets/maomao.png" style={{ maxWidth: "100%" }} />
             </Link>
             <Divider className={classes.hr} />
           </>
