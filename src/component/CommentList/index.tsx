@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Divider, Typography } from "@material-ui/core";
+import { Divider, Link, Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
 import Pagination from "@material-ui/lab/Pagination";
@@ -121,7 +121,9 @@ export function CommentList(props: CommentListPropTypes) {
             <>
               <Divider className={classes.hr} />
 
-              <Typography> 广告位招租</Typography>
+              <Link href="https://www.chatai.lol/" target="_blank">
+                <img alt="chat-ai" src="https://dmesg.app/assets/chat-ai.jpg" style={{ maxWidth: "100%" }} />
+              </Link>
 
               <Divider className={classes.hr} />
             </>

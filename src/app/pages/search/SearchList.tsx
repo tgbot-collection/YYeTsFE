@@ -264,7 +264,13 @@ export function SearchListComponent(props: SearchListPropTypes) {
           <FixedSizeList height={height} width="100%" itemSize={46} itemCount={list.length + commentList.length + 1}>
             {renderRow}
           </FixedSizeList>
-          {process.env.REACT_APP_ADSENSE && showAdsense && <Typography>广告位招租</Typography>}
+          {process.env.REACT_APP_ADSENSE && showAdsense && (
+            <>
+              <MuiLink href="https://www.chatai.lol/" target="_blank">
+                <img alt="chat-ai" src="https://dmesg.app/assets/chat-ai.jpg" style={{ maxWidth: "100%" }} />
+              </MuiLink>
+            </>
+          )}
         </>
       )}
       {extraList.length > 0 && (
