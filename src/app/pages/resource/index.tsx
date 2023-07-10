@@ -230,14 +230,7 @@ export function ResourcePage() {
           doubanInfo={doubanInfo}
         />
         <Divider className={classes.hr} />
-        {process.env.REACT_APP_ADSENSE && showAdsense ? (
-          <>
-            <Link href="https://maomaovpn.com/index.php#/register?code=XHn52jB3" target="_blank">
-              <img alt="maomao" src="https://dmesg.app/assets/maomao.png" style={{ maxWidth: "100%" }} />
-            </Link>
-            <Divider className={classes.hr} />
-          </>
-        ) : null}
+
         <Address loading={loading} resourceAddress={resourceAddress} resourceId={id as string} />
         <Divider className={classes.hr} />
         <CommentComponent loading={loading} id={Number(id)} title="评论" />
