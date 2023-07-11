@@ -48,7 +48,7 @@
     "source-map-explorer": "^2.5.3",
     "super-tiny-icons": "^0.4.0",
     "typescript": "^4.8.3",
-    "web-vitals": "^1.0.1",
+    "web-vitals": "^3.4.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {
