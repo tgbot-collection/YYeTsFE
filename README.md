@@ -1,6 +1,6 @@
 # YYeTs
 
-[YYeTsBot 前端](https://yyets.dmesg.app/)
+[YYeTsBot 前端](https://yyets.click/)
 
 React App
 
