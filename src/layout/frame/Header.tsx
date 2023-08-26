@@ -14,7 +14,6 @@ import {
   Divider,
   Tooltip,
 } from "@material-ui/core";
-import { Crisp } from "crisp-sdk-web";
 import { AccountCircle, GitHub, Search, QuestionAnswer } from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
 import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/hooks";
@@ -57,12 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export function Header() {
-  const crispID = process.env.REACT_APP_CRISP;
-  if (crispID) {
-    Crisp.configure(crispID);
-  }
   const location = useLocation();
-
   const { enqueueSnackbar } = useSnackbar();
   const { username } = useAuth();
   const dispatch = useAppDispatch();
