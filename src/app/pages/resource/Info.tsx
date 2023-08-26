@@ -153,6 +153,10 @@ export function Info(props: InfoPropTypes) {
   };
 
   const classes = useStyles();
+  const getDoubanPoster = () => {
+    const webpcloud = "https://3297e64.webp.ee";
+    return `${webpcloud}/api/douban?resource_id=${id}&type=image`;
+  };
 
   return (
     <div>
@@ -201,7 +205,7 @@ export function Info(props: InfoPropTypes) {
           <Link href={doubanInfo.doubanLink} target="_blank">
             <div
               style={{
-                backgroundImage: `url(${process.env.REACT_APP_TAURI || ""}/api/douban?resource_id=${id}&type=image)`,
+                backgroundImage: `url(${getDoubanPoster()})`,
               }}
               className={classes.post}
             />
