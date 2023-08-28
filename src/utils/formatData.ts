@@ -30,7 +30,7 @@ export const formatAvatar = (name: string) => {
 export const getGravatar = (name: string, hasAvatar: boolean, hash: string) => {
   const hashQuery = hash ? `?hash=${hash}` : "";
   const gravatarPrefix = process.env.NODE_ENV !== "development" ? "https://gravatar.webp.se" : "";
-  const webpPrefix = process.env.NODE_ENV !== "development" ? "https://yyets.webp.se" : "";
+  const webpPrefix = process.env.NODE_ENV !== "development" ? "https://3297e64.webp.ee" : "";
 
   if (hasAvatar) {
     return `${webpPrefix}/api/user/avatar/${name}${hashQuery}`;
