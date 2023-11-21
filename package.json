@@ -38,17 +38,17 @@
     "react-dom": "^17.0.2",
     "react-easy-crop": "^4.7.3",
     "react-github-btn": "^1.4.0",
-    "react-redux": "^8.0.5",
+    "react-redux": "^8.1.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-transition-group": "^4.4.5",
     "react-window": "^1.8.6",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0",
+    "redux-thunk": "^2.4.2",
     "source-map-explorer": "^2.5.3",
     "super-tiny-icons": "^0.4.0",
     "typescript": "^4.8.3",
-    "web-vitals": "^1.0.1",
+    "web-vitals": "^3.4.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {
@@ -116,6 +116,6 @@
     }
   },
   "engines": {
-    "node": ">=12 <=19"
+    "node": ">=16 <=20"
   }
 }
