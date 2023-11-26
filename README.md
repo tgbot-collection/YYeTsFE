@@ -21,8 +21,6 @@ yarn
  REACT_APP_DOMAIN=xxx
  # google analytic 追踪 ID
  REACT_APP_GA=xxx
- # Sentry DSN
- REACT_APP_SENTRY_DSN=xxx
  # 是否生成 sourcemap
  GENERATE_SOURCEMAP=true
  # adsense
