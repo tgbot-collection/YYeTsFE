@@ -51,7 +51,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.2.3",
+    "@tauri-apps/cli": "^1.5.8",
     "@types/js-cookie": "^3.0.1",
     "@types/react-copy-to-clipboard": "^5.0.0",
     "@types/react-router-dom": "^5.1.7",
