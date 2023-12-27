@@ -46,6 +46,7 @@ interface GetCommentParams {
   size: number;
   page: number;
   comment_id?: string;
+  sort?: string;
 }
 
 export interface Comment {

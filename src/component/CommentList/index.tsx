@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Divider, Link, Typography } from "@material-ui/core";
+import { Divider, Link, Typography, Select, MenuItem } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
 import Pagination from "@material-ui/lab/Pagination";
@@ -30,7 +30,7 @@ export function CommentList(props: CommentListPropTypes) {
   const [count, setCount] = React.useState<number>(0);
   const [listLoading, setListLoading] = React.useState<boolean>(true);
   // const [commentList, commentList] = React.useState<Array<Comment>>([]);
-
+  const [sort, setSort] = React.useState<string>("newest");
   const [replyId, setReplyId] = React.useState<number | string>(id);
   const pageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     // if current page equals new page, just scroll to top
@@ -42,29 +42,40 @@ export function CommentList(props: CommentListPropTypes) {
     document.getElementById("scroll")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const loadComment = React.useCallback(
+    (s: string) => {
+      const requestParams = {
+        resource_id: id,
+        page,
+        size: PAGE_SIZE,
+        comment_id: window.location.href.split("#")[1] || undefined,
+        sort: s,
+      };
+      getComment(requestParams)
+        .then((res) => {
+          if (res) {
+            setCommentList((pre: any) => (page === 1 ? res.data.data : pre.concat(res.data.data)));
+            setCount(res.data.count);
+          }
+          setListLoading(false);
+        })
+        .catch((error) => {
+          enqueueSnackbar(`获取评论列表出错: ${error.message}`, { variant: "error" });
+          setListLoading(false);
+        });
+    },
+    [page, id, enqueueSnackbar, setCommentList],
+  );
+
+  const handleSort = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSort(event.target.value as string);
+    setListLoading(true);
+    loadComment(event.target.value as string);
+  };
+
   React.useEffect(() => {
-    const requestParams = {
-      resource_id: id,
-      page,
-      size: PAGE_SIZE,
-      comment_id: window.location.href.split("#")[1] || undefined,
-    };
-
-    getComment(requestParams)
-      .then((res) => {
-        if (res) {
-          // @ts-ignore
-          setCommentList((pre) => (page === 1 ? res.data.data : pre.concat(res.data.data)));
-          setCount(res.data.count);
-        }
-        setListLoading(false);
-      })
-      .catch((error) => {
-        enqueueSnackbar(`获取评论列表出错: ${error.message}`, { variant: "error" });
-
-        setListLoading(false);
-      });
-  }, [page, id, enqueueSnackbar, setCommentList]);
+    loadComment("newest");
+  }, [loadComment]);
 
   if (loading)
     return (
@@ -94,6 +105,10 @@ export function CommentList(props: CommentListPropTypes) {
       {!listLoading && commentList.length > 0 && (
         <>
           <div>
+            <Select labelId="sort-select" id="sort-select" value={sort} onChange={handleSort}>
+              <MenuItem value="newest">时间降序</MenuItem>
+              <MenuItem value="oldest">时间升序</MenuItem>
+            </Select>
             {commentList.map((comment, index) => (
               <CommentCard
                 resourceId={id}

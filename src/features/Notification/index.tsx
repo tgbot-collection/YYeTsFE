@@ -62,7 +62,7 @@ export function Notification() {
   return (
     <>
       <IconButton color="inherit" {...bindTrigger(noticePopupState)}>
-        <Badge badgeContent={unReadCount > 99 ? "99+" : unReadCount} color="secondary">
+        <Badge overlap="rectangular" badgeContent={unReadCount > 99 ? "99+" : unReadCount} color="secondary">
           <NotificationsIcon />
         </Badge>
       </IconButton>
