@@ -30,7 +30,7 @@ export function HomePage() {
           <Typography variant="h5" component="p" color="textSecondary" gutterBottom>
             本站数据库
             <Link component={RouterLink} to="/database" color="secondary">
-              永久免费
+              可提供下载
             </Link>
             ， 如有疑问可以查看
             <Link component={RouterLink} to="/help">

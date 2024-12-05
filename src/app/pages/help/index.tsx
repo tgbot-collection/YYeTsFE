@@ -110,9 +110,7 @@ export function HelpPage() {
         <Typography variant="h6" component="h3" gutterBottom>
           可以商业化这个项目吗
         </Typography>
-        <Typography>
-          有一点需要先声明，我不会进行如加入会员制度等商业化行为。所有用户等捐赠是自发性并且不具有强制性。
-        </Typography>
+        <Typography>我不会进行如加入会员制度等商业化行为。所有用户等捐赠是自发性并且不具有强制性。</Typography>
         <Typography>
           本项目使用
           <MuiLink href="https://github.com/tgbot-collection/YYeTsBot/blob/master/LICENSE"> MIT 协议</MuiLink>
