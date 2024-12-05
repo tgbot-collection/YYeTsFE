@@ -17,9 +17,10 @@ import { lighten } from "@material-ui/core/styles";
 import { deepOrange, deepPurple, pink, blue } from "@material-ui/core/colors";
 import clsx from "clsx";
 
-import { CommentResult, ExtraResult, postMetrics, ResourceInfo } from "API";
+import { CommentResult, SubtitleResult, postMetrics, ResourceInfo } from "API";
 import { noop, toAbsoluteUrl, formatComment, ShowAdsense } from "utils";
 import CommentDrawer from "./CommentDrawer";
+import SubtitleDrawer from "./SubtitleDrawer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,7 +91,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.getContrastText(blue[500]),
       backgroundColor: blue[500],
     },
-  })
+  }),
 );
 
 interface ResourceItemPropTypes {
@@ -102,8 +103,7 @@ interface ResourceItemPropTypes {
 const ResourceItem = (props: ResourceItemPropTypes) => {
   const { index, style, list } = props;
   const classes = useStyles();
-  // TODO
-  // @ts-ignore
+  if (list.length === 0) return null;
 
   return (
     <Link
@@ -121,7 +121,7 @@ const ResourceItem = (props: ResourceItemPropTypes) => {
           className={clsx(
             classes.channel,
             { [classes.orange]: list[index].channel === "tv" },
-            { [classes.purple]: list[index].channel === "movie" }
+            { [classes.purple]: list[index].channel === "movie" },
           )}
         >
           {list[index].channel_cn}
@@ -154,12 +154,18 @@ interface CommentItemPropTypes {
   onClick: (comment: CommentResult) => void;
 }
 
+interface SubtitleItemPropTypes {
+  index: number;
+  style: React.CSSProperties;
+  list: Array<SubtitleResult>;
+  onClick: (subtitle: SubtitleResult) => void;
+}
+
 const CommentItem = (props: CommentItemPropTypes) => {
   const { index, style, list, onClick } = props;
-
   const classes = useStyles();
+  if (list.length === 0) return null;
   const content = formatComment(list[index].comment);
-
   const comment = content.name ? `@${content.name}, ${content.text}` : content.text;
 
   return (
@@ -185,46 +191,80 @@ const CommentItem = (props: CommentItemPropTypes) => {
   );
 };
 
+const SubtitleItem = (props: SubtitleItemPropTypes) => {
+  const { index, style, list, onClick } = props;
+  const classes = useStyles();
+  if (list.length === 0) return null;
+
+  return (
+    <Box style={style} key={index} className={classes.item} onClick={() => onClick(list[index])}>
+      <ListItemAvatar>
+        <Avatar className={clsx(classes.channel, classes.comment)} color="blue">
+          字幕
+        </Avatar>
+      </ListItemAvatar>
+      <div className={classes.warp}>
+        <Typography noWrap className={classes.itemInfo}>
+          {list[index].cnname}
+
+          <Typography component="span" variant="body2" color="primary">
+            &nbsp;{list[index].enname}
+          </Typography>
+        </Typography>
+        <Typography variant="caption" noWrap className={classes.itemInfo} color="textSecondary">
+          {list[index].lang}
+          {list[index].format}
+        </Typography>
+      </div>
+    </Box>
+  );
+};
+
 interface SearchListPropTypes {
   loading: boolean;
-  list: Array<ResourceInfo>;
-  extraList: Array<ExtraResult>;
+  resourceList: Array<ResourceInfo>;
   commentList: Array<CommentResult>;
+  subtitleList: Array<SubtitleResult>;
 }
 
 export function SearchListComponent(props: SearchListPropTypes) {
   const showAdsense = ShowAdsense();
-  const { list, extraList, commentList, loading } = props;
+  const { resourceList, commentList, subtitleList, loading } = props;
+  const mergedList = [
+    ...resourceList.map((item, idx) => ({ ...item, type: "resource", originalIndex: idx })),
+    ...commentList.map((item, idx) => ({ ...item, type: "comment", originalIndex: idx })),
+    ...subtitleList.map((item, idx) => ({ ...item, type: "subtitle", originalIndex: idx })),
+  ];
 
   // 控制侧边抽屉展开
-  const [drawerVisible, setDrawerVisible] = React.useState<boolean>(false);
-  const [drawerContent, setDrawerContent] = React.useState<CommentResult | null>(null);
+  const [commentDrawerVisible, setCommentDrawerVisible] = React.useState(false);
+  const [subtitleDrawerVisible, setSubtitleDrawerVisible] = React.useState(false);
+  const [commentContent, setCommentContent] = React.useState<CommentResult | null>(null);
+  const [subtitleContent, setSubtitleContent] = React.useState<SubtitleResult | null>(null);
 
   const classes = useStyles();
 
   const handleClickComment = (comment: CommentResult) => {
-    setDrawerContent(comment);
-    setDrawerVisible(true);
+    setCommentContent(comment);
+    setCommentDrawerVisible(true);
+  };
+
+  const handleClickSubtitle = (subtitle: SubtitleResult) => {
+    setSubtitleContent(subtitle);
+    setSubtitleDrawerVisible(true);
   };
 
   const handleCloseDrawer = () => {
-    setDrawerVisible(false);
-    setDrawerContent(null);
-  };
-
-  const handleToExtra = (event: React.SyntheticEvent, href: string) => {
-    event.preventDefault();
-    postMetrics("extra").catch(noop);
-    setTimeout(() => {
-      // eslint-disable-next-line no-restricted-globals
-      location.href = href;
-    }, 500);
+    setCommentDrawerVisible(false);
+    setCommentContent(null);
+    setSubtitleDrawerVisible(false);
+    setSubtitleContent(null);
   };
 
   function renderRow(renderProps: ListChildComponentProps) {
     const { index, style } = renderProps;
-
-    if (index === list.length + commentList.length) {
+    const item = mergedList[index];
+    if (!item) {
       return (
         <Typography style={style} key={index} className={classes.end} color="secondary">
           我是有底线哒 o(≧口≦)o
@@ -232,11 +272,19 @@ export function SearchListComponent(props: SearchListPropTypes) {
       );
     }
 
-    if (index < list.length) {
-      return <ResourceItem index={index} style={style} list={list} />;
+    if (item.type === "resource") {
+      return <ResourceItem index={item.originalIndex} style={style} list={resourceList} />;
+    }
+    if (item.type === "comment") {
+      return <CommentItem index={item.originalIndex} style={style} list={commentList} onClick={handleClickComment} />;
+    }
+    if (item.type === "subtitle") {
+      return (
+        <SubtitleItem index={item.originalIndex} style={style} list={subtitleList} onClick={handleClickSubtitle} />
+      );
     }
 
-    return <CommentItem index={index - list.length} style={style} list={commentList} onClick={handleClickComment} />;
+    return null;
   }
 
   /* 去除搜索和搜索结果高度 */
@@ -256,62 +304,26 @@ export function SearchListComponent(props: SearchListPropTypes) {
 
   return (
     <div className={classes.root}>
-      {list.length + commentList.length > 0 && (
-        <>
-          <Typography style={{ height: 46, lineHeight: "46px" }}>
-            共 {list.length} 条资源, {commentList.length} 条相关评论
-          </Typography>
-          <FixedSizeList height={height} width="100%" itemSize={46} itemCount={list.length + commentList.length + 1}>
-            {renderRow}
-          </FixedSizeList>
-          {process.env.REACT_APP_ADSENSE && showAdsense && (
-            <>
-              <MuiLink href="https://www.chatai.lol/" target="_blank">
-                <img alt="chat-ai" src="https://dmesg.app/assets/chat-ai.jpg" style={{ maxWidth: "100%" }} />
-              </MuiLink>
-            </>
-          )}
-        </>
-      )}
-      {extraList.length > 0 && (
-        <>
-          <Typography style={{ height: 46, lineHeight: "46px" }}>
-            本站无结果，外站找到了 {extraList.length} 条相关记录
-          </Typography>
-          {extraList.map((extraItem) => (
-            <a
-              className={classes.item}
-              href={extraItem.url}
-              style={{ height: 46 }}
-              key={extraItem.url}
-              onClick={(e) => handleToExtra(e, extraItem.url)}
-            >
-              <ListItemAvatar>
-                <Avatar className={clsx(classes.channel, classes.extra)}>外链</Avatar>
-              </ListItemAvatar>
-              <div className={classes.warp}>
-                <Typography noWrap className={classes.itemInfo}>
-                  {extraItem.name}
-                </Typography>
-                <Typography variant="caption" noWrap className={classes.itemInfo} color="textSecondary">
-                  来自: {extraItem.class || "---"}
-                </Typography>
-              </div>
-            </a>
-          ))}
-          <Typography style={{ height: 46 }} className={classes.end} color="secondary">
-            我是有底线哒 o(≧口≦)o
-          </Typography>
-        </>
-      )}
+      <FixedSizeList height={height} width="100%" itemSize={46} itemCount={mergedList.length + 1}>
+        {renderRow}
+      </FixedSizeList>
+
       {commentList.length > 0 && (
-        <CommentDrawer open={drawerVisible} onClose={handleCloseDrawer} content={drawerContent} />
+        <CommentDrawer open={commentDrawerVisible} onClose={handleCloseDrawer} content={commentContent} />
       )}
-      {list.length === 0 && extraList.length === 0 && commentList.length === 0 && (
+      {subtitleList.length > 0 && (
+        <SubtitleDrawer open={subtitleDrawerVisible} onClose={handleCloseDrawer} content={subtitleContent} />
+      )}
+
+      {resourceList.length + commentList.length + subtitleList.length === 0 ? (
         <div className={classes.empty} style={{ height }}>
           <img src={toAbsoluteUrl("/svg/emptyAddress.svg")} alt="empty" />
           <Typography>暂无结果</Typography>
         </div>
+      ) : (
+        <Typography style={{ height: 46, lineHeight: "46px" }}>
+          共 {resourceList.length} 条资源, {commentList.length} 条相关评论,{subtitleList.length} 条字幕
+        </Typography>
       )}
     </div>
   );

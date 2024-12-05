@@ -31,10 +31,29 @@ export function getTop() {
   });
 }
 
-export interface ExtraResult {
-  name: string;
-  url: string;
-  class: string;
+export interface SubtitleResult {
+  id: number;
+  cnname: string; // 中文名称
+  enname: string; // 英文名称
+  resourceid: number; // 资源 ID
+  season: number; // 季度
+  episode: number; // 集数
+  segment: string; // 分段信息
+  segment_num: number; // 分段编号
+  source: string; // 来源
+  category: string; // 分类
+  lang: string; // 语言
+  format: string; // 格式
+  file: string; // 文件路径
+  filename: string; // 文件名
+  remark: string; // 备注
+  views: number; // 浏览次数
+  downloads: number; // 下载次数
+  comments: number; // 评论数
+  updater: number; // 更新者 ID
+  updatetime: number; // 更新时间
+  operator: number; // 操作者 ID
+  dateline: number; // 数据时间线
 }
 
 export interface CommentResult {
@@ -50,11 +69,9 @@ export interface CommentResult {
 }
 
 interface GetSearchKwRes {
-  data: Array<ResourceInfo>;
-  /* 外站结果 */
-  extra: Array<ExtraResult>;
-  /* 评论区 */
+  resource: Array<ResourceInfo>;
   comment: Array<CommentResult>;
+  subtitle: Array<SubtitleResult>;
 }
 
 /* 搜索剧集 */

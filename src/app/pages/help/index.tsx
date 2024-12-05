@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
     item: {
       marginBottom: theme.spacing(4),
     },
-  })
+  }),
 );
 
 export function HelpPage() {
@@ -174,9 +174,7 @@ export function HelpPage() {
         <Typography variant="h6" component="h3" gutterBottom>
           搜索下拉框的有什么选择
         </Typography>
-        <Typography>
-          目前提供两种搜索选项：默认和豆瓣。默认模式会搜索人人影视数据库和评论，豆瓣模式会搜索豆瓣的电影信息，包括演员，导演，编剧，介绍等信息。
-        </Typography>
+        <Typography>目前提供以下搜索选项：默认模式、资源模式、字幕模式、评论模式。默认模式会搜索全部资源</Typography>
       </div>
     </Container>
   );

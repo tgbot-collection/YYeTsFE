@@ -19,7 +19,7 @@ import { FileCopy as CopyIcon, Close as CloseIcon } from "@material-ui/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
 
-import { CommentResult, postMetrics } from "API";
+import { CommentResult, postMetrics, SubtitleResult } from "API";
 import { formatAvatar, formatComment, noop, getGravatar } from "utils";
 import { useGoResourcePage } from "hooks";
 
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
     forceCursor: {
       cursor: "pointer",
     },
-  })
+  }),
 );
 
 interface CommentResourcePropTypes {

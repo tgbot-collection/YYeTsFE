@@ -21,7 +21,7 @@ import { Adsense } from "@ctrl/react-adsense";
 import {
   cancelGetTop,
   CommentResult,
-  ExtraResult,
+  SubtitleResult,
   getSearchKw,
   getTop,
   GetTopRes,
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
         marginLeft: theme.spacing(4),
       },
     },
-  })
+  }),
 );
 
 export function SearchPage() {
@@ -79,8 +79,8 @@ export function SearchPage() {
   const [top, setTop] = React.useState<GetTopRes>({} as GetTopRes);
 
   const [listLoading, setListLoading] = React.useState<boolean>(true);
-  const [list, setList] = React.useState<Array<ResourceInfo>>([]);
-  const [extraList, setExtraList] = React.useState<Array<ExtraResult>>([]);
+  const [resourceList, setResourceList] = React.useState<Array<ResourceInfo>>([]);
+  const [subtitleList, setSubtitleList] = React.useState<Array<SubtitleResult>>([]);
   const [commentList, setCommentList] = React.useState<Array<CommentResult>>([]);
   const [select, setSelect] = React.useState<string>("default");
 
@@ -91,9 +91,9 @@ export function SearchPage() {
         setListLoading(false);
 
         if (res.data) {
-          const { data, extra, comment } = res.data;
-          setList(data);
-          setExtraList(extra);
+          const { resource, subtitle, comment } = res.data;
+          setResourceList(resource);
+          setSubtitleList(subtitle);
           setCommentList(comment);
         }
       })
@@ -173,7 +173,9 @@ export function SearchPage() {
                   }}
                 >
                   <MenuItem value="default">默认</MenuItem>
-                  <MenuItem value="douban">豆瓣</MenuItem>
+                  <MenuItem value="resource">资源</MenuItem>
+                  <MenuItem value="comment">评论</MenuItem>
+                  <MenuItem value="subtitle">字幕</MenuItem>
                 </Select>
               </InputAdornment>
             ),
@@ -202,7 +204,12 @@ export function SearchPage() {
           {!!Object.keys(top).length && <SectionComponent data={top} />}
         </>
       ) : (
-        <SearchListComponent list={list} extraList={extraList} commentList={commentList} loading={listLoading} />
+        <SearchListComponent
+          resourceList={resourceList}
+          commentList={commentList}
+          subtitleList={subtitleList}
+          loading={listLoading}
+        />
       )}
     </Container>
   );
