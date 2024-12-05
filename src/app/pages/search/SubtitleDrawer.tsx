@@ -82,8 +82,7 @@ export default function SubtitleDrawer(props: SubtitleResourcePropTypes) {
   const { enqueueSnackbar } = useSnackbar();
   const handleDownload = async (file: string) => {
     try {
-      const response = await axios.post("/api/download", { file });
-
+      const response = await axios.post("/api/download", { file }, { responseType: "arraybuffer" });
       const blob = new Blob([response.data], { type: "application/octet-stream" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
