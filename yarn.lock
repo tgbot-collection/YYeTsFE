@@ -12653,10 +12653,10 @@ stylis@4.0.13:
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.0.13.tgz#f5db332e376d13cc84ecfe5dace9a2a51d954c91"
   integrity sha512-xGPXiFVl4YED9Jh7Euv2V220mriG9u4B2TA6Ybjc1catrstKD2PpIdU3U0RKpkVBC2EhmL/F0sPCr9vrFTNRag==
 
-super-tiny-icons@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/super-tiny-icons/-/super-tiny-icons-0.4.0.tgz#ec925cad4d788d98e50fd4229c3f2bf51abeba27"
-  integrity sha512-PEHlUQsSdEtQNeP4pNOBCDU9cJe6bsrMmG3yV62icvMDgjCC+srl9AfJ5RGwfKbyvGNbYRUtcmkka+k7yhZxOA==
+super-tiny-icons@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/super-tiny-icons/-/super-tiny-icons-0.6.0.tgz#2fdda464bac78819db08a0aeb1f644d046408b8d"
+  integrity sha512-xJ7jIAO8qCnmXQBcHdBA4oSdvyiDM4aWX/mViWaLNhBnDE9/xwsKTakObdhEUs36JZ/rfzqI+Uc72LgnPxvPUw==
   dependencies:
     opencollective-postinstall "^2.0.2"
 
