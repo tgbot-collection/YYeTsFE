@@ -32,6 +32,7 @@ export function getTop() {
 }
 
 export interface SubtitleResult {
+  _id:string;
   id: number;
   cnname: string; // 中文名称
   enname: string; // 英文名称

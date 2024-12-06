@@ -252,6 +252,7 @@ export function SearchListComponent(props: SearchListPropTypes) {
   const handleClickSubtitle = (subtitle: SubtitleResult) => {
     setSubtitleContent(subtitle);
     setSubtitleDrawerVisible(true);
+    postMetrics("viewSubtitle", subtitle._id);
   };
 
   const handleCloseDrawer = () => {
