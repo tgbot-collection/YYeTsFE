@@ -19,10 +19,11 @@ type MetricsType =
   | "discuss" // 留言板
   | "extra" // 外链
   | "backOld" // 返回旧版
-  | "copyComment"; // 复制评论
+  | "copyComment" // 复制评论
+  | "viewSubtitle";
 
-export function postMetrics(type: MetricsType) {
-  return axios.post("/api/metrics", { type });
+export function postMetrics(type: MetricsType, id: number = 0) {
+  return axios.post("/api/metrics", { type, id });
 }
 
 type MetricsObject = {

@@ -249,9 +249,10 @@ export function SearchListComponent(props: SearchListPropTypes) {
     setCommentDrawerVisible(true);
   };
 
-  const handleClickSubtitle = (subtitle: SubtitleResult) => {
+  const handleClickSubtitle = async (subtitle: SubtitleResult) => {
     setSubtitleContent(subtitle);
     setSubtitleDrawerVisible(true);
+    await postMetrics("viewSubtitle", subtitle.id);
   };
 
   const handleCloseDrawer = () => {
