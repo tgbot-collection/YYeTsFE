@@ -26,11 +26,10 @@ jobs:
           npm install -g yarn
           yarn
           yarn build
-          zip -r build.zip build/
-          ls
+          zip -r $(git rev-parse --short HEAD).zip build/
 
       - name: Release
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          files: build.zip
+          files: "*.zip"
