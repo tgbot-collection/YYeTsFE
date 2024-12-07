@@ -39,13 +39,13 @@ export function HelpPage() {
         <Typography>一般来说，分享页面的下载链接是有电驴、磁力链和网盘的。</Typography>
         <Typography>网盘就去下载对应的客户端，电驴和磁力链，可以尝试下迅雷。</Typography>
         <Typography>
-          磁力链还可以试试 qBittorrent、uTorrent、BitCommet，并且记得去同步一份最新的{" "}
+          磁力链还可以试试 qBittorrent、uTorrent、BitCommet，并且记得去同步一份最新的
           <MuiLink href="https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt">
             tracker
-          </MuiLink>{" "}
+          </MuiLink>
           哦。
         </Typography>
-        <Typography> 另外值得一提的是，有些网盘支持离线资源，可以把磁力、ed2k 贴进去。</Typography>
+        <Typography> 另外，有些网盘支持离线资源，可以把磁力、ed2k 贴进去。</Typography>
       </div>
 
       <div className={classes.item}>

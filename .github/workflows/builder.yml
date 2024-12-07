@@ -41,7 +41,7 @@ jobs:
           zip -r $(git rev-parse --short HEAD).zip build/
 
       - name: Release frontend resources
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: "*.zip"
