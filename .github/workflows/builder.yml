@@ -28,7 +28,7 @@ jobs:
           yarn build
           zip -r $(git rev-parse --short HEAD).zip build/
 
-      - name: Release
+      - name: Release frontend resources
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
