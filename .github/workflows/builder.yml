@@ -37,6 +37,7 @@ jobs:
           export NODE_OPTIONS=--openssl-legacy-provider
           npm install -g yarn
           yarn
+          mv .env.example .env
           yarn build
           zip -r $(git rev-parse --short HEAD).zip build/
 
