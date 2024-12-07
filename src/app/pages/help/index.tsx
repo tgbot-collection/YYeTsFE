@@ -65,13 +65,6 @@ export function HelpPage() {
 
       <div className={classes.item}>
         <Typography variant="h6" component="h3" gutterBottom>
-          是否会关站
-        </Typography>
-        <Typography>不会，我的主观意愿不会。即使被关站也不要怕，本项目的代码、数据库都是开源的。</Typography>
-      </div>
-
-      <div className={classes.item}>
-        <Typography variant="h6" component="h3" gutterBottom>
           有些资源没有，是什么原因
         </Typography>
         <Typography>这个是做的归档数据，所以新剧是没有的。当然，如果我心情好，也许还会手动添加几部。</Typography>
@@ -108,39 +101,17 @@ export function HelpPage() {
 
       <div className={classes.item}>
         <Typography variant="h6" component="h3" gutterBottom>
-          可以商业化这个项目吗
-        </Typography>
-        <Typography>我不会进行如加入会员制度等商业化行为。所有用户等捐赠是自发性并且不具有强制性。</Typography>
-        <Typography>
-          本项目使用
-          <MuiLink href="https://github.com/tgbot-collection/YYeTsBot/blob/master/LICENSE"> MIT 协议</MuiLink>
-          授权，因此你可以进行商业化，以任意形式进行分发、修改以及私有使用。你只要保持保持版权声明就可以了。
-        </Typography>
-      </div>
-
-      <div className={classes.item}>
-        <Typography variant="h6" component="h3" gutterBottom>
-          网站打不开，无法搜索
-        </Typography>
-        <Typography>
-          呃这个应该不太可能啊。可能你网络连接到 Cloudflare 不太稳？换个网络，再刷新试试看呢？还不行去 GitHub
-          报错给我吧。
-        </Typography>
-      </div>
-
-      <div className={classes.item}>
-        <Typography variant="h6" component="h3" gutterBottom>
           本站会收集哪些信息
         </Typography>
         <Typography>主要有如下几种信息：</Typography>
         <Typography>
-          1. 你的IP地址会被记录在 Nginx
-          的日志中。在面临攻击、爬虫等恶意行为时，我会找到这个IP然后加到防火墙中。我不会公开或与第三方分享访问日志；
+          1.
+          你的IP地址会被记录在日志中。在面临攻击、爬虫等恶意行为时，我会找到这个IP然后加到防火墙中。我不会公开或与第三方分享访问日志；
         </Typography>
         <Typography>2. 我使用了 Google Analytics，请参考 Google Analytics 的隐私政策；</Typography>
         <Typography>3. 我使用了 Google Adsense，请参考 Google Adsense 的隐私政策；</Typography>
         <Typography>4. 我使用了 Cloudflare，请参考 Cloudflare 的隐私政策；</Typography>
-        <Typography>5. 我记录了 metrics 信息，用于优化日后访问量，此信息不包含个人信息，无法用于追踪你；</Typography>
+        <Typography>5. 我记录了统计信息，用于优化日后访问量，此信息不包含个人信息，无法用于追踪你；</Typography>
         <Typography>
           6. 如果你选择注册，我会保存你的用户名、加密后的密码、注册时间、UA 等信息。此类信息不会被公开或与第三方分享；
         </Typography>
@@ -165,7 +136,6 @@ export function HelpPage() {
         <Typography>
           注册用户可以发表评论，但是请注意文明用语。该网站是我的私人空间，不当言论可能会导致封号。
         </Typography>
-        <Typography>日后可能会考虑转向为只有注册用户才能看到资源的模式。</Typography>
       </div>
 
       <div className={classes.item}>
