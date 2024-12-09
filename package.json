@@ -19,7 +19,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-window": "^1.8.8",
     "adblock-detect-react": "^1.1.0",
-    "axios": "^0.27.2",
+    "axios": "^1.7.9",
     "bowser": "^2.11.0",
     "clsx": "^1.2.1",
     "compressorjs": "^1.2.0",
