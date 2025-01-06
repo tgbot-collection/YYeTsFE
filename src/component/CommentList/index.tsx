@@ -132,17 +132,11 @@ export function CommentList(props: CommentListPropTypes) {
             ))}
           </div>
 
-          {process.env.REACT_APP_ADSENSE && showAdsense ? (
-            <>
-              <Divider className={classes.hr} />
-
-              <Link href="https://www.chatai.lol/" target="_blank">
-                <img alt="chat-ai" src="https://dmesg.app/assets/chat-ai.jpg" style={{ maxWidth: "100%" }} />
-              </Link>
-
-              <Divider className={classes.hr} />
-            </>
-          ) : null}
+          <Divider className={classes.hr} />
+          <Link href="https://burn.hair/?lang=zh-CN&utm_source=yyets" target="_blank">
+            头顶冒火 OpenAI GPT 接口站，稳定快速，使用人工智能提高生产力！
+          </Link>
+          <Divider className={classes.hr} />
 
           <div className={classes.hasMore}>
             <Pagination

@@ -97,6 +97,11 @@ export function Footer() {
                     Telegram Channel
                   </Link>
                 </li>
+                <li>
+                  <Link href="https://burn.hair/?lang=zh-CN&utm_source=yyets" color="inherit" variant="body1">
+                    头顶冒火 OpenAI 接口站
+                  </Link>
+                </li>
               </ul>
             </Grid>
 

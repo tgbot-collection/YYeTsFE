@@ -1,6 +1,6 @@
 import * as React from "react";
 import { noop, setTitle } from "utils";
-import { Container, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Container, Link, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 
 import { postMetrics } from "API";
 import { CommentComponent } from "features";
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       paddingTop: theme.spacing(4),
     },
-  })
+  }),
 );
 
 export function DiscussPage() {
@@ -27,11 +27,15 @@ export function DiscussPage() {
     <Container className={classes.container}>
       <Typography component="h2" variant="h4" gutterBottom>
         留言板
+        <span style={{ fontSize: "medium", paddingLeft: "1rem" }}>
+          使用 ChatGPT 解锁你的生产力，快来使用
+          <Link href="https://burn.hair/?lang=zh-CN&utm_source=yyets"> 头顶冒火</Link> 吧！
+        </span>
       </Typography>
+
       <Typography gutterBottom style={{ marginBottom: "32px" }}>
         留下你想说的和建议吧
       </Typography>
-
       {process.env.REACT_APP_ADSENSE && (
         <Adsense
           className="adsbygoogle"
