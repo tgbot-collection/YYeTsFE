@@ -102,6 +102,11 @@ export function Footer() {
                     头顶冒火 OpenAI 接口站
                   </Link>
                 </li>
+                <li>
+                  <Link href="https://www.mmy234.com/#/register?code=XHn52jB3" color="inherit" variant="body1">
+                    猫猫云VPN ¥10/月100G流量
+                  </Link>
+                </li>
               </ul>
             </Grid>
 

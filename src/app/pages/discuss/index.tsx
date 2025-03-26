@@ -28,8 +28,9 @@ export function DiscussPage() {
       <Typography component="h2" variant="h4" gutterBottom>
         留言板
         <span style={{ fontSize: "medium", paddingLeft: "1rem" }}>
-          使用 ChatGPT 解锁你的生产力，快来使用
-          <Link href="https://burn.hair/?lang=zh-CN&utm_source=yyets"> 头顶冒火</Link> 吧！
+          人工智能大语言模型，
+          <Link href="https://burn.hair/?lang=zh-CN&utm_source=yyets">快来使用头顶冒火吧</Link> ！ 头顶冒火 推荐使用
+          <Link href="https://www.mmy234.com/#/register?code=XHn52jB3"> 猫猫云VPN</Link>
         </span>
       </Typography>
 
