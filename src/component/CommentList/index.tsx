@@ -137,7 +137,7 @@ export function CommentList(props: CommentListPropTypes) {
             头顶冒火 OpenAI GPT 接口站，稳定快速，使用人工智能提高生产力！
           </Link>
           <br />
-          <Link href="https://www.mmy234.com/#/register?code=XHn52jB3" target="_blank" variant="body2">
+          <Link href="https://maomaoyun.net/#/register?code=XHn52jB3" target="_blank" variant="body2">
             搭配猫猫云VPN 月付¥10，100G流量，5设备同时在线，使用更流畅哦
           </Link>
           <Divider className={classes.hr} />

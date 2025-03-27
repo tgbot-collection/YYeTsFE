@@ -103,7 +103,7 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://www.mmy234.com/#/register?code=XHn52jB3" color="inherit" variant="body1">
+                  <Link href="https://maomaoyun.net/#/register?code=XHn52jB3" color="inherit" variant="body1">
                     猫猫云VPN ¥10/月100G流量
                   </Link>
                 </li>
