@@ -48,7 +48,7 @@
     "super-tiny-icons": "^0.6.0",
     "typescript": "^4.8.3",
     "web-vitals": "^3.4.0",
-    "yup": "^0.32.9"
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.2.3",
