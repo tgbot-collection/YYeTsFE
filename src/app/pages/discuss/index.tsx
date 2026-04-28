@@ -30,7 +30,7 @@ export function DiscussPage() {
         <span style={{ fontSize: "medium", paddingLeft: "1rem" }}>
           人工智能大语言模型，
           <Link href="https://burn.hair/?lang=zh-CN&utm_source=yyets">快来使用头顶冒火吧</Link> ！ 头顶冒火 推荐使用
-          <Link href="https://maomaoyun.net/#/register?code=XHn52jB3"> 猫猫云VPN</Link>
+          <Link href="https://maomaoyun.org/#/register?code=kscCUYgT"> 猫猫云VPN 月付¥10，100G流量</Link>
         </span>
       </Typography>
 
