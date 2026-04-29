@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 
-import { formatBrowser, formatComment, formatDate } from "utils";
+import { formatBrowser, formatComment, formatDate, renderCommentWithLinks } from "utils";
 import { UserGroup, Comment, deleteComment, getChildComment } from "API";
 import { useAppSelector, useDomeSize } from "hooks";
 import { useStyles } from "./styled";
@@ -176,7 +176,8 @@ export function CommentCard(props: CommentCardPropTypes) {
                 ，
               </>
             )}
-            {content.text}
+
+            {renderCommentWithLinks(content.text)}
             {rect.height > MAX_HEIGHT && (
               <div
                 className={classes.button}

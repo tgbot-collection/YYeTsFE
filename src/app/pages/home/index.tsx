@@ -40,11 +40,7 @@ export function HomePage() {
             人人影视分享站
           </Typography>
           <Typography variant="h5" component="p" color="textSecondary" gutterBottom>
-            本站数据库
-            <Link component={RouterLink} to="/database" color="secondary">
-              可下载
-            </Link>
-            ， 如有疑问可以查看
+            如有疑问可以查看
             <Link component={RouterLink} to="/help">
               帮助页
             </Link>

@@ -28,9 +28,8 @@ export function DiscussPage() {
       <Typography component="h2" variant="h4" gutterBottom>
         留言板
         <span style={{ fontSize: "medium", paddingLeft: "1rem" }}>
-          人工智能大语言模型，
-          <Link href="https://burn.hair/?lang=zh-CN&utm_source=yyets">快来使用头顶冒火吧</Link> ！ 头顶冒火 推荐使用
-          <Link href="https://maomaoyun.org/#/register?code=kscCUYgT"> 猫猫云VPN 月付¥10，100G流量</Link>
+          AI 大语言模型，
+          <Link href="https://burn.hair/?lang=zh-CN&utm_source=yyets">快来使用头顶冒火吧</Link> ！
         </span>
       </Typography>
 

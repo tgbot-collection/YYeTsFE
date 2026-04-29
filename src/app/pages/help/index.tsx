@@ -84,7 +84,7 @@ export function HelpPage() {
         <Typography>
           谢谢！可以通过<MuiLink href="https://github.com/tgbot-collection/YYeTsBot">点赞</MuiLink>
           ，宣传，使用等方式来支持。当然你也可以通过
-          <MuiLink href="https://www.buymeacoffee.com/bennythink">Buy Me a Coffee</MuiLink>
+          <MuiLink href="https://www.buymeacoffee.com/bennythink">Buy Me a Coffee</MuiLink>、
           <MuiLink href="https://buy.stripe.com/dR67vU4p13Ox73a6oq">Stripe</MuiLink>
           或者加密货币的方式来支持我
         </Typography>
@@ -124,7 +124,6 @@ export function HelpPage() {
         </Typography>
         <Typography>任何人都可以注册，随便写个用户名密码就可以了。</Typography>
         <Typography>功能很简陋了，凑合用吧 😂</Typography>
-        <Typography>你的用户信息不会被包含在上述数据库之中。</Typography>
       </div>
 
       <div className={classes.item}>

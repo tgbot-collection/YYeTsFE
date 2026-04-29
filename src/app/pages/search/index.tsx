@@ -12,6 +12,9 @@ import {
   Theme,
   InputAdornment,
   Typography,
+  Card,
+  CardContent,
+  CardActions,
 } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
@@ -28,10 +31,12 @@ import {
   postMetrics,
   ResourceInfo,
 } from "API";
-import { noop, setTitle } from "utils";
+import { noop, setTitle, toAbsoluteUrl } from "utils";
 import { SectionComponent } from "./Section";
 import { SearchListComponent } from "./SearchList";
 import { RankComponent } from "./Rank";
+import CommentDrawer from "./CommentDrawer";
+import SubtitleDrawer from "./SubtitleDrawer";
 
 const validationSchema = yup.object({
   search: yup.string().required("请输入电影名"),
@@ -185,6 +190,27 @@ export function SearchPage() {
           搜索
         </Button>
       </form>
+      <br />
+      <Card
+        onClick={() => {
+          window.open("https://maomaoyun.org/#/register?code=kscCUYgT");
+        }}
+      >
+        <CardContent>
+          <Typography variant="h5" component="h2">
+            猫猫云 VPN
+          </Typography>
+          <Typography color="textSecondary">高速IEPL专线机场</Typography>
+          <Typography variant="body2" component="p">
+            最低月付 ¥10，100G 流量, 5 设备可用，专为流媒体与日常上网优化，更可靠的联网方式
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" variant="outlined">
+            点击了解更多
+          </Button>
+        </CardActions>
+      </Card>
 
       {mode === "top" ? (
         <>

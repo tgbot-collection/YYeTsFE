@@ -1,6 +1,20 @@
 import * as React from "react";
 import { Skeleton, TabContext, TabList } from "@material-ui/lab";
-import { AppBar, Button, createStyles, makeStyles, Menu, MenuItem, Tab, Theme, Typography } from "@material-ui/core";
+import {
+  AppBar,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  createStyles,
+  Divider,
+  makeStyles,
+  Menu,
+  MenuItem,
+  Tab,
+  Theme,
+  Typography,
+} from "@material-ui/core";
 import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/hooks";
 
@@ -39,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       backgroundColor: theme.palette.background.paper,
     },
-  })
+  }),
 );
 
 interface AddressPropTypes {
@@ -95,6 +109,27 @@ export function Address(props: AddressPropTypes) {
         下载地址
       </Typography>
 
+      <Card
+        onClick={() => {
+          window.open("https://maomaoyun.org/#/register?code=kscCUYgT");
+        }}
+      >
+        <CardContent>
+          <Typography variant="h5" component="h2">
+            若资源无法加载，可能需要 VPN
+          </Typography>
+          <Typography color="textSecondary">猫猫云 VPN</Typography>
+          <Typography variant="body2" component="p">
+            最低月付 ¥10，100G 流量, 5 设备可用， 高速IEPL专线机场，专为流媒体与日常上网优化，更可靠的联网方式
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" variant="outlined">
+            点击了解更多
+          </Button>
+        </CardActions>
+      </Card>
+      <Divider />
       {resourceAddress.length > 0 ? (
         <TabContext value={qualityIndex}>
           <AppBar position="static" className={classes.header} color="default" classes={{ root: classes.appRoot }}>

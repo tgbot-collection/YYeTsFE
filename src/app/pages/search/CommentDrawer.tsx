@@ -20,7 +20,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar } from "notistack";
 
 import { CommentResult, postMetrics, SubtitleResult } from "API";
-import { formatAvatar, formatComment, noop, getGravatar } from "utils";
+import { formatAvatar, formatComment, noop, getGravatar, renderCommentWithLinks } from "utils";
 import { useGoResourcePage } from "hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -98,7 +98,7 @@ export default function CommentDrawer(props: CommentResourcePropTypes) {
             <CardContent>
               <Typography style={{ wordBreak: "break-all", whiteSpace: "pre-line" }}>
                 {formattedContent.name && `@${formattedContent.name}, `}
-                {formattedContent.text}{" "}
+                {renderCommentWithLinks(formattedContent.text)}
               </Typography>
             </CardContent>
           </Card>

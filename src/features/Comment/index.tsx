@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Typography } from "@material-ui/core";
+import { Link, Typography } from "@material-ui/core";
 
 import { CommentInput, CommentList } from "component";
 import { Comment } from "../../API";
@@ -23,6 +23,11 @@ export function CommentComponent(props: CommentPropTypes) {
       )}
 
       <CommentInput resourceId={id} setCommentList={setCommentList} />
+      <Typography gutterBottom>
+        本站推荐使用
+        <Link href="https://maomaoyun.org/#/register?code=kscCUYgT"> 猫猫云 VPN </Link>
+        以获得最佳浏览体验
+      </Typography>
       <br />
       <div id="scroll" />
       <CommentList id={id} loading={loading} commentList={commentList} setCommentList={setCommentList} />

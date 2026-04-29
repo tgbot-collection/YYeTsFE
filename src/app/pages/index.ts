@@ -7,3 +7,4 @@ export * from "./discuss";
 export * from "./me";
 export * from "./database";
 export * from "./help";
+export * from "./redirect";

@@ -9,6 +9,10 @@ import {
   Typography,
   Tooltip,
   Link as MuiLink,
+  Card,
+  CardContent,
+  CardActions,
+  Button,
 } from "@material-ui/core";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import { Skeleton } from "@material-ui/lab";
@@ -16,11 +20,12 @@ import { Link } from "react-router-dom";
 import { lighten } from "@material-ui/core/styles";
 import { deepOrange, deepPurple, pink, blue } from "@material-ui/core/colors";
 import clsx from "clsx";
+import { Adsense } from "@ctrl/react-adsense";
 
 import { CommentResult, SubtitleResult, postMetrics, ResourceInfo } from "API";
 import { noop, toAbsoluteUrl, formatComment, ShowAdsense } from "utils";
-import CommentDrawer from "./CommentDrawer";
 import SubtitleDrawer from "./SubtitleDrawer";
+import CommentDrawer from "./CommentDrawer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -308,6 +313,17 @@ export function SearchListComponent(props: SearchListPropTypes) {
       <FixedSizeList height={height} width="100%" itemSize={46} itemCount={mergedList.length + 1}>
         {renderRow}
       </FixedSizeList>
+
+      {process.env.REACT_APP_ADSENSE && (
+        <Adsense
+          className="adsbygoogle"
+          client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
+          slot="7231929854"
+          style={{ display: "block" }}
+          format="auto"
+          responsive="true"
+        />
+      )}
 
       {commentList.length > 0 && (
         <CommentDrawer open={commentDrawerVisible} onClose={handleCloseDrawer} content={commentContent} />

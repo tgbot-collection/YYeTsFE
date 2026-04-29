@@ -1,9 +1,12 @@
 import * as Bowser from "bowser";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+
 import "dayjs/locale/zh-cn";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { Button } from "@material-ui/core";
+import React from "react";
 
 const md5 = require("md5");
 
@@ -41,6 +44,40 @@ export const getGravatar = (name: string, hasAvatar: boolean, hash: string) => {
   }
   return "";
 };
+
+export function renderCommentWithLinks(text: string) {
+  const URL_REGEX = /(https?:\/\/[^\s]+)/g;
+  if (!text) return null;
+
+  const parts = text.split(URL_REGEX);
+  return parts.map((part, index) => {
+    if (URL_REGEX.test(part)) {
+      URL_REGEX.lastIndex = 0;
+
+      const redirectUrl = `/redirect?url=${encodeURIComponent(part)}`;
+
+      return (
+        <Button
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
+          variant="outlined"
+          color="primary"
+          size="small"
+          href={redirectUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ margin: "6px 0", display: "inline-block" }}
+        >
+          打开资源链接
+        </Button>
+      );
+    }
+
+    URL_REGEX.lastIndex = 0;
+    // eslint-disable-next-line react/no-array-index-key
+    return <React.Fragment key={index}>{part}</React.Fragment>;
+  });
+}
 
 export const formatComment = (comment: string) => {
   const reg = /<reply value="(.*)">@(.*)<\/reply>/;
