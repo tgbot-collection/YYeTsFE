@@ -61,6 +61,7 @@ export interface Comment {
   children: Array<Comment>;
   childrenCount: number;
   group: Array<UserGroup>;
+  invalid?: boolean;
 }
 
 interface GetCommentRes {

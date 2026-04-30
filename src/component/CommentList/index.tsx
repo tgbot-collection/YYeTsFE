@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Divider, Link, Typography, Select, MenuItem } from "@material-ui/core";
+import { Divider, Link, Typography, Select, MenuItem, Checkbox, FormControlLabel, FormGroup } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
 import Pagination from "@material-ui/lab/Pagination";
@@ -19,6 +19,8 @@ interface CommentListPropTypes {
 
 export function CommentList(props: CommentListPropTypes) {
   const showAdsense = ShowAdsense();
+  const [hideInvalidComments, setHideInvalidComments] = React.useState(true);
+
   const { id, loading, commentList, setCommentList } = props;
 
   const { enqueueSnackbar } = useSnackbar();
@@ -109,27 +111,46 @@ export function CommentList(props: CommentListPropTypes) {
               <MenuItem value="newest">时间降序</MenuItem>
               <MenuItem value="oldest">时间升序</MenuItem>
             </Select>
-            {commentList.map((comment, index) => (
-              <CommentCard
-                resourceId={id}
-                commentId={comment.id}
-                username={comment.username}
-                key={comment.id}
-                date={comment.date}
-                ua={comment.browser}
-                floor={count - index}
-                content={formatComment(comment.content)}
-                group={comment.group}
-                childrenComment={comment.children}
-                childrenCount={comment.childrenCount}
-                parentId={comment.id}
-                replyId={replyId}
-                setReplyId={setReplyId}
-                setCommentList={setCommentList}
-                hasAvatar={comment.hasAvatar}
-                hash={comment.hash}
-              />
-            ))}
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={hideInvalidComments}
+                  onChange={(e) => setHideInvalidComments(e.target.checked)}
+                  color="primary"
+                  style={{ marginLeft: "1rem" }}
+                />
+              }
+              label="隐藏失效评论"
+            />
+
+            {commentList.map((comment, index) => {
+              if (hideInvalidComments && comment.invalid) {
+                return <div />;
+              }
+
+              return (
+                <CommentCard
+                  resourceId={id}
+                  commentId={comment.id}
+                  username={comment.username}
+                  key={comment.id}
+                  date={comment.date}
+                  ua={comment.browser}
+                  floor={count - index}
+                  content={formatComment(comment.content)}
+                  group={comment.group}
+                  childrenComment={comment.children}
+                  childrenCount={comment.childrenCount}
+                  parentId={comment.id}
+                  replyId={replyId}
+                  setReplyId={setReplyId}
+                  setCommentList={setCommentList}
+                  hasAvatar={comment.hasAvatar}
+                  hash={comment.hash}
+                  invalid={comment.invalid}
+                />
+              );
+            })}
           </div>
 
           <Divider className={classes.hr} />

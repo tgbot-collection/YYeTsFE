@@ -2,6 +2,7 @@ import * as React from "react";
 import clsx from "clsx";
 import {
   Button,
+  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -39,6 +40,7 @@ interface CommentCardPropTypes {
   replyId: string | number;
   setReplyId: React.Dispatch<React.SetStateAction<string | number>>;
   setCommentList?: React.Dispatch<React.SetStateAction<Array<Comment>>>;
+  invalid?: boolean;
 }
 
 function getIcon(name: string) {
@@ -90,6 +92,7 @@ export function CommentCard(props: CommentCardPropTypes) {
     replyId,
     setReplyId = () => {},
     setCommentList,
+    invalid,
   } = props;
 
   const { group: userGroup } = useAppSelector((state) => state.user);
@@ -163,6 +166,9 @@ export function CommentCard(props: CommentCardPropTypes) {
         <div className="name">
           <Typography component="span" variant="h6" color="textPrimary">
             {username}
+            {invalid === true && (
+              <Chip label="该资源可能已经失效" size="small" color="secondary" style={{ marginLeft: 8 }} />
+            )}
           </Typography>
         </div>
 
