@@ -116,14 +116,6 @@ export function HomePage() {
                   <Chip label="TRX" variant="outlined" color="secondary" size="small" />
                   <Typography gutterBottom> TF9peZjC2FYjU4xNMPg3uP4caYLJxtXeJS</Typography>
                 </Box>
-                <Box display="flex">
-                  <Chip label="XLM" variant="outlined" color="secondary" size="small" />
-                  <Typography gutterBottom> GDGGEI35XJ7BQ6K3WLSVVFJA5JWGSIDVT4QAWAYHBG2Y3V3NLP76RC5U</Typography>
-                </Box>
-                <Box display="flex">
-                  <Chip label="ALGO" variant="outlined" color="secondary" size="small" />
-                  <Typography gutterBottom> Q3YIDNVGHNWYPPOWJE4K5UVTYGM33ADPNVRKXSTYGWAPAWADJSDZ34N6AA</Typography>
-                </Box>
               </Grid>
             </Grid>
           </Popover>
