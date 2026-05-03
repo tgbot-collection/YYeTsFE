@@ -6,6 +6,10 @@ import Typography from "@material-ui/core/Typography";
 import { Adsense } from "@ctrl/react-adsense";
 import { useSnackbar } from "notistack";
 
+import { noop } from "utils";
+
+import { postMetrics } from "../../../API";
+
 export function RedirectPage() {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -18,6 +22,8 @@ export function RedirectPage() {
 
   useEffect(() => {
     if (!targetUrl) return undefined;
+
+    postMetrics("redirect").catch(noop);
 
     const timer = setInterval(() => {
       setSeconds((s) => {

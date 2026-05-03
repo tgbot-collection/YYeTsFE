@@ -20,7 +20,8 @@ type MetricsType =
   | "extra" // 外链
   | "backOld" // 返回旧版
   | "copyComment" // 复制评论
-  | "viewSubtitle";
+  | "viewSubtitle"
+  | "redirect";
 
 export function postMetrics(type: MetricsType, id: number = 0) {
   return axios.post("/api/metrics", { type, id });
