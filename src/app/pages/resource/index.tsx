@@ -1,5 +1,8 @@
 import * as React from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
+import { Launch } from "@material-ui/icons";
 
 import {
   Backdrop,
@@ -31,7 +34,7 @@ import {
   ResourceInfo,
 } from "API";
 import { BackOldIcon } from "Icon";
-import { noop, setTitle, ShowAdsense } from "utils";
+import { noop, setTitle } from "utils";
 import { CommentComponent } from "features";
 import { Info } from "./Info";
 import { Address } from "./Address";
@@ -90,11 +93,10 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2, 4, 3),
       maxWidth: "80vw",
     },
-  })
+  }),
 );
 
 export function ResourcePage() {
-  const showAdsense = ShowAdsense();
   const location = useLocation<{ title: string }>();
   const { id } = queryString.parse(location.search);
 
@@ -138,7 +140,7 @@ export function ResourcePage() {
         setIsLike(resourceRes.data.is_like || false);
 
         setLoading(false);
-        setTitle(resourceData.info.cnname);
+        setTitle(`${resourceData.info.cnname} 资源分享下载`);
       })
       .catch((error) => {
         enqueueSnackbar(`获取资源信息错误：${error.message}`, { variant: "error" });
@@ -167,6 +169,11 @@ export function ResourcePage() {
 
   return (
     <>
+      <Helmet>
+        <meta name="description" content={`${resourceInfo.cnname} 资源分享，包含网盘、ed2k链接，用户评论实时更新。`} />
+        <meta property="og:title" content={resourceInfo.cnname} />
+        <meta property="og:description" content={`查看 ${resourceInfo.cnname} 的资源分享与评论`} />
+      </Helmet>
       <Container className={classes.container} maxWidth="lg">
         <Tooltip title="返回旧版">
           <IconButton className={classes.back} onClick={handleOpen}>
@@ -181,7 +188,7 @@ export function ResourcePage() {
                 window.location.href = resourceInfo.source || "";
               }}
             >
-              <Link />
+              <Launch />
             </IconButton>
           </Tooltip>
         )}
