@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       height: "61.8%",
     },
-  })
+  }),
 );
 
 export function AvatarUploader(props: any) {
@@ -104,8 +104,8 @@ export function AvatarUploader(props: any) {
   function openCropWindow(event: any) {
     const file = event.target.files[0];
 
-    if (file.size > 1024 * 1024 * 10) {
-      enqueueSnackbar("图片大小不能超过10M", { variant: "error" });
+    if (file.size > 1024 * 1024 * 3) {
+      enqueueSnackbar("图片大小不能超过3M", { variant: "error" });
       return;
     }
     if (file.type === "image/gif") {
@@ -122,7 +122,7 @@ export function AvatarUploader(props: any) {
 
   return (
     <>
-      <Typography>修改头像，支持jpg、png、gif等格式，大小不超过10M</Typography>
+      <Typography>修改头像，支持jpg、png、gif等格式，大小不超过3M</Typography>
       <Avatar src={oldAvatar} className={classes.largeAvatar} />
       <Modal
         open={modalOpen}
