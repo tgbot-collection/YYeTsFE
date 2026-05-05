@@ -81,7 +81,11 @@ const RenderAvatar = React.memo(({ username }: { username: string }) => {
     return <AccountCircle />;
   }
 
-  return hasAvatar ? <Avatar src={`/api/user/avatar/${username}`} /> : <AccountCircle />;
+  return hasAvatar ? (
+    <Avatar src={`/api/user/avatar/${username}`} style={{ width: 24, height: 24 }} />
+  ) : (
+    <AccountCircle />
+  );
 });
 
 export function Header() {
