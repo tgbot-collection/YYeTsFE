@@ -14,7 +14,7 @@ import {
 import { useSnackbar } from "notistack";
 
 import { formatBrowser, formatComment, formatDate, renderCommentWithLinks } from "utils";
-import { UserGroup, Comment, deleteComment, getChildComment } from "API";
+import { UserGroup, Comment, deleteComment, getChildComment, reportComment } from "API";
 import { useAppSelector, useDomeSize } from "hooks";
 import { useStyles } from "./styled";
 import { CommentInput } from "../CommentInput";
@@ -71,6 +71,29 @@ function getIcon(name: string) {
   const browser = browsers.find((b) => name.toLowerCase().includes(b.name));
   const props = { src: browser ? browser.src : tiny.unknown };
   return <img {...props} alt={name} height="10em" />;
+}
+
+function ReportInvalidButton({ commentId }: { commentId: string }) {
+  const [reported, setReported] = React.useState(false);
+
+  const handleClick = async () => {
+    await reportComment(commentId);
+    setReported(true);
+  };
+
+  if (reported) {
+    return (
+      <Button size="small" style={{ marginLeft: 8, color: "dimgray" }} href="/help/link-not-working">
+        已反馈，点击查看解决方案
+      </Button>
+    );
+  }
+
+  return (
+    <Button size="small" color="secondary" onClick={handleClick} style={{ marginLeft: 8 }}>
+      链接失效？
+    </Button>
+  );
 }
 
 export function CommentCard(props: CommentCardPropTypes) {
@@ -167,18 +190,17 @@ export function CommentCard(props: CommentCardPropTypes) {
           <Typography component="span" variant="h6" color="textPrimary">
             {username}
             {invalid === true && (
-              <>
-                <Chip
-                  label="该资源可能已经失效，查看解决方法"
-                  size="small"
-                  color="secondary"
-                  style={{ marginLeft: 8 }}
-                  onClick={() => {
-                    window.location.href = "/help/link-not-working";
-                  }}
-                />
-              </>
+              <Chip
+                label="该资源可能已经失效，查看解决方法"
+                size="small"
+                color="secondary"
+                style={{ marginLeft: 8 }}
+                onClick={() => {
+                  window.location.href = "/help/link-not-working";
+                }}
+              />
             )}
+            {!invalid && <ReportInvalidButton commentId={commentId} />}
           </Typography>
         </div>
 

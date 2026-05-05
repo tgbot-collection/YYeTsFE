@@ -41,6 +41,10 @@ export function deleteComment(params: DeleteCommentParams) {
   return axios.delete("/api/comment", { data: params });
 }
 
+export function reportComment(id: string) {
+  return axios.patch("/api/comment", { id });
+}
+
 interface GetCommentParams {
   resource_id: number;
   size: number;
