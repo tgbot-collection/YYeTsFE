@@ -167,7 +167,17 @@ export function CommentCard(props: CommentCardPropTypes) {
           <Typography component="span" variant="h6" color="textPrimary">
             {username}
             {invalid === true && (
-              <Chip label="该资源可能已经失效" size="small" color="secondary" style={{ marginLeft: 8 }} />
+              <>
+                <Chip
+                  label="该资源可能已经失效，查看解决方法"
+                  size="small"
+                  color="secondary"
+                  style={{ marginLeft: 8 }}
+                  onClick={() => {
+                    window.location.href = "/help/link-not-working";
+                  }}
+                />
+              </>
             )}
           </Typography>
         </div>

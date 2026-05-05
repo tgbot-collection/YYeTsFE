@@ -6,7 +6,17 @@ import pangu from "pangu";
 
 import { useAppDispatch, useAuth, useLoginBack } from "hooks";
 import { SplashScreen } from "layout";
-import { DataBasePage, DiscussPage, HelpPage, HomePage, MePage, ResourcePage, SearchPage, RedirectPage } from "./pages";
+import {
+  DataBasePage,
+  DiscussPage,
+  HelpPage,
+  HomePage,
+  MePage,
+  ResourcePage,
+  SearchPage,
+  RedirectPage,
+  LinkNotWorkPage,
+} from "./pages";
 import { getAdsense, getUser, UserInfo } from "../API";
 import { setUsername } from "./pages/login/userSlice";
 
@@ -90,6 +100,7 @@ export function BasePage() {
         </Route>
         <Route exact path="/database" component={DataBasePage} />
         <Route exact path="/help" component={HelpPage} />
+        <Route exact path="/help/link-not-working" component={LinkNotWorkPage} />
 
         <Route exact path="/statistics" component={StatisticPage} />
         <Route path="/redirect" component={RedirectPage} />

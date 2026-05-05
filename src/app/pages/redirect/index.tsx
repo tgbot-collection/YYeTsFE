@@ -22,6 +22,9 @@ export function RedirectPage() {
 
   useEffect(() => {
     if (!targetUrl) return undefined;
+    if (targetUrl === "loop") {
+      setSeconds(3600);
+    }
 
     postMetrics("redirect").catch(noop);
 
@@ -73,9 +76,11 @@ export function RedirectPage() {
           }}
         >
           <Typography variant="subtitle1" gutterBottom>
-            推荐工具
+            解决打不开 / 没速度问题
           </Typography>
-          <Typography paragraph>使用 VPN 可以改善部分网盘访问失败、速度慢、地区限制等问题。</Typography>
+          <Typography variant="subtitle2" paragraph>
+            使用 VPN 可以改善部分网盘访问失败、速度慢、地区限制等问题。
+          </Typography>
 
           <Button
             variant="contained"

@@ -1,8 +1,9 @@
 import * as React from "react";
 import { noop, setTitle } from "utils";
-import { Container, createStyles, Link as MuiLink, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Container, createStyles, Link, Link as MuiLink, makeStyles, Theme, Typography } from "@material-ui/core";
 
 import { postMetrics } from "API";
+import { Adsense } from "@ctrl/react-adsense";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,6 +37,10 @@ export function HelpPage() {
         <Typography variant="h6" component="h3" gutterBottom>
           如何下载
         </Typography>
+        <Typography>
+          <MuiLink href="/help/link-not-working">打不开链接？点击查看解决方案</MuiLink>
+        </Typography>
+
         <Typography>一般来说，分享页面的下载链接是有电驴、磁力链和网盘的。</Typography>
         <Typography>网盘就去下载对应的客户端，电驴和磁力链，可以尝试下迅雷。</Typography>
         <Typography>
@@ -140,6 +145,66 @@ export function HelpPage() {
           搜索下拉框的有什么选择
         </Typography>
         <Typography>目前提供以下搜索选项：默认模式、资源模式、字幕模式、评论模式。默认模式会搜索全部资源</Typography>
+      </div>
+    </Container>
+  );
+}
+
+export function LinkNotWorkPage() {
+  setTitle("资源打不开 / 网盘链接失效 / ed2k没速度怎么办？");
+  const classes = useStyles();
+
+  React.useEffect(() => {
+    postMetrics("help").catch(noop);
+  }, []);
+
+  return (
+    <Container className={classes.container}>
+      <Typography variant="h5" component="h5" className={classes.title}>
+        ❌ 资源打不开 / 没速度？
+      </Typography>
+
+      <div className={classes.item}>
+        <Typography variant="h6" component="h6" gutterBottom>
+          可能原因：
+        </Typography>
+        <Typography>网盘资源已失效</Typography>
+        <Typography>地区网络限制</Typography>
+        <Typography>下载工具问题</Typography>
+        <Typography variant="h6" component="h6" gutterBottom>
+          常见解决方案：
+        </Typography>
+        <Typography>刷新页面重新尝试 </Typography>
+        <Typography>更换浏览器</Typography>
+        <Typography>稍后再试（可能限流）</Typography>
+        <Typography>使用下载工具（如迅雷）</Typography>
+        {process.env.REACT_APP_ADSENSE && (
+          <Adsense
+            className="adsbygoogle"
+            client={`ca-pub-${process.env.REACT_APP_ADSENSE}`}
+            slot="8326668457"
+            style={{ display: "block" }}
+            format="auto"
+            responsive="true"
+          />
+        )}
+        <Typography variant="subtitle1">
+          部分网盘或资源在某些地区可能无法访问， 例如海外访问国内网盘，或反之。
+        </Typography>
+        <Typography>这种情况下，可以尝试使用网络加速工具（VPN）来解决。</Typography>
+
+        <Typography gutterBottom>
+          本站推荐使用
+          <Link
+            href="https://maomaoyun.org/#/register?code=kscCUYgT"
+            onClick={() => {
+              postMetrics("vpnClick");
+            }}
+          >
+            猫猫云 VPN
+          </Link>
+          以获得最佳浏览体验
+        </Typography>
       </div>
     </Container>
   );

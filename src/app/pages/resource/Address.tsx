@@ -117,7 +117,7 @@ export function Address(props: AddressPropTypes) {
       >
         <CardContent>
           <Typography variant="h5" component="h2">
-            若资源无法加载，可能需要 VPN
+            若资源无法下载，可能需要 VPN
           </Typography>
           <Typography color="textSecondary">猫猫云 VPN</Typography>
           <Typography variant="body2" component="p">
