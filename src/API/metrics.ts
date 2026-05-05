@@ -21,7 +21,8 @@ type MetricsType =
   | "backOld" // 返回旧版
   | "copyComment" // 复制评论
   | "viewSubtitle"
-  | "redirect";
+  | "redirect"
+  | "vpnClick";
 
 export function postMetrics(type: MetricsType, id: number = 0) {
   return axios.post("/api/metrics", { type, id });

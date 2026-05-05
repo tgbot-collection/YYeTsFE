@@ -18,7 +18,7 @@ import {
 import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/hooks";
 
-import { AddressInfo } from "API";
+import { AddressInfo, postMetrics } from "API";
 import { toAbsoluteUrl } from "utils";
 import { DataTable } from "./DataTable";
 
@@ -112,6 +112,7 @@ export function Address(props: AddressPropTypes) {
       <Card
         onClick={() => {
           window.open("https://maomaoyun.org/#/register?code=kscCUYgT");
+          postMetrics("vpnClick");
         }}
       >
         <CardContent>

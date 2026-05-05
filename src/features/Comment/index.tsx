@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link, Typography } from "@material-ui/core";
 
 import { CommentInput, CommentList } from "component";
-import { Comment } from "../../API";
+import { Comment, postMetrics } from "../../API";
 
 interface CommentPropTypes {
   id: number;
@@ -25,7 +25,14 @@ export function CommentComponent(props: CommentPropTypes) {
       <CommentInput resourceId={id} setCommentList={setCommentList} />
       <Typography gutterBottom>
         本站推荐使用
-        <Link href="https://maomaoyun.org/#/register?code=kscCUYgT"> 猫猫云 VPN </Link>
+        <Link
+          href="https://maomaoyun.org/#/register?code=kscCUYgT"
+          onClick={() => {
+            postMetrics("vpnClick");
+          }}
+        >
+          猫猫云 VPN
+        </Link>
         以获得最佳浏览体验
       </Typography>
       <br />

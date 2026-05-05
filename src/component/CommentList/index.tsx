@@ -4,7 +4,7 @@ import { Skeleton } from "@material-ui/lab";
 import { useSnackbar } from "notistack";
 import Pagination from "@material-ui/lab/Pagination";
 
-import { Comment, getComment } from "API";
+import { Comment, getComment, postMetrics } from "API";
 import { CommentCard } from "../CommentCard";
 
 import { useStyles } from "./styled";
@@ -158,7 +158,14 @@ export function CommentList(props: CommentListPropTypes) {
             头顶冒火 OpenAI GPT 接口站，稳定快速，使用人工智能提高生产力！
           </Link>
           <br />
-          <Link href="https://maomaoyun.org/#/register?code=kscCUYgT" target="_blank" variant="body2">
+          <Link
+            href="https://maomaoyun.org/#/register?code=kscCUYgT"
+            target="_blank"
+            variant="body2"
+            onClick={() => {
+              postMetrics("vpnClick");
+            }}
+          >
             搭配猫猫云VPN 月付¥10，100G流量，5设备同时在线，高速节点更流畅
           </Link>
           <Divider className={classes.hr} />

@@ -4,6 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { toAbsoluteUrl } from "utils";
 import packageInfo from "../../../package.json";
+import { postMetrics } from "../../API";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -103,7 +104,14 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://maomaoyun.org/#/register?code=kscCUYgT" color="inherit" variant="body1">
+                  <Link
+                    href="https://maomaoyun.org/#/register?code=kscCUYgT"
+                    color="inherit"
+                    variant="body1"
+                    onClick={() => {
+                      postMetrics("vpnClick");
+                    }}
+                  >
                     猫猫云VPN 高速节点 ¥10/月100G流量
                   </Link>
                 </li>

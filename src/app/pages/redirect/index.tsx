@@ -83,6 +83,9 @@ export function RedirectPage() {
             href="https://maomaoyun.org/#/register?code=kscCUYgT"
             target="_blank"
             rel="nofollow noopener noreferrer"
+            onClick={() => {
+              postMetrics("vpnClick");
+            }}
           >
             查看推荐 VPN
           </Button>

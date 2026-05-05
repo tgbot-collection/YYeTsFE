@@ -194,6 +194,7 @@ export function SearchPage() {
       <Card
         onClick={() => {
           window.open("https://maomaoyun.org/#/register?code=kscCUYgT");
+          postMetrics("vpnClick");
         }}
       >
         <CardContent>
