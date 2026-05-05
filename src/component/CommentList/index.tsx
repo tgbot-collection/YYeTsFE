@@ -125,7 +125,7 @@ export function CommentList(props: CommentListPropTypes) {
 
             {commentList.map((comment, index) => {
               if (hideInvalidComments && comment.invalid) {
-                return <div />;
+                return null;
               }
 
               return (

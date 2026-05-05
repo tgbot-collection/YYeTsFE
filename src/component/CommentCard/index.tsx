@@ -119,7 +119,6 @@ export function CommentCard(props: CommentCardPropTypes) {
   } = props;
 
   const { group: userGroup } = useAppSelector((state) => state.user);
-
   const [showMore, setShowMore] = React.useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
   const [childLoading, setChildLoading] = React.useState<boolean>(false);
@@ -183,12 +182,28 @@ export function CommentCard(props: CommentCardPropTypes) {
 
   return (
     <>
-      <div className={classes.commentItem} id={commentId}>
+      <div
+        className={classes.commentItem}
+        id={commentId}
+        style={{ backgroundColor: `${group.includes("admin") ? "#f0f9ff" : ""}` }}
+      >
         <Avatar className="avatar" group={group} username={username} hasAvatar={hasAvatar} hash={hash} />
 
         <div className="name">
           <Typography component="span" variant="h6" color="textPrimary">
             {username}
+            {group.includes("admin") && (
+              <Chip
+                label="官方推荐"
+                size="small"
+                style={{
+                  backgroundColor: "#e6f4ea",
+                  color: "#1e7e34",
+                  fontWeight: 500,
+                  marginLeft: 8,
+                }}
+              />
+            )}
             {invalid === true && (
               <Chip
                 label="该资源可能已经失效，查看解决方法"

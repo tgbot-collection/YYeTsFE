@@ -21,7 +21,7 @@ interface PatchInfo {
   message: string;
 }
 
-export type UserGroup = "admin" | "user";
+export type UserGroup = "admin" | "user" | "publisher";
 
 export interface UserInfo {
   username: string;
