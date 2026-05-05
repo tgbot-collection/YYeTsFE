@@ -13,6 +13,7 @@ import {
   Link as MuLink,
   Divider,
   Tooltip,
+  Avatar,
 } from "@material-ui/core";
 import { AccountCircle, GitHub, Search, QuestionAnswer } from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
@@ -23,6 +24,7 @@ import { logout, toAbsoluteUrl } from "utils";
 import { useAppDispatch, useAuth, useLoginBack } from "hooks";
 import { Notification, Adblock } from "features";
 import { setUsername } from "app/pages/login/userSlice";
+import axios from "axios";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,8 +54,35 @@ const useStyles = makeStyles((theme: Theme) =>
     danger: {
       color: theme.palette.error.main,
     },
-  })
+  }),
 );
+
+const RenderAvatar = React.memo(({ username }: { username: string }) => {
+  const [hasAvatar, setHasAvatar] = React.useState<boolean | null>(null);
+
+  React.useEffect(() => {
+    let cancelled = false;
+
+    axios
+      .head(`/api/user/avatar/${username}`)
+      .then(() => {
+        if (!cancelled) setHasAvatar(true);
+      })
+      .catch(() => {
+        if (!cancelled) setHasAvatar(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [username]);
+
+  if (hasAvatar === null) {
+    return <AccountCircle />;
+  }
+
+  return hasAvatar ? <Avatar src={`/api/user/avatar/${username}`} /> : <AccountCircle />;
+});
 
 export function Header() {
   const location = useLocation();
@@ -133,7 +162,7 @@ export function Header() {
             <Notification />
 
             <IconButton color="inherit" {...bindTrigger(loginPopupState)}>
-              <AccountCircle />
+              <RenderAvatar username={username} />
             </IconButton>
             <Menu
               {...bindMenu(loginPopupState)}
