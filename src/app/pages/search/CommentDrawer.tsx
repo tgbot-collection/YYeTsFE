@@ -114,7 +114,13 @@ export default function CommentDrawer(props: CommentResourcePropTypes) {
                 gtag("event", "copyComment");
               }}
             >
-              <Button variant="contained" color="primary" size="small" startIcon={<CopyIcon />}>
+              <Button
+                style={{ display: "none" }}
+                variant="contained"
+                color="primary"
+                size="small"
+                startIcon={<CopyIcon />}
+              >
                 复制评论
               </Button>
             </CopyToClipboard>
