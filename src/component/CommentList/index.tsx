@@ -154,10 +154,6 @@ export function CommentList(props: CommentListPropTypes) {
           </div>
 
           <Divider className={classes.hr} />
-          <Link href="https://burn.hair/?lang=zh-CN&utm_source=yyets" target="_blank" variant="body1">
-            头顶冒火 OpenAI GPT 接口站，稳定快速，使用人工智能提高生产力！
-          </Link>
-          <br />
           <Link
             href="https://maomaoyun.org/#/register?code=kscCUYgT"
             target="_blank"
@@ -166,7 +162,7 @@ export function CommentList(props: CommentListPropTypes) {
               postMetrics("vpnClick");
             }}
           >
-            搭配猫猫云VPN 月付¥10，100G流量，5设备同时在线，高速节点更流畅
+            搭配猫猫云VPN 月付¥15，100G流量，5设备同时在线，高速节点更流畅
           </Link>
           <Divider className={classes.hr} />
 

@@ -112,7 +112,7 @@ export function Footer() {
                       postMetrics("vpnClick");
                     }}
                   >
-                    猫猫云VPN 高速节点 ¥10/月100G流量
+                    猫猫云VPN 高速节点 ¥15/月100G流量
                   </Link>
                 </li>
               </ul>

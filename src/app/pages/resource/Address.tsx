@@ -121,7 +121,7 @@ export function Address(props: AddressPropTypes) {
           </Typography>
           <Typography color="textSecondary">猫猫云 VPN</Typography>
           <Typography variant="body2" component="p">
-            最低月付 ¥10，100G 流量, 5 设备可用， 高速IEPL专线机场，专为流媒体与日常上网优化，更可靠的联网方式
+            最低月付 ¥15，100G 流量, 5 设备可用， 高速IEPL专线机场，专为流媒体与日常上网优化，更可靠的联网方式
           </Typography>
         </CardContent>
         <CardActions>
