@@ -13,6 +13,7 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  Button,
 } from "@material-ui/core";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSnackbar, ProviderContext } from "notistack";
@@ -46,7 +47,7 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
     title: {
       flex: "1 1 100%",
     },
-  })
+  }),
 );
 
 interface EnhancedTableToolbarProps {
@@ -87,6 +88,30 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
       )}
       {numSelected > 0 && (
         <>
+          <Button
+            variant="contained"
+            style={{ whiteSpace: "nowrap" }}
+            onClick={() => {
+              // @ts-ignore
+              window.thunderLink.newTask({
+                tasks: multipleAddress.ed2k.split("\n").map((url) => ({ url })),
+              });
+            }}
+          >
+            迅雷下载电驴
+          </Button>
+          <Button
+            variant="contained"
+            style={{ whiteSpace: "nowrap", marginLeft: "1rem" }}
+            onClick={() => {
+              // @ts-ignore
+              window.thunderLink.newTask({
+                tasks: multipleAddress.magnet.split("\n").map((url) => ({ url })),
+              });
+            }}
+          >
+            迅雷下载磁力
+          </Button>
           <CopyToClipboard
             text={multipleAddress.ed2k}
             onCopy={() => {
@@ -156,7 +181,7 @@ const useStyles = makeStyles((theme: Theme) =>
       wordBreak: "break-all",
       minWidth: 200,
     },
-  })
+  }),
 );
 
 interface DataTablePropTypes {
