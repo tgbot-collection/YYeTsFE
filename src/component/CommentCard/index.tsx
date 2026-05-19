@@ -177,7 +177,7 @@ export function CommentCard(props: CommentCardPropTypes) {
   };
 
   const classes = useStyles();
-  const MAX_HEIGHT = 72;
+  const MAX_HEIGHT = 95;
   const { os, browser } = formatBrowser(ua);
 
   return (
