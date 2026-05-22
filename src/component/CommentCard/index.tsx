@@ -215,7 +215,7 @@ export function CommentCard(props: CommentCardPropTypes) {
                 }}
               />
             )}
-            {!invalid && <ReportInvalidButton commentId={commentId} />}
+            {!invalid && content.text.includes("http") && <ReportInvalidButton commentId={commentId} />}
           </Typography>
         </div>
 
